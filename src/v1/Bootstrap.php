@@ -57,7 +57,7 @@ class Bootstrap implements BootstrapInterface
     {
         return [
             'aliases' => [
-                '@yii2admin' => '@vendor/kamaelkz/yii2-admin-panel/v1/src',
+                '@yii2admin' => '@vendor/kamaelkz/yii2-admin-panel/src/v1',
             ],
             'modules' => [
                 'uikit' => [
