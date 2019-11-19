@@ -21,9 +21,6 @@
         "concepture/yii2-user-module" : "dev-master",
         "concepture/yii2-handbook-module" : "dev-master"
     },
-    "extra": {
-        "bootstrap": "kamaelkz\\yii2admin\\Bootstrap"
-    },
     "autoload": {
         "psr-4": {
             "kamaelkz\\yii2admin\\": "src"
