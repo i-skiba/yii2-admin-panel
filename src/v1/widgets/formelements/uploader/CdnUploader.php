@@ -6,8 +6,8 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
+use yii\helpers\Url;
 use concepture\yii2logic\traits\WidgetTrait;
-use common\helpers\Url;
 use common\components\cdn\pojo\CdnImagePojo;
 
 /**

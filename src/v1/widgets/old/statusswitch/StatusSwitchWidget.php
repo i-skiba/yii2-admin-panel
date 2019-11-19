@@ -4,7 +4,7 @@ namespace frontend\common\components\widgets\statusswitch;
 
 use Yii;
 use yii\helpers\Html;
-use frontend\common\helpers\Url;
+use yii\helpers\Url;
 use yii\base\InvalidConfigException;
 
 /**

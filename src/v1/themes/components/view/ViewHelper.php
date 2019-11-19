@@ -3,7 +3,7 @@
 namespace kamaelkz\yii2admin\v1\themes\components\view;
 
 use Yii;
-use common\helpers\Url;
+use yii\helpers\Url;
 use yii\helpers\Html;
 
 /**

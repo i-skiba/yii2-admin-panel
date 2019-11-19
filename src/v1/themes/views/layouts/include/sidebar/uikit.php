@@ -1,5 +1,5 @@
 <?php
-    use common\helpers\Url;
+    use yii\helpers\Url;
 ?>
 
 <li class="nav-item nav-item-submenu">

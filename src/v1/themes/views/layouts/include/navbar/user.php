@@ -1,5 +1,5 @@
 <?php
-    use common\helpers\Url;
+    use yii\helpers\Url;
     use kamaelkz\yii2admin\v1\themes\bundles\ImagesBundle;
     
     $imageBundlePath = $this->assetBundles[ImagesBundle::class]->baseUrl;
