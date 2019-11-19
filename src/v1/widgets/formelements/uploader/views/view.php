@@ -51,7 +51,7 @@ use yii\helpers\Html;
                 </div>
 
                 <div class="list-icons list-icons-extended ml-auto">
-                    <a href="#" class="list-icons-item file-delete">
+                    <a href="#" class="list-icons-item file-delete" <?= $pojo->id ? "data-file-id='{$pojo->id}'" : null; ?>>
                         <i class="icon-bin top-0"></i>
                     </a>
                 </div>
