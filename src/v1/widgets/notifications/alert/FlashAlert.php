@@ -36,7 +36,7 @@ class FlashAlert extends BaseWidget
      */
     public function run() 
     {
-        $closeLabel = Yii::t(yii2admin,'Закрыть');
+        $closeLabel = Yii::t('yii2admin','Закрыть');
         $message = Yii::$app->session->getFlash($this->type);
         if(! $message ) {
             return null;

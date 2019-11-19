@@ -113,7 +113,7 @@ class Crud extends ActiveRecord
                 'compare',
                 'compareValue' => true,
                 'operator' => '==',
-                'message' => Yii::t(yii2admin, 'Необходимо принять чекбокс, как должное.')
+                'message' => Yii::t('yii2admin', 'Необходимо принять чекбокс, как должное.')
             ],
             [
                 [
@@ -178,19 +178,19 @@ class Crud extends ActiveRecord
         return [
             'id' => '#',
             'image' => 'Изображение',
-            'text_input' => Yii::t(yii2admin, 'Текстовое поле'),
-            'text_area' => Yii::t(yii2admin, 'Многострочное текстовое поле'),
-            'mask' => Yii::t(yii2admin, 'Маска'),
-            'editor' => Yii::t(yii2admin, 'Редактор'),
-            'checkbox_standart' => Yii::t(yii2admin, 'Чекбокс стандартный'),
-            'checkbox_switch' => Yii::t(yii2admin, 'Чекбокс хитрый'),
-            'date_picker' => Yii::t(yii2admin, 'Выбор даты'),
-            'time_picker' => Yii::t(yii2admin, 'Выбор времени'),
-            'dropdown' => Yii::t(yii2admin, 'Выпадающее меню'),
-            'dropdown_root' => Yii::t(yii2admin, 'Управляющий элемент'),
-            'dropdown_depend' => Yii::t(yii2admin, 'Зависимые элементы 1'),
-            'dropdown_depend_2' => Yii::t(yii2admin, 'Зависимый элемент 2'),
-            'radio' => Yii::t(yii2admin, 'Набор радиобатонов'),
+            'text_input' => Yii::t('yii2admin', 'Текстовое поле'),
+            'text_area' => Yii::t('yii2admin', 'Многострочное текстовое поле'),
+            'mask' => Yii::t('yii2admin', 'Маска'),
+            'editor' => Yii::t('yii2admin', 'Редактор'),
+            'checkbox_standart' => Yii::t('yii2admin', 'Чекбокс стандартный'),
+            'checkbox_switch' => Yii::t('yii2admin', 'Чекбокс хитрый'),
+            'date_picker' => Yii::t('yii2admin', 'Выбор даты'),
+            'time_picker' => Yii::t('yii2admin', 'Выбор времени'),
+            'dropdown' => Yii::t('yii2admin', 'Выпадающее меню'),
+            'dropdown_root' => Yii::t('yii2admin', 'Управляющий элемент'),
+            'dropdown_depend' => Yii::t('yii2admin', 'Зависимые элементы 1'),
+            'dropdown_depend_2' => Yii::t('yii2admin', 'Зависимый элемент 2'),
+            'radio' => Yii::t('yii2admin', 'Набор радиобатонов'),
         ];
     }
 }

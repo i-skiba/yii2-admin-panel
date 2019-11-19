@@ -126,7 +126,7 @@ class DefaultController extends BaseController
         $model = new EmailPasswordResetRequestForm();
         $model->route = "/site/reset-password";
         if ($model->load(Yii::$app->request->post()) && $this->authService()->sendPasswordResetEmail($model) ) {
-            Yii::$app->session->setFlash('success', Yii::t(yii2admin, "Проверьте почту"));
+            Yii::$app->session->setFlash('success', Yii::t('yii2admin', "Проверьте почту"));
 
             return $this->redirect('/site/login');
         }
@@ -153,7 +153,7 @@ class DefaultController extends BaseController
         $model = new PasswordResetForm();
         $model->token = $token;
         if ($model->load(Yii::$app->request->post()) && $this->authService()->changePassword($model) ) {
-            Yii::$app->session->setFlash('success', Yii::t(yii2admin, "Пароль успешно изменен"));
+            Yii::$app->session->setFlash('success', Yii::t('yii2admin', "Пароль успешно изменен"));
 
             return $this->redirect('/site/index');
         }
@@ -177,7 +177,7 @@ class DefaultController extends BaseController
 
         $model = new SignUpForm();
         if ($model->load(Yii::$app->request->post()) && $this->authService()->signUp($model) ) {
-            Yii::$app->session->setFlash('success', Yii::t(yii2admin, "Успешная регистрация. Теперь вы можете авторизоваться."));
+            Yii::$app->session->setFlash('success', Yii::t('yii2admin', "Успешная регистрация. Теперь вы можете авторизоваться."));
 
             return $this->redirect('/site/login');
         }

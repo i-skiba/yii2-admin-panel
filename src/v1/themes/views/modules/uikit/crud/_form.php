@@ -22,7 +22,7 @@ use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
         <div class="card">
             <div class="card-body text-right">
                 <?=  Html::submitButton(
-                    '<b><i class="icon-checkmark3"></i></b>' . Yii::t(yii2admin, 'Сохранить'),
+                    '<b><i class="icon-checkmark3"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
                     [
                         'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1'
                     ]
@@ -263,7 +263,7 @@ use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
             </div>
             <div class="card-body text-right">
                 <?=  Html::submitButton(
-                    '<b><i class="icon-checkmark3"></i></b>' . Yii::t(yii2admin, 'Сохранить'),
+                    '<b><i class="icon-checkmark3"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
                     [
                         'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1'
                     ]
@@ -273,13 +273,13 @@ use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
 <!--        <div class="card">-->
 <!--            <div class="card-body text-right">-->
 <!--                --><?//=  Html::submitButton(
-//                    '<b><i class="icon-floppy-disk"></i></b>' . Yii::t(yii2admin, 'Сохранить'),
+//                    '<b><i class="icon-floppy-disk"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
 //                    [
 //                        'class' => 'btn bg-success btn-labeled btn-labeled-left'
 //                    ]
 //                ); ?>
 <!--                --><?//=  Html::submitButton(
-//                    '<b><i class="icon-list"></i></b>' . Yii::t(yii2admin, 'Сохранить и вернуться к списку'),
+//                    '<b><i class="icon-list"></i></b>' . Yii::t('yii2admin', 'Сохранить и вернуться к списку'),
 //                    [
 //                        'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1'
 //                    ]

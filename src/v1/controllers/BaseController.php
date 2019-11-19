@@ -86,7 +86,7 @@ abstract class BaseController extends Controller
     public function getSuccessFlash($message)
     {
         return empty($message)
-                ? Yii::t(yii2admin , 'Операция прошла успешно.')
+                ? Yii::t('yii2admin' , 'Операция прошла успешно.')
                 : $message ;
     }
 
@@ -100,7 +100,7 @@ abstract class BaseController extends Controller
     public function getErrorFlash($message = null)
     {
         return empty($message)
-                ? Yii::t(yii2admin , 'Операция завершилась с ошибкой. Попробуйте позже.')
+                ? Yii::t('yii2admin' , 'Операция завершилась с ошибкой. Попробуйте позже.')
                 : $message;
     }
 

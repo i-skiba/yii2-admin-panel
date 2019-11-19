@@ -44,7 +44,7 @@ class ViewHelper
         }
 
         if(! $label) {
-            $label = Yii::t(yii2admin, 'Новая запись');
+            $label = Yii::t('yii2admin', 'Новая запись');
         }
 
         $url = Url::to($route);
@@ -80,7 +80,7 @@ class ViewHelper
         }
 
         if(! $label) {
-            $label = Yii::t(yii2admin, 'Сохранить');
+            $label = Yii::t('yii2admin', 'Сохранить');
         }
 
         $content = "<i class='{$icon} text-primary'></i><span>{$label}</span>";

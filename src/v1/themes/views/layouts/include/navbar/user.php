@@ -12,7 +12,7 @@
     </a>
     <div class="dropdown-menu dropdown-menu-right">
         <a href="<?= Url::to(['/site/logout']);?>" class="dropdown-item">
-            <i class="icon-switch2"></i> <?= Yii::t(yii2admin,'Выход');?>
+            <i class="icon-switch2"></i> <?= Yii::t('yii2admin','Выход');?>
         </a>
     </div>
 </li>

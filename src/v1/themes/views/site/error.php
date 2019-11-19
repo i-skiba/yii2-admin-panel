@@ -18,7 +18,7 @@ use yii\helpers\Html;
             <div class="row">
                 <div class="col-sm-12">
                     <a href="<?= (Yii::$app->request->referrer ?: Yii::$app->homeUrl);?>" class="btn btn-primary btn-block">
-                        <i class="icon-home4 mr-2"></i> <?php echo Yii::t(yii2admin,'Назад');?>
+                        <i class="icon-home4 mr-2"></i> <?php echo Yii::t('yii2admin','Назад');?>
                     </a>
                 </div>
             </div>

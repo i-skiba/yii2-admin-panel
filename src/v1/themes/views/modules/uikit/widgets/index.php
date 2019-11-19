@@ -15,14 +15,14 @@
     use yii\widgets\MaskedInput;
     use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
 
-    $title = Yii::t(yii2admin, 'Виджеты');
+    $title = Yii::t('yii2admin', 'Виджеты');
     $this->setTitle($title);
     $this->pushBreadcrumbs($title);
 ?>
 <div class="card">
     <div class="card-header header-elements-inline">
         <h5 class="card-title">
-            <?= Yii::t(yii2admin, 'Предупреждающие сообщения') ;?>
+            <?= Yii::t('yii2admin', 'Предупреждающие сообщения') ;?>
         </h5>
     </div>
     <div class="card-body">
@@ -53,7 +53,7 @@
         <div class="card">
             <div class="card-header header-elements-inline">
                 <h5 class="card-title">
-                    <?= Yii::t(yii2admin, 'Элементы формы') ;?>
+                    <?= Yii::t('yii2admin', 'Элементы формы') ;?>
                 </h5>
             </div>
             <div class="card-body">
@@ -310,7 +310,7 @@
         <div class="card">
             <div class="card-body">
                 <?=  Html::submitButton(
-                    '<i class="icon-floppy-disks"></i> ' . Yii::t(yii2admin, 'Сохранить'),
+                    '<i class="icon-floppy-disks"></i> ' . Yii::t('yii2admin', 'Сохранить'),
                     [
                         'class' => 'btn bg-success'
                     ]

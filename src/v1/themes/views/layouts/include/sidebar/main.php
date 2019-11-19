@@ -34,7 +34,7 @@
                         <a href="<?= Url::to(['/site/index']);?>" class="nav-link active">
                             <i class="icon-home4"></i>
                             <span>
-                                <?= Yii::t(yii2admin, 'Главная');?>
+                                <?= Yii::t('yii2admin', 'Главная');?>
                             </span>
                         </a>
                     </li>

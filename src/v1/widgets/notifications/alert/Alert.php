@@ -42,7 +42,7 @@ class Alert extends BaseWidget
      */
     public function run()
     {
-        $closeLabel = Yii::t(yii2admin,'Закрыть');
+        $closeLabel = Yii::t('yii2admin','Закрыть');
         $message = $this->message;
         if(! $message ) {
             throw new InvalidConfigException('Message must be set.');

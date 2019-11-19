@@ -55,7 +55,7 @@ class Breadcrumbs extends Base
 
         if (empty($this->homeLink)) {
             $this->homeLink = [
-                'label' => '<i class="icon-home2 mr-2"></i> ' . Yii::t(yii2admin,'Главная'),
+                'label' => '<i class="icon-home2 mr-2"></i> ' . Yii::t('yii2admin','Главная'),
                 'url' => Yii::$app->homeUrl,
                 'type' => 'raw',
                 'class' => $this->itemClass

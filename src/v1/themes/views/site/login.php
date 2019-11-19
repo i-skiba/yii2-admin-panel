@@ -32,10 +32,10 @@ $this->title = \Yii::t('backend', "Авторизация");
             <div class="text-center mb-3">
                 <i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
                 <h5 class="mb-0">
-                    <?= \Yii::t(yii2admin, "Авторизация");?>
+                    <?= \Yii::t('yii2admin', "Авторизация");?>
                 </h5>
                 <span class="d-block text-muted">
-                    <?= Yii::t(yii2admin,'Введите свои учетные данные ниже');?>
+                    <?= Yii::t('yii2admin','Введите свои учетные данные ниже');?>
                 </span>
             </div>
             <?= $form
@@ -89,7 +89,7 @@ $this->title = \Yii::t('backend', "Авторизация");
                         ->error(false)
                 ?>
                 <?= Html::a(
-                    Yii::t(yii2admin, "Забыл пароль ?"),
+                    Yii::t('yii2admin', "Забыл пароль ?"),
                     ['/site/request-password-reset'],
                     [
                         'class' => 'ml-auto'
@@ -98,7 +98,7 @@ $this->title = \Yii::t('backend', "Авторизация");
             </div>
             <div class="form-group">
                 <?= Html::submitButton(
-                        \Yii::t(yii2admin, "Войти") . '<i class="icon-circle-right2 ml-2"></i>',
+                        \Yii::t('yii2admin', "Войти") . '<i class="icon-circle-right2 ml-2"></i>',
                         [
                                 'class' => 'btn btn-primary btn-block',
                             'name' => 'login-button'
@@ -113,7 +113,7 @@ $this->title = \Yii::t('backend', "Авторизация");
             </div>
             <div class="form-group">
                 <?= Html::a(
-                        Yii::t(yii2admin, "Регистрация"),
+                        Yii::t('yii2admin', "Регистрация"),
                         [
                                 '/site/registration'
                         ],

@@ -9,7 +9,7 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-bubbles4"></i>
             <span class="visible-xs-inline-block position-right">
-                <?= Yii::t(yii2admin, 'Оповещения');?>
+                <?= Yii::t('yii2admin', 'Оповещения');?>
             </span>
             <?php if($count > 0) :?>
                 <span class="badge bg-danger-400">
@@ -20,7 +20,7 @@
     <?php if($count > 0) :?>
         <div class="dropdown-menu dropdown-content width-350">
             <div class="dropdown-content-heading">
-                    <?= Yii::t(yii2admin, 'Оповещения');?>
+                    <?= Yii::t('yii2admin', 'Оповещения');?>
             </div>
 <!--            --><?//= ListView::widget([
 //                    'dataProvider' => $dataProvider,

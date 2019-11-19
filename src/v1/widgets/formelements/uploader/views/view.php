@@ -9,7 +9,7 @@ use yii\helpers\Html;
             <b>
                 <i class="<?= $buttonIconClass;?>"></i>
             </b>
-            <?= Yii::t(yii2admin, 'Выберите файл');?>
+            <?= Yii::t('yii2admin', 'Выберите файл');?>
             <?= $input ?>
             <?= $hidden ?>
         </div>
@@ -41,7 +41,7 @@ use yii\helpers\Html;
                         <?php endif;?>
                     </div>
                     <span class="font-size-sm text-muted">
-                        <?= Yii::t(yii2admin, 'Размер');?>:
+                        <?= Yii::t('yii2admin', 'Размер');?>:
                         <span class="file-size">
                             <?php if($pojo->size):?>
                                 <?= $pojo->size;?>

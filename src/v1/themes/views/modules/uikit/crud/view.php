@@ -5,13 +5,13 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\widgets\DetailView;
 
-$this->setTitle(Yii::t(yii2admin, 'Просмотр записи'));
-$this->pushBreadcrumbs(['label' => Yii::t(yii2admin, 'CRUD'), 'url' => ['index']]);
+$this->setTitle(Yii::t('yii2admin', 'Просмотр записи'));
+$this->pushBreadcrumbs(['label' => Yii::t('yii2admin', 'CRUD'), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
 
 $this->viewHelper()->pushPageHeader();
-$this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id], Yii::t(yii2admin,'Редактирование'), 'icon-pencil5');
-$this->viewHelper()->pushPageHeader(['index'], Yii::t(yii2admin, 'Список'),'icon-list');
+$this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id], Yii::t('yii2admin','Редактирование'), 'icon-pencil5');
+$this->viewHelper()->pushPageHeader(['index'], Yii::t('yii2admin', 'Список'),'icon-list');
 
 ?>
 
@@ -30,18 +30,18 @@ $this->viewHelper()->pushPageHeader(['index'], Yii::t(yii2admin, 'Список')
                             <b>
                                 <i class="icon-cog5"></i>
                             </b>
-                            <?= Yii::t(yii2admin, 'Операции');?>
+                            <?= Yii::t('yii2admin', 'Операции');?>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                                 <?= Html::a(
-                                    '<i class="icon-bin"></i>' . Yii::t(yii2admin, 'Удалить'),
+                                    '<i class="icon-bin"></i>' . Yii::t('yii2admin', 'Удалить'),
                                     ['delete', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',
                                         'data-pjax-list' => 'list-pjax',
                                         'data-pjax-url' => Url::current([], true),
-                                        'data-swal' => Yii::t(yii2admin , 'Удалить'),
+                                        'data-swal' => Yii::t('yii2admin' , 'Удалить'),
                                     ]
                                 );?>
                         </ul>

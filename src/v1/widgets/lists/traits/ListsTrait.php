@@ -53,7 +53,7 @@ trait ListsTrait
         }
         
         $result = Html::submitButton(
-            '<i class="icon-checkmark"></i> ' . Yii::t(yii2admin, 'Выбрать'),
+            '<i class="icon-checkmark"></i> ' . Yii::t('yii2admin', 'Выбрать'),
             [
                 'class' => 'btn btn-success copy-column-controll hidden mt-20 mb-20 mr-20 pull-right',
             ]

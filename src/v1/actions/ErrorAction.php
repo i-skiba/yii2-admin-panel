@@ -32,11 +32,11 @@ class ErrorAction extends Action
     {
         $this->controller->layout = AppHelper::SINGLE_LAYOUT_PATH;
         if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
-            $exception = new HttpException(404, Yii::t(yii2admin,'Запрашиваемая страница не существует'));
+            $exception = new HttpException(404, Yii::t('yii2admin','Запрашиваемая страница не существует'));
         }
 
         $code = $exception->statusCode;
-        $title = Yii::t(yii2admin , 'Ошибка {error}' , [ 'error' => $code ]);
+        $title = Yii::t('yii2admin' , 'Ошибка {error}' , [ 'error' => $code ]);
         $message = $exception->getMessage();
         $this->controller->view->title = $title;
         $this->controller->view->params['breadcrumbs'] = [

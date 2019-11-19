@@ -113,7 +113,7 @@ HTML;
         }
 
         $copyColumn = [
-            'header' => Yii::t(yii2admin, "Выбор"),
+            'header' => Yii::t('yii2admin', "Выбор"),
             'class' => CopyColumn::class,
             'headerOptions' => [
                 'style' => 'text-align:center;'

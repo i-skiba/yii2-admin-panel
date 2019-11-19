@@ -27,6 +27,6 @@ class Module extends BaseModule
      */
     public static function getModuleLabel()
     {
-        return Yii::t(yii2admin, 'UIkit');
+        return Yii::t('yii2admin', 'UIkit');
     }
 }

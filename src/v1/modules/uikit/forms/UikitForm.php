@@ -124,7 +124,7 @@ class UikitForm extends BaseModel
                         'compare',
                         'compareValue' => true,
                         'operator' => '==',
-                        'message' => Yii::t(yii2admin, 'Необходимо принять чекбокс, как должное.')
+                        'message' => Yii::t('yii2admin', 'Необходимо принять чекбокс, как должное.')
                     ],
                     [
                         [
@@ -202,21 +202,21 @@ class UikitForm extends BaseModel
     {
         return [
             'image' => 'Изображение',
-            'text_input' => Yii::t(yii2admin, 'Текстовое поле'),
-            'text_area' => Yii::t(yii2admin, 'Многострочное текстовое поле'),
-            'mask' => Yii::t(yii2admin, 'Маска'),
-            'editor' => Yii::t(yii2admin, 'Редактор'),
-            'checkbox_standart' => Yii::t(yii2admin, 'Чекбокс стандартный'),
-            'checkbox_switch' => Yii::t(yii2admin, 'Чекбокс хитрый'),
-            'multiInput' => Yii::t(yii2admin, 'Мульти текстовое поле'),
-            'date_picker' => Yii::t(yii2admin, 'Выбор даты'),
-            'time_picker' => Yii::t(yii2admin, 'Выбор времени'),
-            'dropdown' => Yii::t(yii2admin, 'Выпадающее меню'),
-            'dropdown_root' => Yii::t(yii2admin, 'Управляющий элемент'),
-            'dropdown_depend' => Yii::t(yii2admin, 'Зависимые элементы 1'),
-            'dropdown_depend_2' => Yii::t(yii2admin, 'Зависимый элемент 2'),
-            'checkboxList' => Yii::t(yii2admin, 'Набор чекбоксов'),
-            'radio' => Yii::t(yii2admin, 'Набор радиобатонов'),
+            'text_input' => Yii::t('yii2admin', 'Текстовое поле'),
+            'text_area' => Yii::t('yii2admin', 'Многострочное текстовое поле'),
+            'mask' => Yii::t('yii2admin', 'Маска'),
+            'editor' => Yii::t('yii2admin', 'Редактор'),
+            'checkbox_standart' => Yii::t('yii2admin', 'Чекбокс стандартный'),
+            'checkbox_switch' => Yii::t('yii2admin', 'Чекбокс хитрый'),
+            'multiInput' => Yii::t('yii2admin', 'Мульти текстовое поле'),
+            'date_picker' => Yii::t('yii2admin', 'Выбор даты'),
+            'time_picker' => Yii::t('yii2admin', 'Выбор времени'),
+            'dropdown' => Yii::t('yii2admin', 'Выпадающее меню'),
+            'dropdown_root' => Yii::t('yii2admin', 'Управляющий элемент'),
+            'dropdown_depend' => Yii::t('yii2admin', 'Зависимые элементы 1'),
+            'dropdown_depend_2' => Yii::t('yii2admin', 'Зависимый элемент 2'),
+            'checkboxList' => Yii::t('yii2admin', 'Набор чекбоксов'),
+            'radio' => Yii::t('yii2admin', 'Набор радиобатонов'),
         ];
     }
 //

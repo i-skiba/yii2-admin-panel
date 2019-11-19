@@ -33,7 +33,7 @@ class DatePicker extends PickerWidget
             'format' => 'yyyy-mm-dd',
             'formatSubmit' => 'yyyy-mm-dd',
             'hiddenName' => true,
-            'close' => Yii::t(yii2admin, 'закрыть')
+            'close' => Yii::t('yii2admin', 'закрыть')
         ];
     }
 }
