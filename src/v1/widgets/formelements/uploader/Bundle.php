@@ -13,6 +13,7 @@ class Bundle extends BaseBundle
     public $js = [
         'js/jquery.ui.widget.js',
         'js/jquery.fileupload.js',
+        'js/helper.js',
         'js/script.js',
     ];
 

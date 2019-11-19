@@ -25,7 +25,6 @@ class ScriptsBundle extends BaseBundle
             'limitless/global_assets/js/plugins/forms/styling/switch.min.js',
             'limitless/global_assets/js/plugins/notifications/pnotify.min.js',
             'limitless/assets/js/app.js',
-            'scripts/cdn/utility.js',
             'scripts/yii2admin/notify.js',
             'scripts/yii2admin/checkboxes.js',
             'scripts/yii2admin/selects.js',

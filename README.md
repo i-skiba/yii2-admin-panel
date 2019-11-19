@@ -11,9 +11,14 @@ project/config/main.php проекта
 
 console/config/main.php
 ```php
+    'aliases' => [
+        ...
+        '@yii2admin' => '@vendor/kamaelkz/yii2-admin-panel/src/v1',
+        ...
+    ],
     'controllerMap' => [
         ...
-        'migrate-xrayadmin' => [
+        'migrate-yii2admin' => [
             'class' => 'yii\console\controllers\MigrateController',
             'migrationPath' => [
                 '@yii2admin/migrations'
