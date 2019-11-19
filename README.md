@@ -4,7 +4,7 @@ project/config/main.php проекта
 ```php
     'bootstrap' => [
         ...
-        'vendor\kamaelkz\yii2-admin-panel\v1\Bootstrap'
+        'kamaelkz\yii2admin\v1\Bootstrap'
         ...
     ],
 ```
