@@ -165,7 +165,7 @@ class CdnUploader extends InputWidget
             $params['size'] = "{$this->width}x{$this->height}";
             if(! $this->hint) {
                 $this->hint = Yii::t(
-                    yii2admin, 'Допустимый размер изображения: {w}x{h} px',
+                    'yii2admin', 'Допустимый размер изображения: {w}x{h} px',
                     [
                         'w' => $this->width,
                         'h' => $this->height
