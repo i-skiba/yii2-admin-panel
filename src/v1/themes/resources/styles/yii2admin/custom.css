@@ -1,0 +1,41 @@
+.sidebar-dark .nav-sidebar > .nav-item-open > .nav-link:not(.disabled), .sidebar-dark .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light .card[class*="bg-"]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar > .nav-item-open > .nav-link:not(.disabled), .sidebar-light .card[class*="bg-"]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #42A5F5;
+    /*background-color: #e91e63;*/
+}
+form div.required label.control-label::after{
+    content: " * ";
+    color: #FF5A92;
+}
+/*.form-group .form-check-switch {*/
+/*    margin-top: 28px;*/
+/*}*/
+/*.form-group .form-check-inline {*/
+/*    margin-top: 32px;*/
+/*}*/
+
+.admin-grid-box .datatable-footer {
+    border:none;
+}
+
+.admin-grid-box .table thead .asc::after {
+    content: '\ee4d';
+}
+.admin-grid-box .table thead .desc::after {
+    content: '\ee4e';
+}
+.admin-grid-box .table thead th {
+    position: relative;
+}
+.admin-grid-box .table thead .sorting::before, .admin-grid-box .table thead .sorting::after, .admin-grid-box .table thead .asc::after, .admin-grid-box .table thead .desc::after, .admin-grid-box .table thead .asc_disabled::after, .admin-grid-box .table thead .desc_disabled::after {
+    font-family: 'icomoon';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    font-size: 13px;
+    margin-top: -6px;
+    display: inline-block;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #37474F;
+}

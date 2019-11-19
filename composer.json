@@ -1,0 +1,29 @@
+{
+    "name": "kamaelkz/yii2-admin-panel",
+    "description": "Component of admin panel for Yii2 framework",
+    "type": "yii2-extension",
+    "keywords": [
+        "yii2",
+        "admin"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ilya Skiba",
+            "email": "kamaelkz@yandex.kz",
+            "homepage": "https://github.com/i-skiba/yii2-admin-panel",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "concepture/yii2-user-module" : "dev-master"
+    },
+    "extra": {
+        "bootstrap": "kamaelkz\\yii2admin\\Bootstrap"
+    },
+    "autoload": {
+        "psr-4": {
+            "kamaelkz\\yii2admin\\": "src"
+        }
+    }
+}
