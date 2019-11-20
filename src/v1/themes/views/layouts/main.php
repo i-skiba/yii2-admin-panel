@@ -1,22 +1,10 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\Breadcrumbs;
-use yii\widgets\Pjax;
-use kamaelkz\yii2admin\v1\widgets\notifications\alert\FlashAlert;
-use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
-use kamaelkz\yii2admin\v1\themes\bundles\ {
-    ImagesBundle,
-    StylesBundle,
-    ScriptsBundle
-};
+    use yii\helpers\Html;
+    use yii\widgets\Breadcrumbs;
+    use yii\widgets\Pjax;
+    use kamaelkz\yii2admin\v1\widgets\notifications\alert\FlashAlert;
+    use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 ?>
-<?
-    ImagesBundle::register($this);
-    StylesBundle::register($this);
-    ScriptsBundle::register($this);
-?>
-<?= $this->render('include/resources');?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">

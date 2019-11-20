@@ -2,11 +2,21 @@
 
 project/config/main.php проекта
 ```php
+    # инициализация компонента
     'bootstrap' => [
         ...
         'kamaelkz\yii2admin\v1\Bootstrap'
         ...
     ],
+    # добавление кастомных бандлов
+    ...
+    'view' => [
+        'class' => 'kamaelkz\yii2admin\v1\themes\components\view\View',
+        'customBundles' => [
+            'project\bundles\CustomBundle'
+        ]
+    ],
+    ...
 ```
 
 console/config/main.php

@@ -12,6 +12,11 @@ use yii\web\View as Base;
 class View extends Base
 {
     /**
+     * @var array кастомные бандлы для подключения на лаяутах
+     */
+    public $customBundles = [];
+
+    /**
      * @var array
      */
     public $params = [
@@ -36,7 +41,30 @@ class View extends Base
      * @var ViewHelper
      */
     private $viewHelper;
-    
+
+    /**
+     * @inheritDoc
+     */
+    public function beginPage()
+    {
+        $this->registerCustomBundles();
+        parent::beginPage();
+    }
+
+    /**
+     * Регистрация касьтомных бандлов
+     */
+    public function registerCustomBundles()
+    {
+        if(! $this->customBundles || ! is_array($this->customBundles)) {
+            return;
+        }
+
+        foreach ($this->customBundles as $bundle) {
+            $bundle::register($this);
+        }
+    }
+
     /**
      * Доступ к хэлперу
      * 

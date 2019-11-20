@@ -16,6 +16,11 @@ return [
                 'class'=> yii\base\Theme::class,
                 'basePath'=>'@yii2admin/themes'
             ],
+            'customBundles' => [
+                'kamaelkz\yii2admin\v1\themes\bundles\ImagesBundle',
+                'kamaelkz\yii2admin\v1\themes\bundles\StylesBundle',
+                'kamaelkz\yii2admin\v1\themes\bundles\ScriptsBundle',
+            ]
         ],
         'assetManager' => [
             'class' => yii\web\AssetManager::class,

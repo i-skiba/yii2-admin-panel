@@ -11,6 +11,7 @@ use kamaelkz\yii2admin\v1\ {
     widgets\lists\grid\GridView,
     widgets\lists\ListView
 };
+use yii\helpers\ArrayHelper;
 
 /**
  * Первичная настройка компонента
@@ -25,7 +26,16 @@ class Bootstrap implements BootstrapInterface
     public function bootstrap($app)
     {
         Yii::$container->setDefinitions($this->getDefinations());
-        Yii::configure(Yii::$app, $this->getConfigurations());
+        $config = $this->getConfigurations();
+        if(
+            isset(Yii::$app->components['view'])
+            && isset($config['components']['view'])
+        ) {
+            $view = &$config['components']['view'];
+            $view = ArrayHelper::merge(Yii::$app->components['view'], $view);
+        }
+        
+        Yii::configure(Yii::$app, $config);
     }
 
     /**
