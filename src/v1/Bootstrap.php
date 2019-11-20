@@ -3,11 +3,7 @@
 namespace kamaelkz\yii2admin\v1;
 
 use Yii;
-use yii\base\InvalidCallException;
-use yii\base\Theme;
 use yii\base\BootstrapInterface;
-use yii\base\Widget;
-use yii\web\AssetManager;
 use kamaelkz\yii2admin\v1\ {
     widgets\Breadcrumbs,
     widgets\DetailView,
@@ -55,49 +51,7 @@ class Bootstrap implements BootstrapInterface
      */
     private function getConfigurations()
     {
-        return [
-            'aliases' => [
-                '@yii2admin' => '@vendor/kamaelkz/yii2-admin-panel/src/v1',
-            ],
-            'modules' => [
-                'uikit' => [
-                    'class' => 'kamaelkz\yii2admin\v1\modules\uikit\Module'
-                ],
-            ],
-            'components' => [
-                'view' => [
-                    'class' => 'kamaelkz\yii2admin\v1\themes\components\view\View',
-                    'theme' => [
-                        'class'=> Theme::class,
-                        'basePath'=>'@yii2admin/themes'
-                    ],
-                ],
-                'assetManager' => [
-                    'class' => AssetManager::class,
-                    'linkAssets' => true,
-                    'appendTimestamp' => true,
-                    'bundles' => [
-                        'yii\bootstrap\BootstrapPluginAsset' => [
-                            'js'=>[]
-                        ],
-                        'yii\bootstrap\BootstrapAsset' => [
-                            'css' => [],
-                        ],
-                        'yii\web\JqueryAsset' => [
-                            'sourcePath' => '@yii2admin/themes/resources',
-                            'js' => [
-                                'limitless/global_assets/js/main/jquery.min.js'
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'controllerMap' => [
-                'site' => [
-                    'class' => 'kamaelkz\yii2admin\v1\controllers\DefaultController',
-                ],
-            ],
-        ];
+        return require __DIR__ . 'config/main.php';
     }
 }
 //
