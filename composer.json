@@ -7,6 +7,7 @@
         "admin"
     ],
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Ilya Skiba",
