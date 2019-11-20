@@ -3,7 +3,7 @@
 namespace kamaelkz\yii2admin\v1\widgets\notifications\alert;
 
 use Yii;
-use kamaelkz\yii2admin\v1\widgets\base\BaseWidget;
+use concepture\yii2logic\widgets\Widget;
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 use yii\base\InvalidConfigException;
 
@@ -14,7 +14,7 @@ use yii\base\InvalidConfigException;
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
-class Alert extends BaseWidget
+class Alert extends Widget
 {
     /**
      * @var string тип сообщения

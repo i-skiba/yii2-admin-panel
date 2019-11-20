@@ -2,6 +2,8 @@
 
 namespace kamaelkz\yii2admin\v1\themes\bundles;
 
+use concepture\yii2logic\bundles\Bundle;
+
 /**
  * Бандл для jquery плагина fancybox
  *
@@ -9,7 +11,7 @@ namespace kamaelkz\yii2admin\v1\themes\bundles;
  *
  * @author Kamaelkz <kamaelkz@yandex.kz>
  */
-class FancyBoxBundle extends BaseBundle
+class FancyBoxBundle extends Bundle
 {
     public $sourcePath = '@yii2admin/themes/resources/scripts';
     

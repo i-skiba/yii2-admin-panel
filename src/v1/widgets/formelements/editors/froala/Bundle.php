@@ -3,8 +3,8 @@
 namespace kamaelkz\yii2admin\v1\widgets\formelements\editors\froala;
 
 use yii\helpers\ArrayHelper;
-use concepture\yii2logic\base\Exception;
-use kamaelkz\yii2admin\v1\widgets\base\BaseBundle;
+use concepture\yii2logic\exceptions\Exception;
+use concepture\yii2logic\bundles\Bundle as BaseBundle;
 
 /**
  * @author kamaelkz <kamaelkz@yandex.kz>

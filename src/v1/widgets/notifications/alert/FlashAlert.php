@@ -3,7 +3,7 @@
 namespace kamaelkz\yii2admin\v1\widgets\notifications\alert;
 
 use Yii;
-use kamaelkz\yii2admin\v1\widgets\base\BaseWidget;
+use concepture\yii2logic\widgets\Widget;
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 
 /**
@@ -13,7 +13,7 @@ use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
  * 
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
-class FlashAlert extends BaseWidget
+class FlashAlert extends Widget
 {
     /**
      * @var string тип сообщения

@@ -2,14 +2,14 @@
 
 namespace kamaelkz\yii2admin\v1\themes\bundles;
 
-use Yii;
+use concepture\yii2logic\bundles\Bundle;
 
 /**
  * Скрипты
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
-class ScriptsBundle extends BaseBundle
+class ScriptsBundle extends Bundle
 {
     public $sourcePath = '@yii2admin/themes/resources';
 

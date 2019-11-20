@@ -3,7 +3,7 @@
 namespace kamaelkz\yii2admin\v1\modules;
 
 use Yii;
-use concepture\yii2logic\base\Module as CoreModule;
+use concepture\yii2logic\modules\Module as CoreModule;
 use kamaelkz\yii2admin\v1\themes\components\view\View;
 
 /**

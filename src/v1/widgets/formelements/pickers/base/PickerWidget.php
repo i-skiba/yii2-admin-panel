@@ -2,7 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements\pickers\base;
 
-use concepture\yii2logic\traits\WidgetTrait;
+use concepture\yii2logic\widgets\WidgetTrait;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use yii\widgets\InputWidget;

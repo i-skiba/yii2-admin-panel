@@ -5,7 +5,7 @@ namespace kamaelkz\yii2admin\v1\widgets\formelements\multiinput;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
-use kamaelkz\yii2admin\v1\widgets\base\BaseWidget;
+use concepture\yii2logic\widgets\Widget as BaseWidget;
 
 /**
  * Фиджет мультиинупутов добавление / удаление полей

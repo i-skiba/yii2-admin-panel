@@ -2,7 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements\activeform;
 
-use kamaelkz\yii2admin\v1\widgets\base\BaseBundle;
+use concepture\yii2logic\bundles\Bundle as BaseBundle;
 
 /**
  * @author kamaelkz <kamaelkz@yandex.kz>

@@ -3,7 +3,7 @@
 namespace kamaelkz\yii2admin\v1\widgets\formelements\pickers;
 
 use Yii;
-use kamaelkz\yii2admin\v1\widgets\base\BaseBundle;
+use concepture\yii2logic\bundles\Bundle as BaseBundle;
 
 /**
  * Ресурсы для виджета

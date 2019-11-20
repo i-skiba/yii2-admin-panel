@@ -2,8 +2,8 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements\activeform;
 
-use concepture\yii2logic\traits\WidgetTrait;
 use yii\helpers\Html;
+use concepture\yii2logic\widgets\WidgetTrait;
 use kamaelkz\yii2admin\v1\forms\BaseForm;
 
 /**
