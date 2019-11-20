@@ -2,11 +2,11 @@
 
 namespace kamaelkz\yii2admin\v1\modules\uikit\forms;
 
-use common\components\cdn\pojo\CdnImagePojo;
 use Yii;
 use kamaelkz\yii2admin\v1\forms\BaseModel;
 use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
 use concepture\yii2logic\validators\ModelValidator;
+use kamaelkz\yii2cdnuploader\pojo\CdnImagePojo;
 
 /**
  * Форма для UIkit

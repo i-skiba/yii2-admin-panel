@@ -11,7 +11,7 @@ use kamaelkz\yii2admin\v1\widgets\ {
     formelements\pickers\TimePicker
 };
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
-use common\components\cdn\enum\StrategiesEnum;
+use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
 use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
