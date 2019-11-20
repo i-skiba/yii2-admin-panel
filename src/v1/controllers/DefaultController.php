@@ -100,7 +100,11 @@ class DefaultController extends BaseController
 
         $model = new SignInForm();
         $model->setRestrictions([UserRoleEnum::ADMIN]);
-        if ($model->load(Yii::$app->request->post()) && $this->authService()->signIn($model) ) {
+        if (
+            $model->load(Yii::$app->request->post())
+            && $model->validate()
+            && $this->authService()->signIn($model)
+        ) {
             return $this->redirect('/site/index');
         }
 

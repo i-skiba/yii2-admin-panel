@@ -39,9 +39,7 @@ class ErrorAction extends Action
         $title = Yii::t('yii2admin' , 'Ошибка {error}' , [ 'error' => $code ]);
         $message = $exception->getMessage();
         $this->controller->view->title = $title;
-        $this->controller->view->params['breadcrumbs'] = [
-            $this->controller->view->title
-        ];
+        $this->controller->view->params['breadcrumbs'] = $title;
         
         return $this->controller->render( $this->viewPath ,[
             'title' => $title ,

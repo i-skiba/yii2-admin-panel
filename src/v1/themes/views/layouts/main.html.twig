@@ -1,0 +1,79 @@
+{{ use('yii/widgets/Breadcrumbs') }}
+{{ use('kamaelkz/yii2admin/v1/widgets/notifications/alert/FlashAlert') }}
+
+{% set succesFlash = constant('kamaelkz\\yii2admin\\v1\\enum\\FlashAlertEnum::SUCCESS') %}
+{% set errorFlash = constant('kamaelkz\\yii2admin\\v1\\enum\\FlashAlertEnum::ERROR') %}
+
+{{ this.beginPage() }}
+    <!DOCTYPE html>
+    <html lang="{{ app.language }}">
+        <head>
+            <meta charset="{{ app.charset }}">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            {{ html.csrfMetaTags() | raw }}
+            <title>
+                {{ html.encode(this.getTitle()) }}
+            </title>
+            {{ this.head() }}
+        </head>
+        <body class="">
+        {{ this.beginBody() }}
+        {{ this.render('include/navbar/main') | raw }}
+        <div class="page-content">
+            {{ this.render('include/sidebar/main') | raw }}
+            <div class="content-wrapper">
+                {% if(this.getTitle() or this.getTitlePrefix()) %}
+                    <div class="page-header page-header-light">
+                        <div class="page-header-content header-elements-md-inline">
+                            <div class="page-title d-flex">
+                                <h4>
+                                    {% if(this.getTitlePrefix()) %}
+                                        <span class="font-weight-semibold">
+                                             {{ this.getTitlePrefix() }}
+                                        </span>
+                                    {% endif %}
+                                    {% if(this.getTitle() and this.getTitlePrefix()) %}
+                                    -
+                                    {% endif %}
+                                    {{ this.getTitle() }}
+                                </h4>
+                            </div>
+                            <div class="header-elements d-none">
+                                <div class="d-flex justify-content-center">
+                                    {{ this.viewHelper().outputPageHeaderElements() }}
+                                </div>
+                            </div>
+                        </div>
+                        {% if(this.getBreadcrumbs()) %}
+                            <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+                                <div class="d-flex">
+                                    {{ breadcrumbs_widget() }}
+                                </div>
+                                <div class="header-elements d-none">
+                                    <div class="breadcrumb justify-content-center">
+                                        {{ this.viewHelper().outputBreadcrumbsElements() }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="content">
+                    <div class="admin-flash">
+                        {% if(app.session.hasFlash(succesFlash)) %}
+                            {{ flash_alert_widget() }}
+                        {% endif %}
+                        {% if(app.session.hasFlash(errorFlash)) %}
+                            {{ flash_alert_widget({ 'type' : errorFlash }) }}
+                        {% endif %}
+                    </div>
+                    {{ content }}
+                </div>
+                {{ this.render('include/footer') | raw }}
+            </div>
+        </div>
+        {{ this.endBody() }}
+        </body>
+    </html>
+{{ this.endPage() }}

@@ -10,7 +10,7 @@ use yii\helpers\Html;
             <?= Html::encode($code) ?>
         </h1>
         <h5>
-            <?= nl2br(Html::encode($message)) ?>
+            <?= (Html::encode($message)) ?>
         </h5>
     </div>
     <div class="row">

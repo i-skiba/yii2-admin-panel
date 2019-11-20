@@ -16,6 +16,12 @@ use kamaelkz\yii2admin\v1\helpers\AppHelper;
  */
 abstract class BaseController extends Controller
 {
+//    public function init()
+//    {
+//        parent::init();
+//        $this->setMainLayout();
+//    }
+
     /**
      * Переопределен для формах в модалке
      *
