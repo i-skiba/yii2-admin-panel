@@ -1,20 +1,18 @@
 <?php
-use kamaelkz\yii2admin\v1\widgets\ {
-    notifications\alert\Alert,
-    notifications\alert\FlashAlert,
-    formelements\multiinput\MultiInput,
-    formelements\editors\froala\FroalaEditor,
-    formelements\uploader\CdnUploader,
-    formelements\activeform\ActiveForm,
-    formelements\Pjax,
-    formelements\pickers\DatePicker,
-    formelements\pickers\TimePicker
-};
-use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
-use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
-use yii\helpers\Html;
-use yii\widgets\MaskedInput;
-use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
+    use yii\helpers\Html;
+    use yii\widgets\MaskedInput;
+    use kamaelkz\yii2admin\v1\widgets\ {
+        formelements\multiinput\MultiInput,
+        formelements\editors\froala\FroalaEditor,
+        formelements\activeform\ActiveForm,
+        formelements\Pjax,
+        formelements\pickers\DatePicker,
+        formelements\pickers\TimePicker
+    };
+
+    use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
+    use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
+    use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
 
 ?>
 <?php Pjax::begin(['formSelector' => '#uiikit-form']); ?>
