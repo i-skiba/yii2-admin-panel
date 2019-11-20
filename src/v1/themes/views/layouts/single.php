@@ -8,6 +8,7 @@
     StylesBundle::register($this);
     ScriptsBundle::register($this);
 ?>
+<?= $this->render('include/resources');?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
     <html lang="<?php echo Yii::$app->language ?>">

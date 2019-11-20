@@ -16,6 +16,7 @@ use kamaelkz\yii2admin\v1\themes\bundles\ {
     StylesBundle::register($this);
     ScriptsBundle::register($this);
 ?>
+<?= $this->render('include/resources');?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
