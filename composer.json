@@ -7,7 +7,6 @@
         "admin"
     ],
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Ilya Skiba",
@@ -18,8 +17,6 @@
     ],
     "require": {
         "concepture/yii2-logic-core" : "dev-master",
-        "concepture/yii2-user-module" : "dev-master",
-        "concepture/yii2-handbook-module" : "dev-master",
         "kamaelkz/yii2-cdn-uploader" : "dev-master"
     },
     "autoload": {
