@@ -6,7 +6,7 @@ $this->setTitle(Yii::t('yii2admin', 'Редактирование записи')
 $this->pushBreadcrumbs(['label' => Yii::t('yii2admin', 'CRUD'), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
 $this->viewHelper()->pushPageHeader();
-$this->viewHelper()->pushPageHeader(['view', 'id' => $model->id], Yii::t('yii2admin', 'Просмотр'),'icon-info22');
+$this->viewHelper()->pushPageHeader(['view', 'id' => $model->id], Yii::t('yii2admin', 'Просмотр'),'icon-file-eye2');
 $this->viewHelper()->pushPageHeader(['index'], Yii::t('yii2admin', 'Список'),'icon-list');
 
 ?>

@@ -10,7 +10,7 @@ $this->pushBreadcrumbs(['label' => Yii::t('yii2admin', 'CRUD'), 'url' => ['index
 $this->pushBreadcrumbs($this->title);
 
 $this->viewHelper()->pushPageHeader();
-$this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id], Yii::t('yii2admin','Редактирование'), 'icon-pencil5');
+$this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id], Yii::t('yii2admin','Редактировать'), 'icon-pencil6');
 $this->viewHelper()->pushPageHeader(['index'], Yii::t('yii2admin', 'Список'),'icon-list');
 
 ?>
@@ -35,7 +35,7 @@ $this->viewHelper()->pushPageHeader(['index'], Yii::t('yii2admin', 'Список
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                                 <?= Html::a(
-                                    '<i class="icon-bin"></i>' . Yii::t('yii2admin', 'Удалить'),
+                                    '<i class="icon-bin2"></i>' . Yii::t('yii2admin', 'Удалить'),
                                     ['delete', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',

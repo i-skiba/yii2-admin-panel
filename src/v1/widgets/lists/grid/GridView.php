@@ -35,7 +35,7 @@ class GridView extends Base
      * @inheritdoc
      */
     public $options = [
-        'class' => 'grid-view table-responsive'
+        'class' => 'grid-view' # table-responsive
     ];
 
     /**
