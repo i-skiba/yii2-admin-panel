@@ -9,6 +9,6 @@ namespace kamaelkz\yii2admin\v1\helpers;
  */
 class AppHelper
 {
-    const MAIN_LAYOUT_PATH = 'main.html.twig';
-    const SINGLE_LAYOUT_PATH = 'single.html.twig';
+    const MAIN_LAYOUT_PATH = 'main';
+    const SINGLE_LAYOUT_PATH = 'single';
 }

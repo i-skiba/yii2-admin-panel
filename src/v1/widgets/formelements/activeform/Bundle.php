@@ -12,4 +12,8 @@ class Bundle extends BaseBundle
     public $js = [
         'js/script.js',
     ];
+    
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 }

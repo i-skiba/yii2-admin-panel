@@ -64,11 +64,6 @@ $this->title = \Yii::t('backend', "Авторизация");
             <div class="form-group d-flex align-items-center">
                 <?= $form
                         ->field($model, 'rememberMe', [
-                            'template' => '
-                                    {beginLabel}
-                                    {input}
-                                    {labelTitle}
-                                    {endLabel}',
                             'options' => [
                                 'class' => 'form-check mb-0',
                             ],
