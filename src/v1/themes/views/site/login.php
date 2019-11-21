@@ -1,10 +1,7 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \concepture\user\forms\SignInForm */
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 
 $this->title = \Yii::t('backend', "Авторизация");
 ?>

@@ -1,6 +1,7 @@
 <?php
+
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 
 $this->title = \Yii::t('backend', "Восстановление пароля");
 ?>
