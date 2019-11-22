@@ -2,7 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\modules\uikit\controllers;
 
-use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
+use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
 use Yii;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
 use kamaelkz\yii2admin\v1\modules\uikit\forms\UikitForm;

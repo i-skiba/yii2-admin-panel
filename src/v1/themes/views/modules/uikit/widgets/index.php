@@ -12,7 +12,7 @@ use yii\widgets\MaskedInput;
     };
 
     use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
-    use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
+    use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
     use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
 

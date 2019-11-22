@@ -2,7 +2,7 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\widgets\Pjax;
+use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
 use yii\widgets\DetailView;
 
 $this->setTitle(Yii::t('yii2admin', 'Просмотр записи'));
@@ -39,9 +39,59 @@ $this->viewHelper()->pushPageHeader(['index'], Yii::t('yii2admin', 'Список
                                     ['delete', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',
-                                        'data-pjax-list' => 'list-pjax',
+                                        'data-pjax-id' => 'list-pjax',
                                         'data-pjax-url' => Url::current([], true),
                                         'data-swal' => Yii::t('yii2admin' , 'Удалить'),
+                                    ]
+                                );?>
+                                <div class="dropdown-divider"></div>
+                                <?= Html::a(
+                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с уведомлением'),
+                                    ['notify', 'id' => $model->id],
+                                    [
+                                        'class' => 'admin-action dropdown-item',
+                                        'data-pjax-id' => 'list-pjax',
+                                        'data-pjax-url' => Url::current([], true),
+                                        'data-swal' => Yii::t('yii2admin' , 'Операция с уведомлением'),
+                                    ]
+                                );?>
+                                <?= Html::a(
+                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с флешем'),
+                                    ['flash', 'id' => $model->id],
+                                    [
+                                        'class' => 'admin-action dropdown-item',
+                                        'data-pjax-id' => 'list-pjax',
+                                        'data-pjax-url' => Url::current([], true),
+                                        'data-swal' => Yii::t('yii2admin' , 'Операция с флешем'),
+                                    ]
+                                );?>
+                                <?= Html::a(
+                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с редиректом'),
+                                    ['redirect', 'id' => $model->id],
+                                    [
+                                        'class' => 'admin-action dropdown-item',
+                                        'data-swal' => Yii::t('yii2admin' , 'Операция с редиректом'),
+                                    ]
+                                );?>
+                                <?= Html::a(
+                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с колбэком'),
+                                    ['callback', 'id' => $model->id],
+                                    [
+                                        'class' => 'admin-action dropdown-item',
+                                        'data-pjax-id' => 'list-pjax',
+                                        'data-pjax-url' => Url::current([], true),
+                                        'data-swal' => Yii::t('yii2admin' , 'Операция с колбэком'),
+                                        'data-callback' => new \yii\web\JsExpression('
+                                            function( response ){
+                                                console.log(response);
+                                                alert("this function will remove sidebar");
+                                                $sidebar = $(".sidebar");
+                                                $sidebar.html(response);
+                                            }
+                                        '),
+//                                        'data-callback' => new \yii\web\JsExpression('
+//                                            callbackHelper.reloadList("list-pjax")
+//                                        ')
                                     ]
                                 );?>
                         </ul>

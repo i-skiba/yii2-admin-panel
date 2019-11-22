@@ -3,6 +3,8 @@
 namespace kamaelkz\yii2admin\v1\themes\bundles;
 
 use concepture\yii2logic\bundles\Bundle;
+use kamaelkz\yii2admin\v1\helpers\LanguageHelper;
+use Yii;
 
 /**
  * Скрипты
@@ -15,6 +17,7 @@ class ScriptsBundle extends Bundle
 
     public function init()
     {
+        $iso = LanguageHelper::getIso(true);
         parent::init();
         $this->js = [
             'limitless/global_assets/js/plugins/loaders/pace.min.js',
@@ -24,11 +27,13 @@ class ScriptsBundle extends Bundle
             'limitless/global_assets/js/plugins/forms/styling/switchery.min.js',
             'limitless/global_assets/js/plugins/forms/styling/switch.min.js',
             'limitless/global_assets/js/plugins/notifications/pnotify.min.js',
+            'limitless/global_assets/js/plugins/notifications/sweet_alert.min.js',
             'limitless/assets/js/app.js',
             'scripts/yii2admin/notify.js',
             'scripts/yii2admin/checkboxes.js',
             'scripts/yii2admin/selects.js',
-            'scripts/yii2admin/custom.js',
+            'scripts/yii2admin/core/app.js',
+            "scripts/yii2admin/core/translations/{$iso}.js",
 //            'core/libraries/jquery_ui/core.min.js',
 //            'core/libraries/jquery_ui/interactions.min.js',
 //            'plugins/forms/selects/select2.min.js',

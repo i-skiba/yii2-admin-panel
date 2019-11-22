@@ -8,6 +8,7 @@ use concepture\yii2logic\controllers\web\Controller;
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 use kamaelkz\yii2admin\v1\widgets\notifications\alert\FlashAlert;
 use kamaelkz\yii2admin\v1\helpers\AppHelper;
+use kamaelkz\yii2admin\v1\controllers\traits\ResponseTrait;
 
 /**
  * Базовы контроллер административной части приложения
@@ -16,6 +17,8 @@ use kamaelkz\yii2admin\v1\helpers\AppHelper;
  */
 abstract class BaseController extends Controller
 {
+    use ResponseTrait;
+
 //    public function init()
 //    {
 //        parent::init();
@@ -42,16 +45,16 @@ abstract class BaseController extends Controller
         return "{$title}{$content}";
     }
 
-    /**
-     * Переопределен для формах в модалке
-     *
-     * @param array|string $url
-     * @param int $statusCode
-     *
-     * @return string|\yii\web\Response
-     *
-     * @throws \Exception
-     */
+//    /**
+//     * Переопределен для формах в модалке
+//     *
+//     * @param array|string $url
+//     * @param int $statusCode
+//     *
+//     * @return string|\yii\web\Response
+//     *
+//     * @throws \Exception
+//     */
 //    public function redirect($url, $statusCode = 302)
 //    {
 //        if(! Yii::$app->request->isPjax) {

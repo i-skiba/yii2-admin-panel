@@ -4,7 +4,7 @@ namespace kamaelkz\yii2admin\v1\modules\uikit\models;
 
 use Yii;
 use kamaelkz\yii2cdnuploader\pojo\CdnImagePojo;
-use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
+use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
 use concepture\yii2logic\models\ActiveRecord;
 use concepture\yii2logic\validators\ModelValidator;
 

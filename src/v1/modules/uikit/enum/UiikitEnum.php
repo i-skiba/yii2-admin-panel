@@ -1,6 +1,6 @@
 <?php
 
-namespace kamaelkz\yii2admin\v1\modules\uikit\enums;
+namespace kamaelkz\yii2admin\v1\modules\uikit\enum;
 
 use concepture\yii2logic\enum\Enum;
 

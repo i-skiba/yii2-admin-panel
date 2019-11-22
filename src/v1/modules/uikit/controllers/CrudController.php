@@ -2,9 +2,13 @@
 
 namespace kamaelkz\yii2admin\v1\modules\uikit\controllers;
 
+use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 use kamaelkz\yii2admin\v1\modules\uikit\forms\UikitForm;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
 use concepture\yii2user\enum\UserRoleEnum;
+use kamaelkz\yii2admin\v1\widgets\notifications\alert\Alert;
+use yii\helpers\Json;
+use yii\helpers\Url;
 
 /**
  * Пример CRUD
@@ -24,7 +28,12 @@ class CrudController extends BaseController
                     'index',
                     'create',
                     'update',
-                    'view'
+                    'view',
+//                    'delete',
+                    'notify',
+                    'flash',
+                    'redirect',
+                    'callback',
                 ],
                 'allow' => true,
                 'roles' => [
@@ -32,6 +41,44 @@ class CrudController extends BaseController
                 ],
             ],
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function actions()
+    {
+        $parent = parent::actions();
+        unset($parent['delete']);
+
+        return $parent;
+    }
+
+    public function actionDelete()
+    {
+
+    }
+    
+    public function actionNotify()
+    {
+        return $this->responseNotify(FlashAlertEnum::ERROR, $this->getErrorFlash());
+    }
+
+    public function actionFlash()
+    {
+        return $this->responseFlash(FlashAlertEnum::ERROR, $this->getErrorFlash());
+    }
+
+    public function actionRedirect()
+    {
+        $this->setSuccessFlash();
+
+        return $this->responseRedirect(['index']);
+    }
+
+    public function actionCallback()
+    {
+        return 'it is callback result';
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-    use kamaelkz\yii2admin\v1\modules\uikit\enums\UiikitEnum;
+    use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
 
 ?>
 <div class="row">

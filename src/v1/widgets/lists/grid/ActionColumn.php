@@ -5,6 +5,8 @@ namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 use Yii;
 use yii\helpers\Html;
 use yii\grid\ActionColumn as BaseColumn;
+use yii\helpers\Url;
+use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
 
 /**
  * Колонка действий для грида
@@ -46,8 +48,10 @@ class ActionColumn extends BaseColumn
         $this->initDefaultButton('view', 'file-eye2');
         $this->initDefaultButton('update', 'pencil6');
         $this->initDefaultButton('delete', 'bin2', [
-            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-            'data-method' => 'post',
+            'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
+            'data-pjax-id' => Pjax::DEFAULT_ID,
+            'data-pjax-url' => Url::current([], true),
+            'data-swal' => Yii::t('yii2admin' , 'Удалить'),
         ]);
     }
 
