@@ -78,8 +78,8 @@ class GridView extends Base
     protected function prepareLayout()
     {
         $searchForm = null;
-        if($this->searchVisible && ! $this->searchParams) {
-            throw new InvalidConfigException('The "formatter" property must be either a Format object or a configuration array.');
+        if($this->searchVisible && ! $this->searchParams['model']) {
+            throw new InvalidConfigException('The "searchParams model" must be set.');
         }
 
         if($this->searchVisible) {
