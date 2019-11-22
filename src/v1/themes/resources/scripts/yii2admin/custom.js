@@ -41,5 +41,28 @@ $(document).ready(function() {
         if(typeof componentCdnUploader !== 'undefined') {
             componentCdnUploader.initialization();
         }
+
+        App.initCardActions();
+    });
+
+    // Поиск по grid-view / list-view
+    $(document).on('submit', '.search-box form', function(event) {
+        $.pjax.submit(event, '#list-pjax');
+    });
+    // Очистка полей поиска
+    $(document).on('click','.search-clear' ,function(e){
+        e.preventDefault();
+        var form = $(this).closest('.search-box form');
+        form.find('input[type="text"]').val('');
+        //.row чтобы не сбрасывались системные hidden поля, а только поля формы поиска
+        form.find('.row input[type="hidden"]').val('');
+        form.find('select').val('');
+        if($('.selectbox').length > 0) {
+            $('.selectbox').data("selectBox-selectBoxIt").refresh();
+        }
+
+        form.find('input[type="checkbox"]').removeAttr('checked');
+        // removeBootstrapClass();
+        form.submit();
     });
 });

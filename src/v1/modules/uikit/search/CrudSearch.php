@@ -21,6 +21,10 @@ class CrudSearch extends Crud
                     [
                         [
                             'id',
+                            'dropdown',
+                            'dropdown_root',
+                            'dropdown_depend',
+                            'dropdown_depend_2',
                         ],
                         'integer'
                     ]
@@ -32,7 +36,7 @@ class CrudSearch extends Crud
      */
     public function extendDataProvider(ActiveDataProvider $dataProvider)
     {
-        $dataProvider->getPagination()->pageSize = 1;
+        $dataProvider->getPagination()->pageSize = 2;
 
         parent::extendDataProvider($dataProvider);
     }

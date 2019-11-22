@@ -3,7 +3,9 @@
 namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\grid\GridView as Base;
+use kamaelkz\yii2admin\v1\forms\BaseForm;
 use frontend\common\components\columns\CopyColumn;
 use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 
@@ -19,7 +21,7 @@ class GridView extends Base
     /**
      * @var boolean признак отображения поиска
      */
-    public $searchVisible = false;
+    public $searchVisible = true;
 
     /**
      * @var string представление поиска
@@ -75,29 +77,22 @@ class GridView extends Base
      */
     protected function prepareLayout()
     {
-        $searchBlock = null;
-        if($this->searchVisible) {
-            $searchBlock = $this->view->render($this->searchView, $this->searchParams);
+        $searchForm = null;
+        if($this->searchVisible && ! $this->searchParams) {
+            throw new InvalidConfigException('The "formatter" property must be either a Format object or a configuration array.');
         }
-        $this->layout = <<<HTML
-            $searchBlock
-            <div class='card admin-grid-box'>
-                <div class='datatable-header length-left'>
-                    <div class='dataTables_info'>
-                        {summary}
-                    </div>
-                    <div class='dataTables_paginate'>
-                        {pager}
-                    </div>
-                </div>
-                {items}
-                <div class='datatable-footer info-right'>
-                    <div class='dataTables_paginate'>
-                        {pager}
-                    </div>
-                </div>
-            </div>
-HTML;
+
+        if($this->searchVisible) {
+            $model = $this->searchParams['model'];
+            $viewPath = $this->getView()->context->getViewPath();
+            $this->searchParams['searchViewPath'] = "{$viewPath}/{$this->searchView}.php";
+            # признак открытой формы поиска
+            $this->searchParams['collapsed'] = (Yii::$app->request->get(BaseForm::$refreshParam) === null);
+            $this->searchParams['selectedFilterCount'] = $model->getSelectedFilterCount();
+        }
+
+
+        $this->layout = $this->render('layout', $this->searchParams);
 
     }
     

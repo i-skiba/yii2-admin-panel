@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 
 ?>
+
 <div class="flex-fill">
     <div class="text-center mb-3">
         <h1 class="error-title">

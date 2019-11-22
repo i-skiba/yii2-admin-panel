@@ -39,3 +39,6 @@ form div.required label.control-label::after{
     -moz-osx-font-smoothing: grayscale;
     color: #37474F;
 }
+.no-margin {
+    margin: 0px; !important;
+}
