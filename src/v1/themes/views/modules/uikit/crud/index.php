@@ -16,6 +16,7 @@ $this->viewHelper()->pushPageHeader();
 <?php Pjax::begin();?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'searchVisible' => true,
         'searchParams' => [
             'model' => $searchModel
         ],

@@ -16,6 +16,9 @@ use yii\helpers\ArrayHelper;
 /**
  * Первичная настройка компонента
  *
+ * @todo: абстрагировать bootstrap
+ * @todo: решить проблемы с виджетами begin/end
+ *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
 class Bootstrap implements BootstrapInterface
@@ -27,14 +30,28 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::$container->setDefinitions($this->getDefinations());
         $config = $this->getConfigurations();
-        if(
-            isset(Yii::$app->components['view'])
-            && isset($config['components']['view'])
-        ) {
-            $view = &$config['components']['view'];
-            $view = ArrayHelper::merge(Yii::$app->components['view'], $view);
+        if(! $config || ! is_array($config)) {
+            return;
         }
-        
+
+        foreach ($config as $key => $value) {
+            switch ($key) {
+                case 'aliases' :
+                    foreach ($config['aliases'] as $alias => $path) {
+                        Yii::setAlias($alias, $path);
+                    }
+
+                    break;
+            }
+
+            if(! property_exists(Yii::$app, $key)) {
+                continue;
+            }
+
+            $item = &$config[$key];
+            $item = ArrayHelper::merge(Yii::$app->{$key}, $item);
+        }
+
         Yii::configure(Yii::$app, $config);
     }
 
@@ -67,7 +84,7 @@ class Bootstrap implements BootstrapInterface
 //
 //
 ///**
-///* @todo решить проблемы с виджетами begin/end
+///*
 // * @inheritDoc
 // */
 //public static function end()

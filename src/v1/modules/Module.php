@@ -13,6 +13,8 @@ use kamaelkz\yii2admin\v1\themes\components\view\View;
  */
 abstract class Module extends CoreModule
 {
+    public $settings = [];
+
     /**
      * @inheritDoc
      */

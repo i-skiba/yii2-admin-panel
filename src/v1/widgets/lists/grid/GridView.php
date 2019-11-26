@@ -21,7 +21,7 @@ class GridView extends Base
     /**
      * @var boolean признак отображения поиска
      */
-    public $searchVisible = true;
+    public $searchVisible = false;
 
     /**
      * @var string представление поиска
