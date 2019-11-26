@@ -13,6 +13,7 @@ use concepture\yii2logic\widgets\Widget;
  *
  * @todo : вынести шабллоны, сделать кастомизацию шаблонов
  * @todo : stdClass $item или Model
+ * @todo : на развитие можно использовать какой-то конфиг у модулей для формирования меню
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
