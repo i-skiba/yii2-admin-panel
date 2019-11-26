@@ -11,6 +11,9 @@ return [
                 'type' => 'ca',
                 'rule' => ['site', 'index']
             ],
+            'visible' => function() {
+                return true;
+            }
         ],
         'uikit' => [
             'position' => 1000,
