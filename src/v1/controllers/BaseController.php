@@ -39,7 +39,8 @@ abstract class BaseController extends Controller
             return parent::render($view, $params);
         }
 
-        $title = Html::tag('title', $this->view->title);
+        d($this->getView());
+        $title = Html::tag('title', $this->getView()->getTitle());
         $content = $this->renderAjax($view, $params);
         
         return "{$title}{$content}";

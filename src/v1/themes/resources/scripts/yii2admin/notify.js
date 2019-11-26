@@ -47,7 +47,7 @@ var componentNotify = {
                 type: "info",
                 showCancelButton: true,
                 confirmButtonText: message,
-                cancelButtonText: yii2admin.t('cancel'),
+                cancelButtonText: Yii2Admin.t('cancel'),
         }).then(function (result) {
             if(! result.value) {
                 return false;

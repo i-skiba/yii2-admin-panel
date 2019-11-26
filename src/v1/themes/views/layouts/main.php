@@ -81,18 +81,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
+                    <h5 class="modal-title">Magic modal</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">
-                        Basic modal
-                    </h6>
                 </div>
-                <?php Pjax::begin([
-                    'id' => 'magic-modal-pjax',
-                    'scrollTo' => 'false',
-                    'enablePushState' => false
-                ]); ?>
-
-                <?php Pjax::end(); ?>
+                <div class="modal-body">
+                    <?php Pjax::begin([
+                        'id' => 'magic-modal-pjax',
+                        'scrollTo' => 'false',
+                        'enablePushState' => false
+                    ]); ?>
+                    <?php Pjax::end(); ?>
+                </div>
             </div>
         </div>
     </div>

@@ -11,23 +11,6 @@ use kamaelkz\yii2cdnuploader\pojo\CdnImagePojo;
 /**
  * Форма для UIkit
  *
- * @property string $image
- * @property string $mask
- * @property string $text_input
- * @property string $text_area
- * @property string $editor
- * @property boolean $checkbox_standart
- * @property boolean $checkbox_switch
- * @property string $date_picker
- * @property string $time_picker
- * @property integer $dropdown
- * @property integer $dropdown_root
- * @property integer $dropdown_depend
- * @property integer $dropdown_depend_2
- * @property integer $radio
- * @property array $checkboxList
- * @property array $multiInput
- *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
 class UikitForm extends BaseModel

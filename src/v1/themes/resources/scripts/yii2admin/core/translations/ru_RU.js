@@ -1,4 +1,4 @@
 // Русский язык
-yii2admin.translations = {
+Yii2Admin.translations = {
     'cancel' : 'Отмена'
 }

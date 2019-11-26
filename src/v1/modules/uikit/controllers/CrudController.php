@@ -6,9 +6,6 @@ use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 use kamaelkz\yii2admin\v1\modules\uikit\forms\UikitForm;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
 use concepture\yii2user\enum\UserRoleEnum;
-use kamaelkz\yii2admin\v1\widgets\notifications\alert\Alert;
-use yii\helpers\Json;
-use yii\helpers\Url;
 
 /**
  * Пример CRUD
