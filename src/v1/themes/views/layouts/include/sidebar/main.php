@@ -1,7 +1,7 @@
 <?php
 
     use kamaelkz\yii2admin\v1\themes\bundles\ImagesBundle;
-    use kamaelkz\yii2admin\v1\widgets\Sidebar;
+    use kamaelkz\yii2admin\v1\widgets\navigation\sidebar\Sidebar;
 
     $imageBundlePath = $this->assetBundles[ImagesBundle::class]->baseUrl;
 ?>

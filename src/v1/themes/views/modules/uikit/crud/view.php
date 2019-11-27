@@ -6,7 +6,7 @@ use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
 use yii\widgets\DetailView;
 
 $this->setTitle(Yii::t('yii2admin', 'Просмотр записи'));
-$this->pushBreadcrumbs(['label' => Yii::t('yii2admin', 'CRUD'), 'url' => ['index']]);
+$this->pushBreadcrumbs(['label' => Yii::t('yii2admin', 'Интерфейс'), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
 
 $this->viewHelper()->pushPageHeader();

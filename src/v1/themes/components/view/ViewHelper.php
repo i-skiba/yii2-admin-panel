@@ -57,7 +57,7 @@ class ViewHelper
         }
 
         if(isset($options['data-url'])) {
-            $url = null;
+            $url = '#';
         }
 
         $html = Html::a($content, $url, $options);

@@ -23,6 +23,7 @@ class MagicModalController extends BaseController
             [
                 'actions' => [
                     'create',
+                    'index',
                 ],
                 'allow' => true,
                 'roles' => [
@@ -31,20 +32,20 @@ class MagicModalController extends BaseController
             ],
         ];
     }
-//
-//    /**
-//     * @inheritDoc
-//     */
-//    public function behaviors()
-//    {
-//        $behaviors = parent::behaviors();
-//        $behaviors['onlyAjax'] = [
-//            'class' => PjaxFilter::class,
-//            'except' => ['options'],
-//        ];
-//
-//        return $behaviors;
-//    }
+
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['onlyAjax'] = [
+            'class' => PjaxFilter::class,
+            'except' => ['options', 'index'],
+        ];
+
+        return $behaviors;
+    }
 
     /**
      * @inheritDoc
@@ -52,9 +53,22 @@ class MagicModalController extends BaseController
     public function actions()
     {
         $parent = parent::actions();
-        unset($parent['update'], $parent['delete'], $parent['index'], $parent['view']);
+        unset(
+            $parent['index'],
+            $parent['view'],
+            $parent['update'],
+            $parent['delete']
+        );
 
         return $parent;
+    }
+
+    /**
+     * @return string
+     */
+    public function actionIndex()
+    {
+        return $this->render('index');
     }
 
     /**

@@ -16,7 +16,6 @@ class MagicModalForm extends BaseForm
     public $image;
     public $text_input;
     public $text_area;
-    public $editor;
     public $checkbox_standart;
 
     /**
@@ -28,7 +27,6 @@ class MagicModalForm extends BaseForm
                     [
                         [
                             'image',
-                            'editor',
                             'text_input',
                             'text_area',
                             'checkbox_standart',
@@ -47,7 +45,6 @@ class MagicModalForm extends BaseForm
             'image' => 'Изображение',
             'text_input' => Yii::t('yii2admin', 'Текстовое поле'),
             'text_area' => Yii::t('yii2admin', 'Многострочное текстовое поле'),
-            'editor' => Yii::t('yii2admin', 'Редактор'),
             'checkbox_standart' => Yii::t('yii2admin', 'Чекбокс стандартный'),
         ];
     }

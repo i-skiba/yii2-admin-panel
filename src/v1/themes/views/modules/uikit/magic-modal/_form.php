@@ -28,31 +28,6 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <?= $form
-                        ->field($model, 'editor')
-                        ->widget(FroalaEditor::class, [
-                            'model' => $model,
-                            'attribute' => 'editor',
-                            'clientOptions' => [
-                                'attribution' => false,
-                                'heightMin' => 200,
-                                'toolbarSticky' => true,
-                                'toolbarInline'=> false,
-                                'theme' =>'royal', //optional: dark, red, gray, royal
-                                'language' => Yii::$app->language,
-                                'quickInsertTags' => [],
-                            ]
-                        ]);
-                    ?>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <?= $form->field($model, 'text_area')->textarea(); ?>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <?= $form
                         ->field($model, 'image')

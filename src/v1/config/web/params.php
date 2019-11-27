@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'yii2admin-sidebar' => [
+    'yii2admin-navigation' => [
         'index' => [
             'position' => 1,
             'label' => Yii::t('yii2admin', 'Главная'),
@@ -11,20 +11,36 @@ return [
                 'type' => 'ca',
                 'rule' => ['site', 'index']
             ],
-            'visible' => function() {
-                return true;
-            }
+            'visible' => [
+                'sidebar' => function() {
+                    return true;
+                },
+                'dashboard' => false
+            ]
         ],
         'uikit' => [
             'position' => 1000,
-            'label' => 'UIkit',
-            'icon' => 'icon-stack',
+            'label' => Yii::t('yii2admin', 'Разработчику'),
+            'url' => ['/uikit'],
+            'icon' => 'icon-wrench',
+            'color' => 'info',
             'active' => [
                 'type' => 'm',
                 'rule' => 'uikit'
             ],
-            'visible' => YII_DEBUG,
+            'visible' => [
+                'sidebar' => YII_DEBUG,
+                'dashboard' => YII_DEBUG
+            ],
             'children' => [
+                [
+                    'label' => Yii::t('yii2admin', 'Интерфейс'),
+                    'url' => ['/uikit/crud'],
+                    'active' => [
+                        'type' => 'mc',
+                        'rule' => ['uikit', ['crud']],
+                    ]
+                ],
                 [
                     'label' => Yii::t('yii2admin', 'Виджеты'),
                     'url' => ['/uikit/widgets'],
@@ -34,11 +50,12 @@ return [
                     ]
                 ],
                 [
-                    'label' => Yii::t('yii2admin', 'CRUD'),
-                    'url' => ['/uikit/crud'],
+                    'label' => Yii::t('yii2admin', 'Модальные окна'),
+                    'url' => ['/uikit/magic-modal'],
+                    'icon' => 'icon-magic-wand2',
                     'active' => [
                         'type' => 'mc',
-                        'rule' => ['uikit', ['crud']],
+                        'rule' => ['uikit', ['magic-modal']],
                     ]
                 ],
             ]
