@@ -31,21 +31,20 @@ class MagicModalController extends BaseController
             ],
         ];
     }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['onlyAjax'] = [
-            'class' => PjaxFilter::class,
-            'except' => ['options'],
-        ];
-
-        return $behaviors;
-    }
+//
+//    /**
+//     * @inheritDoc
+//     */
+//    public function behaviors()
+//    {
+//        $behaviors = parent::behaviors();
+//        $behaviors['onlyAjax'] = [
+//            'class' => PjaxFilter::class,
+//            'except' => ['options'],
+//        ];
+//
+//        return $behaviors;
+//    }
 
     /**
      * @inheritDoc

@@ -4,6 +4,9 @@ $config = [
     'aliases' => [
         '@yii2admin' => '@vendor/kamaelkz/yii2-admin-panel/src/v1',
     ],
+    'bootstrap' => [
+        'kamaelkz\yii2admin\v1\Yii2Admin',
+    ],
     'components' => [
         'view' => [
             'class' => 'kamaelkz\yii2admin\v1\themes\components\view\View',

@@ -12,16 +12,16 @@ use kamaelkz\yii2admin\v1\ {
     widgets\lists\ListView
 };
 use yii\helpers\ArrayHelper;
+use kamaelkz\yii2cdnuploader\Yii2CdnUploader;
 
 /**
  * Первичная настройка компонента
  *
- * @todo: абстрагировать bootstrap
  * @todo: решить проблемы с виджетами begin/end
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
-class Bootstrap implements BootstrapInterface
+class Yii2Admin implements BootstrapInterface
 {
     /**
      * @inheritDoc
@@ -29,30 +29,6 @@ class Bootstrap implements BootstrapInterface
     public function bootstrap($app)
     {
         Yii::$container->setDefinitions($this->getDefinations());
-        $config = $this->getConfigurations();
-        if(! $config || ! is_array($config)) {
-            return;
-        }
-
-        foreach ($config as $key => $value) {
-            switch ($key) {
-                case 'aliases' :
-                    foreach ($config['aliases'] as $alias => $path) {
-                        Yii::setAlias($alias, $path);
-                    }
-
-                    break;
-            }
-
-            if(! property_exists(Yii::$app, $key)) {
-                continue;
-            }
-
-            $item = &$config[$key];
-            $item = ArrayHelper::merge(Yii::$app->{$key}, $item);
-        }
-
-        Yii::configure(Yii::$app, $config);
     }
 
     /**
@@ -76,9 +52,12 @@ class Bootstrap implements BootstrapInterface
      *
      * @return array
      */
-    private function getConfigurations()
+    public static function getConfiguration()
     {
-        return require __DIR__ . '/config/main.php';
+        return ArrayHelper::merge(
+            require __DIR__ . '/config/main.php',
+            Yii2CdnUploader::getConfiguration()
+        );
     }
 }
 //
