@@ -11,6 +11,7 @@ use kamaelkz\yii2admin\v1\ {
     widgets\lists\grid\GridView,
     widgets\lists\ListView
 };
+use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use kamaelkz\yii2cdnuploader\Yii2CdnUploader;
 
@@ -23,6 +24,9 @@ use kamaelkz\yii2cdnuploader\Yii2CdnUploader;
  */
 class Yii2Admin implements BootstrapInterface
 {
+    const WEB = 'web';
+    const CONSOLE = 'console';
+
     /**
      * @inheritDoc
      */
@@ -50,12 +54,18 @@ class Yii2Admin implements BootstrapInterface
     /**
      * Конфигурация компонента админки
      *
+     * @param string $type
+     * @throws InvalidConfigException
      * @return array
      */
-    public static function getConfiguration()
+    public static function getConfiguration($type = self::WEB)
     {
+        if(! in_array($type, [self::WEB, self::CONSOLE])) {
+            throw new InvalidConfigException('Configuration type is not defined.');
+        }
+
         return ArrayHelper::merge(
-            require __DIR__ . '/config/main.php',
+            require __DIR__ . "/config/{$type}/main.php",
             Yii2CdnUploader::getConfiguration()
         );
     }
