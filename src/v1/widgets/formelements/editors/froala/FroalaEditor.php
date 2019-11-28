@@ -8,6 +8,7 @@ use yii\helpers\Json;
 use yii\widgets\InputWidget;
 use yii\helpers\Inflector;
 use yii\web\JsExpression;
+use yii\helpers\Url;
 
 /**
  * Виджет редактора Froala Wysiwyg editor
@@ -114,11 +115,13 @@ class FroalaEditor extends InputWidget
     {
         return [
             'key' => getenv('FROALA_LICENSE_KEY'),
+            'imageUploadURL' => Url::to(['/cdn']),
             'events' => [
                 'image.beforeUpload' => new JsExpression("
                         function (images) {
                             var self = this;
                             CdnHelper.auth(
+                                self.opts.imageUploadURL,
                                 [],
                                 function (response) {
                                         if (response.status !== 'success') {
