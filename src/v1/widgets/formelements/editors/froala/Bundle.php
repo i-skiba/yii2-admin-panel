@@ -48,6 +48,13 @@ class Bundle extends BaseBundle
     /**
      * @var array
      */
+    public $depends = [
+        'kamaelkz\yii2cdnuploader\widgets\CdnHelperBundle'
+    ];
+
+    /**
+     * @var array
+     */
     public $froalaPlugins = [
 
     ];

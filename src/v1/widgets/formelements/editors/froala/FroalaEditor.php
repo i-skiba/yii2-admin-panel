@@ -5,9 +5,9 @@ namespace kamaelkz\yii2admin\v1\widgets\formelements\editors\froala;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\widgets\ActiveForm;
 use yii\widgets\InputWidget;
 use yii\helpers\Inflector;
+use yii\web\JsExpression;
 
 /**
  * Виджет редактора Froala Wysiwyg editor
@@ -113,7 +113,46 @@ class FroalaEditor extends InputWidget
     private function getDefaultClientOptions()
     {
         return [
-            'key' => getenv('FROALA_LICENSE_KEY')
+            'key' => getenv('FROALA_LICENSE_KEY'),
+            'events' => [
+                'image.beforeUpload' => new JsExpression("
+                        function (images) {
+                            var self = this;
+                            CdnHelper.auth(
+                                [],
+                                function (response) {
+                                        if (response.status !== 'success') {
+                                            return;
+                                        }
+                                        
+                                        self.opts.requestHeaders = {
+                                            'Authorization': 'Bearer ' + response.token ,
+                                        };
+                                        self.opts.imageUploadURL = response.uploadUrl;
+                                        self.opts.proxyDomain = response.staticDomain
+                                    },
+                                    false
+                            );
+                
+                            return images;
+                        }
+                "),
+//                'image.uploaded' => new JsExpression("
+//                        function (response) {
+//                            // костыль для dev цдн, так как нет проксей
+//                            var data = JSON.parse(response);
+//                            data.link = data.link.replace(this.opts.proxyDomain,this.opts.proxyDomain + '/' + CdnHelper.staticPrefix);
+//                            response =  JSON.stringify(data)
+//
+//                            return response;
+//                        }
+//                "),
+//                'image.inserted' => new JsExpression("
+//                        function (img, response) {
+//                                console.log(response);
+//                        }
+//                "),
+            ]
         ];
     }
 }
