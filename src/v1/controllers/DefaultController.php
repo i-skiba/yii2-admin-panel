@@ -80,7 +80,7 @@ class DefaultController extends BaseController
     {
         if (Yii::$app->user->isGuest) {
 
-            return $this->redirect('/site/login');
+            return $this->redirect(['/site/login']);
         }
 
         return $this->render('index');
@@ -95,7 +95,7 @@ class DefaultController extends BaseController
     public function actionLogin()
     {
         if (! Yii::$app->user->isGuest) {
-            return $this->redirect('/site/index');
+            return $this->redirect(['/site/index']);
         }
 
         $model = new SignInForm();
@@ -105,7 +105,7 @@ class DefaultController extends BaseController
             && $model->validate()
             && $this->authService()->signIn($model)
         ) {
-            return $this->redirect('/site/index');
+            return $this->redirect(['/site/index']);
         }
 
         $model->validation = '';
@@ -124,7 +124,7 @@ class DefaultController extends BaseController
     public function actionRequestPasswordReset()
     {
         if (! Yii::$app->user->isGuest) {
-            return $this->redirect('/site/index');
+            return $this->redirect(['/site/index']);
         }
 
         $model = new EmailPasswordResetRequestForm();
@@ -132,7 +132,7 @@ class DefaultController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $this->authService()->sendPasswordResetEmail($model) ) {
             Yii::$app->session->setFlash('success', Yii::t('yii2admin', "Проверьте почту"));
 
-            return $this->redirect('/site/login');
+            return $this->redirect(['/site/login']);
         }
 
         return $this->render('password_reset_request', [
@@ -151,7 +151,7 @@ class DefaultController extends BaseController
     public function actionResetPassword($token)
     {
         if (! Yii::$app->user->isGuest) {
-            return $this->redirect('/site/index');
+            return $this->redirect(['/site/index']);
         }
 
         $model = new PasswordResetForm();
@@ -159,7 +159,7 @@ class DefaultController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $this->authService()->changePassword($model) ) {
             Yii::$app->session->setFlash('success', Yii::t('yii2admin', "Пароль успешно изменен"));
 
-            return $this->redirect('/site/index');
+            return $this->redirect(['/site/index']);
         }
 
         return $this->render('password_reset', [
@@ -176,14 +176,14 @@ class DefaultController extends BaseController
     public function actionRegistration()
     {
         if (! Yii::$app->user->isGuest) {
-            return $this->redirect('/site/index');
+            return $this->redirect(['/site/index']);
         }
 
         $model = new SignUpForm();
         if ($model->load(Yii::$app->request->post()) && $this->authService()->signUp($model) ) {
             Yii::$app->session->setFlash('success', Yii::t('yii2admin', "Успешная регистрация. Теперь вы можете авторизоваться."));
 
-            return $this->redirect('/site/login');
+            return $this->redirect(['/site/index']);
         }
 
         return $this->render('registration', [
@@ -201,6 +201,6 @@ class DefaultController extends BaseController
     {
         Yii::$app->user->logout();
 
-        return $this->redirect('/site/login');
+        return $this->redirect(['/site/login']);
     }
 }
