@@ -37,11 +37,6 @@ class ActionColumn extends BaseColumn
     /**
      * {@inheritdoc}
      */
-    public $template = '{view} {update} {delete}';
-
-    /**
-     * {@inheritdoc}
-     */
     protected function initDefaultButtons()
     {
         $this->setDefaultSettings();
@@ -128,7 +123,9 @@ HTML;
         $this->header = Yii::t('yii2admin', 'Операции');
         if($this->dropdown) {
             $this->headerOptions['style'] = 'width : 15%';
-            $this->template = '{view} {update}<div class="dropdown-divider"></div>{delete}';
+            if($this->template === '{view} {update} {delete}') {
+                $this->template = '{view} {update}<div class="dropdown-divider"></div>{delete}';
+            }
         }
     }
 }
