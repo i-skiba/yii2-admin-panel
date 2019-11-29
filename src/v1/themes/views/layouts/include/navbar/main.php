@@ -24,7 +24,7 @@
         <span class="ml-md-3 mr-md-auto"></span>
         <ul class="navbar-nav">
             <?= $this->render('nav_right');?>
-            <?= $this->render('user');?>
+            <?= $this->render('nav_user');?>
         </ul>
     </div>
 </div>
