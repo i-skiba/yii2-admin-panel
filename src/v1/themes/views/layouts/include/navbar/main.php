@@ -19,9 +19,11 @@
                     <i class="icon-paragraph-justify3"></i>
                 </a>
             </li>
+            <?= $this->render('nav_left');?>
         </ul>
         <span class="ml-md-3 mr-md-auto"></span>
         <ul class="navbar-nav">
+            <?= $this->render('nav_right');?>
             <?= $this->render('user');?>
         </ul>
     </div>
