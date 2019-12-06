@@ -17,6 +17,25 @@ class SidebarHelper
     const ACTIVE_GROUP_CLASS = ' nav-item-expanded nav-item-open';
 
     /**
+     * Проверка активности меню по контроллеру
+     *
+     * @param string $c
+     * @param string $a
+     * @return string|null
+     */
+    public static function c(string $c)
+    {
+        $state = false;
+        $controller = Yii::$app->controller;
+
+        if(($controller->id == $c)) {
+            $state = true;
+        }
+
+        return $state ? self::ACTIVE_CLASS  : null;
+    }
+
+    /**
      * Проверка активности меню по контроллеру и действию
      *
      * @param string $c
