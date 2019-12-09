@@ -45,10 +45,10 @@ class View extends Base
     /**
      * @inheritDoc
      */
-    public function beginPage()
+    public function init()
     {
+        parent::init();
         $this->registerCustomBundles();
-        parent::beginPage();
     }
 
     /**
@@ -146,6 +146,39 @@ class View extends Base
      */
     public function render($view, $params = [], $context = null)
     {
+        $result = $this->getOverrideView($view, $params, $context);
+        if($result) {
+            return $result;
+        }
+
+        return parent::render($view, $params, $context);
+    }
+
+    /**
+     * Поиск сначало проектного представления, после компонента админки
+     *
+     * @inheritDoc
+     */
+    public function renderAjax($view, $params = [], $context = null)
+    {
+        $result = $this->getOverrideView($view, $params, $context);
+        if($result) {
+            return $result;
+        }
+
+        return parent::renderAjax($view, $params, $context);
+    }
+
+    /**
+     * Поиск переопределенного представления проекта
+     *
+     * @param string $view
+     * @param array $params
+     * @param null $context
+     * @return string|null
+     */
+    protected function getOverrideView($view, $params = [], $context = null)
+    {
         $appViewFile = $this->findViewFile($view, $context);
         if (is_file($appViewFile) && file_exists($appViewFile)) {
             $themeBasePath = $this->theme->basePath;
@@ -156,6 +189,6 @@ class View extends Base
             return $result;
         }
 
-        return parent::render($view, $params, $context);
+        return null;
     }
 }
