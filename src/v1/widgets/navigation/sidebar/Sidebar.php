@@ -70,12 +70,27 @@ class Sidebar extends NavigationWidget
         }
 
         $setting = $item['active'];
-        if(! isset($setting['type']) || ! isset($setting['rule'])) {
-            throw new InvalidConfigException('Item active type and rule must be set.');
+        if(! isset($setting['rules'])) {
+            throw new InvalidConfigException('Item active rules must be set.');
         }
 
-        $params = is_array($setting['rule']) ? $setting['rule'] : [$setting['rule']];
+        $params = is_array($setting['rules']) ? $setting['rules'] : [$setting['rules']];
+        $result = null;
+        foreach ($params as $type => $args) {
+            $class = SidebarHelper::ACTIVE_CLASS;
+            if(isset($item['children'])) {
+                $class = SidebarHelper::ACTIVE_GROUP_CLASS;
+            }
 
-        return call_user_func_array([SidebarHelper::class, $setting['type']], $params);
+            $args[] = $class;
+            $active = call_user_func_array([SidebarHelper::class, $type], $args);
+            if(! $active) {
+                continue;
+            }
+
+            $result = $active;
+        }
+
+        return $result;
     }
 }

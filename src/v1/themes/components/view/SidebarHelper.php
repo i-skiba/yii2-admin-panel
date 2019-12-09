@@ -21,9 +21,11 @@ class SidebarHelper
      *
      * @param string $c
      * @param string $a
+     * @param string $class
+     *
      * @return string|null
      */
-    public static function c(string $c)
+    public static function c(string $c, $class = self::ACTIVE_CLASS)
     {
         $state = false;
         $controller = Yii::$app->controller;
@@ -32,7 +34,7 @@ class SidebarHelper
             $state = true;
         }
 
-        return $state ? self::ACTIVE_CLASS  : null;
+        return $state ? $class  : null;
     }
 
     /**
@@ -40,9 +42,11 @@ class SidebarHelper
      *
      * @param string $c
      * @param string $a
+     * @param string $class
+     *
      * @return string|null
      */
-    public static function ca(string $c, string $a)
+    public static function ca(string $c, string $a, $class = self::ACTIVE_CLASS)
     {
         $state = false;
         $controller = Yii::$app->controller;
@@ -55,7 +59,7 @@ class SidebarHelper
             $state = true;
         }
 
-        return $state ? self::ACTIVE_CLASS  : null;
+        return $state ? $class : null;
     }
 
     /**
@@ -63,9 +67,11 @@ class SidebarHelper
      *
      * @param string $m
      * @param array $c
+     * @param string $class
+     *
      * @return string|null
      */
-    public static function mc(string $m, array $c)
+    public static function mc(string $m, array $c, $class = self::ACTIVE_CLASS)
     {
         $state = false;
         $controller = Yii::$app->controller;
@@ -78,16 +84,18 @@ class SidebarHelper
             $state = true;
         }
 
-        return $state ? self::ACTIVE_CLASS  : null;
+        return $state ? $class : null;
     }
 
     /**
      * Проверка активности меню по модулю
      *
      * @param string|array $m
+     * @param string $class
+     *
      * @return string|null
      */
-    public static function m($m)
+    public static function m($m, $class = self::ACTIVE_GROUP_CLASS)
     {
         $controller = Yii::$app->controller;
         $module = $controller->module;
@@ -98,7 +106,7 @@ class SidebarHelper
             $state = true;
         }
 
-        return $state ? self::ACTIVE_GROUP_CLASS  : null;
+        return $state ? $class : null;
     }
 
     /**
@@ -109,7 +117,7 @@ class SidebarHelper
      * @param string $a
      * @return string|null
      */
-    public static function mca(string $m, array $c, string $a)
+    public static function mca(string $m, array $c, string $a, $class = self::ACTIVE_CLASS)
     {
         $state = false;
         $controller = Yii::$app->controller;
@@ -124,6 +132,6 @@ class SidebarHelper
             $state = true;
         }
 
-        return $state ? self::ACTIVE_CLASS  : null;
+        return $state ? $class : null;
     }
 }

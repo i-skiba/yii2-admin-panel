@@ -8,8 +8,9 @@ return [
             'url' => ['/site/index'],
             'icon' => 'icon-home4',
             'active' => [
-                'type' => 'ca',
-                'rule' => ['site', 'index']
+                'rules' => [
+                    'ca' => ['site', 'index']
+                ]
             ],
             'visible' => [
                 'sidebar' => function() {
@@ -25,8 +26,9 @@ return [
             'icon' => 'icon-wrench',
             'color' => 'info',
             'active' => [
-                'type' => 'm',
-                'rule' => 'uikit'
+                'rules' => [
+                    'm' => ['uikit']
+                ]
             ],
             'visible' => [
                 'sidebar' => YII_DEBUG,
@@ -37,16 +39,18 @@ return [
                     'label' => Yii::t('yii2admin', 'Интерфейс'),
                     'url' => ['/uikit/crud'],
                     'active' => [
-                        'type' => 'mc',
-                        'rule' => ['uikit', ['crud']],
+                        'rules' => [
+                            'mc' => ['uikit', ['crud']]
+                        ],
                     ]
                 ],
                 [
                     'label' => Yii::t('yii2admin', 'Виджеты'),
                     'url' => ['/uikit/widgets'],
                     'active' => [
-                        'type' => 'mc',
-                        'rule' => ['uikit', ['widgets']]
+                        'rules' => [
+                            'mc' => ['uikit', ['widgets']]
+                        ]
                     ]
                 ],
                 [
@@ -54,8 +58,9 @@ return [
                     'url' => ['/uikit/magic-modal'],
                     'icon' => 'icon-magic-wand2',
                     'active' => [
-                        'type' => 'mc',
-                        'rule' => ['uikit', ['magic-modal']],
+                        'rules' => [
+                            'mc' => ['uikit', ['magic-modal']]
+                        ]
                     ]
                 ],
             ]
