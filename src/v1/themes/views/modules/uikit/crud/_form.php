@@ -13,6 +13,7 @@
     use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
     use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
+    use kamaelkz\yii2cdnuploader\widgets\Uploader;
 
 ?>
 <?php Pjax::begin(['formSelector' => '#uiikit-form']); ?>
@@ -166,6 +167,32 @@
                                 'resizeBigger' => false,
                                 'width' => 313,
                                 'height' => 235,
+                                'options' => [
+                                    'plugin-options' => [
+                                        # todo: похоже не пашет
+                                        'maxFileSize' => 2000000,
+                                    ]
+                                ],
+                                'clientEvents' => [
+                                    'fileuploaddone' => new \yii\web\JsExpression('function(e, data) {
+                                                console.log(e);
+                                            }'),
+                                    'fileuploadfail' => new \yii\web\JsExpression('function(e, data) {
+                                                console.log(e);
+                                            }'),
+                                ],
+                            ])
+                            ->error(false)
+                            ->hint(false);
+                        ?>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <?= $form
+                            ->field($model, 'image_local')
+                            ->widget(Uploader::class, [
+                                'model' => $model,
+                                'attribute' => 'image_local',
+                                'buttonWrapClass' => 'bg-pink',
                                 'options' => [
                                     'plugin-options' => [
                                         # todo: похоже не пашет

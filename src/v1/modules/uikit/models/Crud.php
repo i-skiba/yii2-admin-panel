@@ -13,6 +13,7 @@ use concepture\yii2logic\validators\ModelValidator;
  *
  * @property integer $id
  * @property string $image
+ * @property string $image_local
  * @property string $mask
  * @property string $text_input
  * @property string $text_area
@@ -141,13 +142,15 @@ class Crud extends ActiveRecord
             ],
             [
                 [
-                    'image'
+                    'image',
+                    'image_local',
                 ],
                 'string'
             ],
             [
                 [
-                    'image'
+                    'image',
+                    'image_local'
                 ],
                 ModelValidator::class,
                 'modelClass' => CdnImagePojo::class,
@@ -178,6 +181,7 @@ class Crud extends ActiveRecord
         return [
             'id' => '#',
             'image' => 'Изображение',
+            'image_local' => 'Изображение (локальная загрузка)',
             'text_input' => Yii::t('yii2admin', 'Текстовое поле'),
             'text_area' => Yii::t('yii2admin', 'Многострочное текстовое поле'),
             'mask' => Yii::t('yii2admin', 'Маска'),

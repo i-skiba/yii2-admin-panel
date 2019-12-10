@@ -17,6 +17,7 @@ class UikitForm extends BaseModel
 {
     public $id;
     public $image;
+    public $image_local;
     public $mask;
     public $text_input;
     public $text_area;
@@ -149,13 +150,15 @@ class UikitForm extends BaseModel
                     ],
                     [
                         [
-                            'image'
+                            'image',
+                            'image_local'
                         ],
                         'string'
                     ],
                     [
                         [
-                            'image'
+                            'image',
+                            'image_local'
                         ],
                         ModelValidator::class,
                         'modelClass' => CdnImagePojo::class,
@@ -185,6 +188,7 @@ class UikitForm extends BaseModel
     {
         return [
             'image' => 'Изображение',
+            'image_local' => 'Изображение (локальная загрузка)',
             'text_input' => Yii::t('yii2admin', 'Текстовое поле'),
             'text_area' => Yii::t('yii2admin', 'Многострочное текстовое поле'),
             'mask' => Yii::t('yii2admin', 'Маска'),
