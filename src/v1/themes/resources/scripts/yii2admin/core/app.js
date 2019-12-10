@@ -62,9 +62,13 @@ var Yii2Admin = {
         }
     },
     // рецепт, понаблюдать
-    runCallback : function(string, data) {
-        var wrap = s => "{ return " + string.trim() + " };"
-        var func = new Function( wrap(string) );
+    runCallback : function(callback, data) {
+        if(typeof callback === 'function') {
+            return eval(callback)(data);
+        }
+
+        var wrap = s => "{ return " + callback.trim() + " };"
+        var func = new Function( wrap(callback) );
         try{
             func.call(null).call(null, data);
         } catch(e) {}
