@@ -7,7 +7,7 @@ var Yii2Admin = {
 
         return  this.translations[key];
     },
-    sendRequest : function (action , pjax_id , pjax_url , params, callback) {
+    sendRequest : function (action , params, options, callback) {
         var self = this;
         $.ajax({
             type : 'POST',
@@ -20,18 +20,16 @@ var Yii2Admin = {
                     var response = data;
                 }
 
-                if(typeof pjax_id === 'undefined') {
-                    componentNotify.pNotify(response.type, response.message);
-                } else {
+                if(typeof options.pjax_id !== 'undefined') {
                     var pjaxOptions = {
                         push : false,
                         replace : false
                     };
-                    if(typeof pjax_url !== 'undefined') {
-                        pjaxOptions['url'] = pjax_url;
+                    if(typeof options.pjax_url !== 'undefined') {
+                        pjaxOptions['url'] = options.pjax_url;
                     }
 
-                    $.pjax.reload('#' + pjax_id , pjaxOptions);
+                    $.pjax.reload('#' + options.pjax_id , pjaxOptions);
                     self.notify(response);
                 }
 
@@ -44,6 +42,7 @@ var Yii2Admin = {
                 }
 
             }, error : function(data) {
+                // alert(data);
                 var messaga = data.status + ' : ' + data.statusText;
                 componentNotify.pNotify(componentNotify.statuses.error, messaga);
             }
@@ -298,12 +297,17 @@ $(document).ready(function() {
             return false;
         }
 
+        var options = {
+            pjax_id: data.pjaxId,
+            pjax_url: data.pjaxUrl,
+        };
+
         if(typeof data.swal === 'undefined') {
-            Yii2Admin.sendRequest(action, data.pjaxId, data.pjaxUrl, data.params, data.callback)
+            return Yii2Admin.sendRequest(action, data.params, options, data.callback)
         }
 
         componentNotify.sweetAlert(data.swal, function () {
-            Yii2Admin.sendRequest(action, data.pjaxId, data.pjaxUrl, data.params, data.callback)
+            Yii2Admin.sendRequest(action, data.params, options, data.callback)
         });
     });
 
