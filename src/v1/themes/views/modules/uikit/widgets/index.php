@@ -21,12 +21,10 @@ use yii\widgets\MaskedInput;
     $this->pushBreadcrumbs($title);
 ?>
 <div class="card">
-    <div class="card-header header-elements-inline">
-        <h5 class="card-title">
-            <?= Yii::t('yii2admin', 'Предупреждающие сообщения') ;?>
-        </h5>
-    </div>
     <div class="card-body">
+        <legend class="font-weight-semibold text-uppercase font-size-sm">
+            <?= Yii::t('yii2admin', 'Предупреждающие сообщения');?>
+        </legend>
         <?= Alert::widget([
             'type' => FlashAlertEnum::INFO,
             'message' => FlashAlertEnum::INFO,
@@ -52,12 +50,10 @@ use yii\widgets\MaskedInput;
 <?php Pjax::begin(['formSelector' => '#uiikit-form']); ?>
     <?php $form = ActiveForm::begin(['id' => 'uiikit-form']); ?>
         <div class="card">
-            <div class="card-header header-elements-inline">
-                <h5 class="card-title">
-                    <?= Yii::t('yii2admin', 'Элементы формы') ;?>
-                </h5>
-            </div>
             <div class="card-body">
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <?= Yii::t('yii2admin', 'Элементы формы') ;?>
+                </legend>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <?= $form

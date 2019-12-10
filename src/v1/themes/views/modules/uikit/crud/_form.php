@@ -27,7 +27,13 @@
                     ]
                 ); ?>
             </div>
+        </div>
+        <div class="card">
             <div class="card-body">
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <i class="icon-file-empty  mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Однострочные текстовые поля');?>
+                </legend>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <?= $form
@@ -41,8 +47,10 @@
                         <?= $form->field($model, 'text_input')->textInput(); ?>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <i class="icon-watch2 mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Дата / время');?>
+                </legend>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <?= $form
@@ -81,8 +89,10 @@
                         ?>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <i class="icon-file-text2 mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Многострочные текстовые поля');?>
+                </legend>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <?= $form
@@ -106,8 +116,10 @@
                         <?= $form->field($model, 'text_area')->textarea(); ?>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <i class="icon-chevron-down 2 mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Выпадающие списки');?>
+                </legend>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <?= $form
@@ -154,10 +166,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <i class="icon-file-upload 2 mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Загрузка изображений');?>
+                </legend>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <?= $form
                             ->field($model, 'image')
                             ->widget(CdnUploader::class, [
@@ -187,7 +201,7 @@
                             ->hint(false);
                         ?>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <?= $form
                             ->field($model, 'image_local')
                             ->widget(Uploader::class, [
@@ -214,8 +228,10 @@
                         ?>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <i class="icon-equalizer2  2 mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Чекбоксы / радио кнопки');?>
+                </legend>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="row">
@@ -287,6 +303,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card">
             <div class="card-body text-right">
                 <?=  Html::submitButton(
                     '<b><i class="icon-checkmark3"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
@@ -296,21 +314,5 @@
                 ); ?>
             </div>
         </div>
-<!--        <div class="card">-->
-<!--            <div class="card-body text-right">-->
-<!--                --><?//=  Html::submitButton(
-//                    '<b><i class="icon-floppy-disk"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
-//                    [
-//                        'class' => 'btn bg-success btn-labeled btn-labeled-left'
-//                    ]
-//                ); ?>
-<!--                --><?//=  Html::submitButton(
-//                    '<b><i class="icon-list"></i></b>' . Yii::t('yii2admin', 'Сохранить и вернуться к списку'),
-//                    [
-//                        'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1'
-//                    ]
-//                ); ?>
-<!--            </div>-->
-<!--        </div>-->
     <?php ActiveForm::end(); ?>
 <?php Pjax::end(); ?>
