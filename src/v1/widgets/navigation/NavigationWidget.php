@@ -6,6 +6,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
+use yii\helpers\Url;
 use concepture\yii2logic\widgets\Widget as CoreWidget;
 
 /**
@@ -85,6 +86,21 @@ abstract class NavigationWidget extends CoreWidget
         }
 
         echo $content;
+    }
+
+    /**
+     * Формирование ссылки элемента
+     *
+     * @param array $item
+     * @return string|null
+     */
+    protected function getUrl(array $item)
+    {
+        if(! isset($item['url'])) {
+            return '#';
+        }
+
+        return Url::to($item['url']);
     }
 
     /**

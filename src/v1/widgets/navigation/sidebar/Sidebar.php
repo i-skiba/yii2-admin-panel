@@ -32,7 +32,7 @@ class Sidebar extends NavigationWidget
         }
 
         return $this->render('view', [
-            'url' => ( $item['url'] ? Url::to($item['url']) : '#' ),
+            'url' => $this->getUrl($item),
             'tooltip' => ( $item['label'] ?? null ),
             'label' => $this->getLabel($item),
             'elements' => $elements,

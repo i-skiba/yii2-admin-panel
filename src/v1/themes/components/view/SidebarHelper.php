@@ -97,6 +97,7 @@ class SidebarHelper
      */
     public static function m($m, $class = self::ACTIVE_GROUP_CLASS)
     {
+        $state = false;
         $controller = Yii::$app->controller;
         $module = $controller->module;
         if (

@@ -30,7 +30,7 @@ class Dashboard extends NavigationWidget
 
         return $this->render('view', [
             'label' => $item['label'] ?? null,
-            'url' => ($item['url'] ? Url::to($item['url']) : null),
+            'url' => $this->getUrl($item),
             'icon' => $item['icon'] ?? null,
             'color' => $item['color'] ?? 'primary',
             'description' => $item['description'] ?? null,
