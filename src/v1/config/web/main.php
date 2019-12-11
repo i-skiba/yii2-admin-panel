@@ -14,6 +14,7 @@ $config = [
                 'class'=> yii\base\Theme::class,
                 'basePath'=>'@yii2admin/themes'
             ],
+            'definations' => [],
             'customBundles' => [
                 'kamaelkz\yii2admin\v1\themes\bundles\ImagesBundle',
                 'kamaelkz\yii2admin\v1\themes\bundles\StylesBundle',

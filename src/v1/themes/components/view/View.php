@@ -2,15 +2,23 @@
 
 namespace kamaelkz\yii2admin\v1\themes\components\view;
 
+use Yii;
 use yii\web\View as Base;
 
 /**
  * Представление шаблона
  *
+ * @todo definations пока так, не уверен что будет так
+ *
  * @author Kamaelkz <kamaelkz@yandex.kz>
  */
 class View extends Base
 {
+    /**
+     * @var array
+     */
+    public $definations = [];
+
     /**
      * @var array кастомные бандлы для подключения на лаяутах
      */
@@ -180,6 +188,11 @@ class View extends Base
     protected function getOverrideView($view, $params = [], $context = null)
     {
         $appViewFile = $this->findViewFile($view, $context);
+        $defination = $this->getDefination($appViewFile);
+        if(null !== $defination) {
+            $appViewFile = $defination;
+        }
+
         if (is_file($appViewFile) && file_exists($appViewFile)) {
             $themeBasePath = $this->theme->basePath;
             $this->theme->setBasePath('@app');
@@ -190,5 +203,28 @@ class View extends Base
         }
 
         return null;
+    }
+
+    /**
+     * @param stting $viewPath
+     * @return bool
+     */
+    protected function getDefination($viewPath)
+    {
+        if(! $this->definations) {
+            return false;
+        }
+
+        foreach ($this->definations as $from => $to) {
+            $from = Yii::getAlias($from);
+            $to = Yii::getAlias($to);
+            if($from == $viewPath) {
+                return $to;
+            }
+
+            if(($pos = strpos($viewPath, $from)) !== false) {
+                return str_replace($from, $to, $viewPath);
+            }
+        }
     }
 }
