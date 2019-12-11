@@ -100,15 +100,6 @@
                             ->widget(FroalaEditor::class, [
                                 'model' => $model,
                                 'attribute' => 'editor',
-                                'clientOptions' => [
-                                    'attribution' => false,
-                                    'heightMin' => 200,
-                                    'toolbarSticky' => true,
-                                    'toolbarInline'=> false,
-                                    'theme' =>'royal', //optional: dark, red, gray, royal
-                                    'language' => Yii::$app->language,
-                                    'quickInsertTags' => [],
-                                ]
                             ]);
                         ?>
                     </div>

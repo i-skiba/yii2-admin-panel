@@ -5,6 +5,7 @@ namespace kamaelkz\yii2admin\v1\widgets\formelements\editors\froala;
 use yii\helpers\ArrayHelper;
 use concepture\yii2logic\exceptions\Exception;
 use concepture\yii2logic\bundles\Bundle as BaseBundle;
+use yii\web\View;
 
 /**
  * @author kamaelkz <kamaelkz@yandex.kz>
@@ -50,6 +51,10 @@ class Bundle extends BaseBundle
      */
     public $depends = [
         'kamaelkz\yii2cdnuploader\widgets\CdnHelperBundle'
+    ];
+
+    public $cssOptions = [
+        'position' => View::POS_HEAD
     ];
 
     /**

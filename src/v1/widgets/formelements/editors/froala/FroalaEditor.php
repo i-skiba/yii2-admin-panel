@@ -2,9 +2,11 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements\editors\froala;
 
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\web\View;
 use yii\widgets\InputWidget;
 use yii\helpers\Inflector;
 use yii\web\JsExpression;
@@ -48,6 +50,12 @@ class FroalaEditor extends InputWidget
     {
         if(! $this->hasModel()) {
             throw new InvalidConfigException("'model' and 'attribute' properties must be specified.");
+        }
+
+        if(isset($this->options['class'])) {
+            $this->options['class'] .= ' yii2admin_editor';
+        } else {
+            $this->options['class'] = 'yii2admin_editor';
         }
 
         $input = Html::activeTextarea($this->model, $this->attribute, $this->options);
@@ -103,7 +111,12 @@ class FroalaEditor extends InputWidget
 
         $jsOptions = array_merge($this->clientOptions, $pluginsEnabled ? ['pluginsEnabled' => $pluginsEnabled] : []);
         $jsOptions = Json::encode($jsOptions);
-        $view->registerJs("new FroalaEditor('#{$id}',{$jsOptions});");
+        $js = new JsExpression("
+                $(document).ready(function() {
+                    new FroalaEditor('#{$id}',{$jsOptions});
+                })
+        ");
+        $view->registerJs($js->expression, View::POS_LOAD);
     }
 
     /**
@@ -114,6 +127,14 @@ class FroalaEditor extends InputWidget
     private function getDefaultClientOptions()
     {
         return [
+            'enter' => 0,
+            'attribution' => false,
+            'heightMin' => 200,
+            'toolbarSticky' => true,
+            'toolbarInline'=> false,
+            'theme' =>'royal', //optional: dark, red, gray, royal
+            'language' => Yii::$app->language,
+            'quickInsertTags' => [],
             'key' => getenv('FROALA_LICENSE_KEY'),
             'imageUploadURL' => Url::to(['/cdn']),
             'events' => [
