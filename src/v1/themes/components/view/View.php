@@ -212,7 +212,7 @@ class View extends Base
     protected function getDefination($viewPath)
     {
         if(! $this->definations) {
-            return false;
+            return null;
         }
 
         foreach ($this->definations as $from => $to) {
@@ -226,5 +226,7 @@ class View extends Base
                 return str_replace($from, $to, $viewPath);
             }
         }
+
+        return null;
     }
 }
