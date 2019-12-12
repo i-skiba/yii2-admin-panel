@@ -8,7 +8,7 @@ use yii\web\View as Base;
 /**
  * Представление шаблона
  *
- * @todo definations пока так, не уверен что будет так
+ * @todo definition пока так, не уверен что будет так
  *
  * @author Kamaelkz <kamaelkz@yandex.kz>
  */
@@ -17,7 +17,7 @@ class View extends Base
     /**
      * @var array
      */
-    public $definations = [];
+    public $definition = [];
 
     /**
      * @var array кастомные бандлы для подключения на лаяутах
@@ -188,7 +188,7 @@ class View extends Base
     protected function getOverrideView($view, $params = [], $context = null)
     {
         $appViewFile = $this->findViewFile($view, $context);
-        $defination = $this->getDefination($appViewFile);
+        $defination = $this->getDefinition($appViewFile);
         if(null !== $defination) {
             $appViewFile = $defination;
         }
@@ -209,13 +209,13 @@ class View extends Base
      * @param stting $viewPath
      * @return bool
      */
-    protected function getDefination($viewPath)
+    protected function getDefinition($viewPath)
     {
-        if(! $this->definations) {
+        if(! $this->definition) {
             return null;
         }
 
-        foreach ($this->definations as $from => $to) {
+        foreach ($this->definition as $from => $to) {
             $from = Yii::getAlias($from);
             $to = Yii::getAlias($to);
             if($from == $viewPath) {

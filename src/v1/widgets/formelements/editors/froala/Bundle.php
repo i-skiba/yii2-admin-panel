@@ -36,6 +36,7 @@ class Bundle extends BaseBundle
      */
     public $js = [
         'js/froala_editor.min.js',
+        'js/helper.js'
     ];
 
     /**

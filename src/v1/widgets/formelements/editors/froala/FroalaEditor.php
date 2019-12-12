@@ -52,10 +52,16 @@ class FroalaEditor extends InputWidget
             throw new InvalidConfigException("'model' and 'attribute' properties must be specified.");
         }
 
+        $class = ' yii2admin_editor';
         if(isset($this->options['class'])) {
-            $this->options['class'] .= ' yii2admin_editor';
+            $this->options['class'] .= $class;
         } else {
-            $this->options['class'] = 'yii2admin_editor';
+            $this->options['class'] = $class;
+        }
+
+        # todo новые типы
+        if(! isset($this->options['data-type'])) {
+            $this->options['data-type'] = 'default';
         }
 
         $input = Html::activeTextarea($this->model, $this->attribute, $this->options);
@@ -112,9 +118,7 @@ class FroalaEditor extends InputWidget
         $jsOptions = array_merge($this->clientOptions, $pluginsEnabled ? ['pluginsEnabled' => $pluginsEnabled] : []);
         $jsOptions = Json::encode($jsOptions);
         $js = new JsExpression("
-                $(document).ready(function() {
-                    new FroalaEditor('#{$id}',{$jsOptions});
-                })
+            EditorHelper.add('#{$id}',{$jsOptions}, '{$this->options['data-type']}');
         ");
         $view->registerJs($js->expression, View::POS_LOAD);
     }
@@ -127,56 +131,9 @@ class FroalaEditor extends InputWidget
     private function getDefaultClientOptions()
     {
         return [
-            'enter' => 0,
-            'attribution' => false,
-            'heightMin' => 200,
-            'toolbarSticky' => true,
-            'toolbarInline'=> false,
-            'theme' =>'royal', //optional: dark, red, gray, royal
             'language' => Yii::$app->language,
-            'quickInsertTags' => [],
             'key' => getenv('FROALA_LICENSE_KEY'),
             'imageUploadURL' => Url::to(['/cdn']),
-            'events' => [
-                'image.beforeUpload' => new JsExpression("
-                        function (images) {
-                            var self = this;
-                            CdnHelper.auth(
-                                self.opts.imageUploadURL,
-                                [],
-                                function (response) {
-                                        if (response.status !== 'success') {
-                                            return;
-                                        }
-                                        
-                                        self.opts.requestHeaders = {
-                                            'Authorization': 'Bearer ' + response.token ,
-                                        };
-                                        self.opts.imageUploadURL = response.uploadUrl;
-                                        self.opts.proxyDomain = response.staticDomain
-                                    },
-                                    false
-                            );
-                
-                            return images;
-                        }
-                "),
-//                'image.uploaded' => new JsExpression("
-//                        function (response) {
-//                            // костыль для dev цдн, так как нет проксей
-//                            var data = JSON.parse(response);
-//                            data.link = data.link.replace(this.opts.proxyDomain,this.opts.proxyDomain + '/' + CdnHelper.staticPrefix);
-//                            response =  JSON.stringify(data)
-//
-//                            return response;
-//                        }
-//                "),
-//                'image.inserted' => new JsExpression("
-//                        function (img, response) {
-//                                console.log(response);
-//                        }
-//                "),
-            ]
         ];
     }
 }
