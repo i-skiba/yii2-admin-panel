@@ -87,9 +87,14 @@ EditorHelper.prototype.getOptions = function(type) {
             },
             // Маассив для преобразования абзацев в виджеты на соновании их фонового цвета
             templateForWidget: {
-                // video: { background: 'lime' , html: '<span class="fr-video fr-fvc fr-dvb fr-draggable" contenteditable="false" draggable="true"><iframe width="640" height="360" src="https://www.youtube.com/embed/s%?wmode=opaque" frameborder="0" allowfullscreen="" class="fr-draggable"></iframe></span>' },
-                quote: { background: 'yellow' , html: '<div class="quote-block fr-widget fr-inner fr-breaker">s%</div>' },
-                grayBlock: { background: ['lightgrey','silver'] , html: '<div class="gray-text-block fr-widget fr-inner fr-breaker">s%</div>' }
+                quote: {
+                    background: 'yellow',
+                    html: '<blockquote class="fr-widget fr-inner fr-breaker">s%</blockquote>'
+                },
+                grayBlock: {
+                    background: ['lightgrey', 'silver'],
+                    html: '<p class="notice fr-widget fr-inner fr-breaker">s%</p>'
+                }
             },
             htmlAllowedEmptyTags: ['textarea', 'a', 'iframe', 'object', 'video', 'style', 'script', '.fa', 'span'],
             htmlAllowedTags: ['p', 'br', 'table','tbody', 'tr', 'td', 'div', 'span', 'a', 'iframe', 'strong', 'b', 'pre', 'i', 'img', 'em', 'u', 's', 'h1', 'h2', 'h3', 'h4', 'ul', 'li', 'ol', 'blockquote', 'time' ],
