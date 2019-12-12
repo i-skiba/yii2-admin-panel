@@ -118,7 +118,8 @@ class FroalaEditor extends InputWidget
         $jsOptions = array_merge($this->clientOptions, $pluginsEnabled ? ['pluginsEnabled' => $pluginsEnabled] : []);
         $jsOptions = Json::encode($jsOptions);
         $js = new JsExpression("
-            EditorHelper.add('#{$id}',{$jsOptions}, '{$this->options['data-type']}');
+            EditorHelper.extendConfig('{$this->options['data-type']}', {$jsOptions});
+            EditorHelper.add('#{$id}', '{$this->options['data-type']}');
         ");
         $view->registerJs($js->expression, View::POS_LOAD);
     }

@@ -17,8 +17,8 @@ class ScriptsBundle extends Bundle
 
     public function init()
     {
-        $iso = LanguageHelper::getIso(true);
         parent::init();
+        $iso = LanguageHelper::getIso();
         $this->js = [
             'limitless/global_assets/js/plugins/loaders/pace.min.js',
             'limitless/global_assets/js/plugins/loaders/blockui.min.js',
@@ -32,8 +32,9 @@ class ScriptsBundle extends Bundle
             'scripts/yii2admin/notify.js',
             'scripts/yii2admin/checkboxes.js',
             'scripts/yii2admin/selects.js',
+            'scripts/yii2admin/core/helpers/lodash.js',
             'scripts/yii2admin/core/app.js',
-            "scripts/yii2admin/core/translations/{$iso}.js",
+            "scripts/yii2admin/core/i18n/{$iso}.js",
 //            'core/libraries/jquery_ui/core.min.js',
 //            'core/libraries/jquery_ui/interactions.min.js',
 //            'plugins/forms/selects/select2.min.js',

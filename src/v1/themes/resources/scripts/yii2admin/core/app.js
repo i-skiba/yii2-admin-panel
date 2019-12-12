@@ -1,11 +1,16 @@
 var Yii2Admin = {
-    translations : {},
     t : function (key) {
-        if(typeof this.translations[key] === 'undefined') {
+        if(typeof this.i18n.dictionary[key] === 'undefined') {
             return null;
         }
 
-        return  this.translations[key];
+        return  this.i18n.dictionary[key];
+    },
+    i18n : {
+        dictionary : {},
+        extend : function (object) {
+            this.dictionary = _.extend(this.dictionary, object);
+        }
     },
     sendRequest : function (action , params, options, callback) {
         var self = this;
