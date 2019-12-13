@@ -3,6 +3,8 @@
 /* @var $this \kamaelkz\yii2admin\v1\themes\components\view\View */
 
 use yii\helpers\Url;
+use kamaelkz\yii2admin\v1\widgets\formelements\magicmodalinput\MagicModalInput;
+use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 
 $this->setTitle(Yii::t('yii2admin', 'Магические модалки'));
 $this->pushBreadcrumbs($this->title);
@@ -26,4 +28,19 @@ $this->viewHelper()->pushPageHeader(
     ]
 );
 ?>
-будет что то точно
+<div class="card">
+    <div class="card-body">
+        <legend class="font-weight-semibold text-uppercase font-size-sm">
+            <?= Yii::t('yii2admin', 'Начинается магия друзья'); ?>
+        </legend>
+        <?php $form = ActiveForm::begin(['id' => 'uiikit-form']); ?>
+            <?= MagicModalInput::widget([
+                    'form' => $form,
+                    'model' => $model,
+                    'attribute' => 'text_input',
+                    'label_attribute' => 'text_input',
+                    'route' => Url::to(['create'])
+            ]);?>
+        <?php ActiveForm::end(); ?>
+    </div>
+</div>

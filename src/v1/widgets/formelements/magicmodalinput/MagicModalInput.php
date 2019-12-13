@@ -1,11 +1,13 @@
 <?php
 
-namespace frontend\common\components\widgets\magicmodalinput;
+namespace kamaelkz\yii2admin\v1\widgets\formelements\magicmodalinput;
 
+use Yii;
+use yii\jui\InputWidget;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\Widget;
-use yii\widgets\ActiveForm;
+use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 
 /**
  * Виджет поля ввода для магической модалки
@@ -19,10 +21,8 @@ use yii\widgets\ActiveForm;
  * 
  * @author Kamaelkz <kamaelkz@yandex.kz>
  */
-class MagicModalInputWidget extends Widget
+class MagicModalInput extends InputWidget
 {
-    public $model;
-    public $attribute;
     public $label_attribute;
     public $form;
     public $route;
@@ -33,18 +33,18 @@ class MagicModalInputWidget extends Widget
     public function init()
     {
         parent::init();
-        if(! $this->model || (!$this->model instanceof Model)){
-            throw new InvalidConfigException('Атрибут {model} не может быть пустым или не является экземпляром класса yii\base\Model');
-        }
-        if(! $this->attribute){
-            throw new InvalidConfigException('Атрибут {attribute} не может быть пустым');
-        }
-        if(! $this->label_attribute){
-            throw new InvalidConfigException('Атрибут {label_attribute} не может быть пустым');
+        if(! $this->label_attribute) {
+            throw new InvalidConfigException(
+                Yii::t(
+                    'common',
+                    'Атрибут {label_attribute} не может быть пустым'
+                )
+            );
         }
         if(! $this->form || (! $this->form instanceof ActiveForm)){
             throw new InvalidConfigException('Свойство {form} не может быть пустым или не является экземпляром класса yii\widgets\ActiveForm');
         }
+
         if(! $this->route) {
             throw new InvalidConfigException('Свойство {route} не может быть пустым');
         }
@@ -55,11 +55,11 @@ class MagicModalInputWidget extends Widget
         return $this->render($this->viewName, [
             'model' => $this->model,
             'attribute' => $this->attribute,
-            'label_attribute' => $this->label_attribute,
             'form' => $this->form,
             'route' => $this->route,
             'callback' => $this->callback,
             'icon' => $this->icon,
+            'label_attribute' => $this->label_attribute,
         ]);
     }
 }

@@ -114,7 +114,6 @@ class View extends Base
      */
     public function setTitle(string $title)
     {
-//        d($title);
         $this->title = $title;
     }
 

@@ -185,7 +185,8 @@ var MagicModal = function(pjax) {
         'modal-xs'
     ];
     this.response = null;
-    this.isJsonResponse = null;
+    this.isJsonResponse = false;
+    this.isStop = false;
     this.callback = null;
     if(this.$modal.length > 0) {
         this.$container = this.$modal.find('.modal-dialog');
@@ -195,6 +196,7 @@ var MagicModal = function(pjax) {
 }
 
 MagicModal.prototype.run = function($el) {
+    this.isStop = false;
     var data = $el.data();
     this.applySize( data.modalSize );
     this.setCallback( data.callback );
@@ -213,7 +215,7 @@ MagicModal.prototype.run = function($el) {
     var formData = null;
     //TODO сбор данных с более одного селектора
     if($serializeElement.length === 1) {
-        formData = serializeControl.serialize();
+        formData = $serializeElement.serialize();
         //удаление параметра _csrf из серилизованной строки
         formData = formData.replace( /_csrf=(.*?)\&/g, "" );
         this.pjax.extendSettings({data : formData});
@@ -243,10 +245,11 @@ MagicModal.prototype.setCallback = function(value) {
     this.callback = value
 },
 
-MagicModal.prototype.reset = function() {
-    this.response = null;
-    this.isJsonResponse = false;
+MagicModal.prototype.stop = function() {
     this.callback = null;
+    this.isJsonResponse = false;
+    this.response = null;
+    this.isStop = true;
 }
 
 var CallbackHelper = function() {
@@ -382,6 +385,8 @@ $(document).ready(function() {
         magicModal.pjax.extendSettings({ url: $form.attr('action')});
         delete magicModal.pjax.settings.data;
         magicModal.pjax.submit(event);
+
+        return true;
     });
 
     $magicModalPjax.on('pjax:timeout', function (event, data) {
@@ -397,8 +402,9 @@ $(document).ready(function() {
                 yii2admin.runCallback(magicModal.callback, response.data);
             }
 
-            // magicModal.reset();
+
             magicModal.$modal.modal('hide');
+            magicModal.stop();
         } catch (e) {
             var content = $(status);
             var title = content.filter('title');
@@ -406,29 +412,33 @@ $(document).ready(function() {
                 magicModal.$modal.find('.modal-title').html(title.html());
             }
         }
+
+        return true;
     });
     //подгрузка контента с удаленного роута
     $magicModalPjax.on('pjax:end', function(object, xhr) {
         if(xhr.status != 200 || magicModal.isJsonResponse) {
-            return;
+            return true;
         }
 
-        $magicModalPjax.find('.card').each(function(el) {
-            $(this).removeClass('card');
-        });
-        magicModal.$modal.modal('show');
+        if(! magicModal.isStop) {
+            $magicModalPjax.find('.card').each(function(el) {
+                $(this).removeClass('card');
+            });
+            magicModal.$modal.modal('show');
+        }
     });
 
     $magicModalPjax.on('pjax:error', function (xhr, response) {
         // случаи с abort
         if(response.status == 0) {
-            return;
+            return true;
         }
 
         var message = response.status + ' : ' + response.statusText;
         componentNotify.pNotify(componentNotify.statuses.error, message);
-        magicModal.reset();
+        magicModal.stop();
 
-        return true;
+        return false;
     });
 });

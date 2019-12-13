@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\modules\uikit\controllers;
 
+use kamaelkz\yii2admin\v1\modules\uikit\forms\MagicModalFormInput;
 use kamaelkz\yii2admin\v1\modules\uikit\forms\MagicModalForm;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
 use concepture\yii2user\enum\UserRoleEnum;
@@ -68,7 +69,11 @@ class MagicModalController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new MagicModalFormInput();
+
+        return $this->render('index', [
+            'model' => $model
+        ]);
     }
 
     /**
