@@ -20,7 +20,7 @@ $this->viewHelper()->pushPageHeader(
     null,
     Yii::t('yii2admin', 'Элемент с ошибкой'),
     'icon-warning2',
-    [
+    [   
         'class' => 'magic-modal-control',
         'data-url' => Url::to(['some/link/error']),
     ]

@@ -79,12 +79,6 @@ var Yii2Admin = {
     }
 };
 
-var CallbackHelper = {
-    reloadList: function(id) {
-        $.pjax.reload('#' + id);
-    }
-};
-
 var FlashAlertHelper = {
     interval : null,
     $container : null,
@@ -125,91 +119,150 @@ var FlashAlertHelper = {
     }
 };
 
-var UrlHelper = {
-    addParam : function(queryString, param, value) {
-        queryParameters = this._getQueryParameters(queryString);
-        queryParameters[param] = value;
+var UrlHelper = function() {}
 
-        return $.param(queryParameters);
-    },
-    removeParam : function(queryString, param) {
-        queryParameters = this._getQueryParameters(queryString);
-        delete queryParameters[param];
+UrlHelper.prototype.addParam = function(queryString, param, value) {
+    queryParameters = this._getQueryParameters(queryString);
+    queryParameters[param] = value;
 
-        return $.param(queryParameters);
-    },
-    _getQueryParameters : function(queryString) {
-        var queryParameters = {}, re = /([^&=]+)=([^&]*)/g, m;
-        while (m = re.exec(queryString)) {
-            queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-        }
+    return $.param(queryParameters);
+};
 
-        return queryParameters;
+UrlHelper.prototype.removeParam = function(queryString, param) {
+    queryParameters = this._getQueryParameters(queryString);
+    delete queryParameters[param];
+
+    return $.param(queryParameters);
+};
+
+UrlHelper.prototype._getQueryParameters = function(queryString) {
+    var queryParameters = {}, re = /([^&=]+)=([^&]*)/g, m;
+    while (m = re.exec(queryString)) {
+        queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
+
+    return queryParameters;
 }
 
-var MagicModal = {
-    $modal: null,
-    $container: null,
-    modalSizes : [
+var Pjax = function() {
+    this.selector = '#list-pjax';
+    this.settings = {
+        push : false,
+        scrollTo : false,
+        replace : false
+    };
+}
+
+Pjax.prototype.setSelector = function(value) {
+    this.selector = value;
+}
+
+Pjax.prototype.setSettings = function(object) {
+    this.settings = object;
+}
+
+Pjax.prototype.extendSettings = function(object) {
+    this.settings = _.extend(this.settings, object);
+}
+
+Pjax.prototype.reload = function() {
+    $.pjax.reload(this.selector, this.settings);
+}
+
+Pjax.prototype.submit = function(event) {
+    $.pjax.submit(event, this.selector, this.settings);
+}
+
+var MagicModal = function(pjax) {
+    this.$modal = $('#magic-modal');
+    this.$container = null;
+    this.modalSizes = [
         'modal-full',
         'modal-lg',
         'modal-sm',
         'modal-xs'
-    ],
-    response: null,
-    isJsonResponse: false,
-    callback: null,
-    pjax: {
-        selector: '#magic-modal-pjax',
-        settings : {
-            push : false,
-            scrollTo : false,
-            replace : false
-        },
-        reload: function() {
-            $.pjax.reload(this.selector, this.settings);
-        },
-        submit: function(event) {
-            $.pjax.submit(event, this.selector, this.settings);
-        },
-    },
-    applySize: function(size_class) {
-        if(
-            typeof size_class == 'undefined'
-            || this.$container.hasClass(size_class)
-        ) {
-            return false;
-        }
+    ];
+    this.response = null;
+    this.isJsonResponse = null;
+    this.callback = null;
+    if(this.$modal.length > 0) {
+        this.$container = this.$modal.find('.modal-dialog');
+    }
+    this.pjax = new Pjax();
+    this.pjax.setSelector('#magic-modal-pjax');
+}
 
-        this.$container.removeClass(this.modalSizes.join(' '));
-        this.$container.addClass(size_class);
-    },
-    setCallback: function(callback) {
-        if(typeof callback == 'undefined') {
-            return false;
-        }
-
-        this.callback = callback
-    },
-    reset: function() {
-        this.response = null;
-        this.isJsonResponse = false;
-        this.callback = null;
-    },
-    initialization : function () {
-        this.reset();
-        this.$modal = $('#magic-modal');
-        if(this.$modal.length > 0) {
-            this.$container = this.$modal.find('.modal-dialog');
+MagicModal.prototype.run = function($el) {
+    var data = $el.data();
+    this.applySize( data.modalSize );
+    this.setCallback( data.callback );
+    this.pjax.extendSettings({url : data.url});
+    //если элемент находится в форме
+    var $serializeElement = $el.closest('form');
+    if($serializeElement.length === 0) {
+        var selector = data.serializeSelector;
+        if(typeof selector !== 'undefined') {
+            //TODO реализовать пригодится
+            //parts = selector.split('||');
+            $serializeElement = $(selector);
         }
     }
+
+    var formData = null;
+    //TODO сбор данных с более одного селектора
+    if($serializeElement.length === 1) {
+        formData = serializeControl.serialize();
+        //удаление параметра _csrf из серилизованной строки
+        formData = formData.replace( /_csrf=(.*?)\&/g, "" );
+        this.pjax.extendSettings({data : formData});
+        delete this.pjax.settings.data['_scrf'];
+    }
+
+    this.pjax.reload();
+}
+
+MagicModal.prototype.applySize = function(size_class) {
+    if(
+        typeof size_class == 'undefined'
+        || this.$container.hasClass(size_class)
+    ) {
+        return false;
+    }
+
+    this.$container.removeClass(this.modalSizes.join(' '));
+    this.$container.addClass(size_class);
+}
+
+MagicModal.prototype.setCallback = function(value) {
+    if(typeof value == 'undefined') {
+        return false;
+    }
+
+    this.callback = value
+},
+
+MagicModal.prototype.reset = function() {
+    this.response = null;
+    this.isJsonResponse = false;
+    this.callback = null;
+}
+
+var CallbackHelper = function() {
+    this.pjax = new Pjax();
+};
+
+CallbackHelper.prototype.reloadPjax = function(selector) {
+    this.pjax.setSelector(selector);
+    this.pjax.reload();
 }
 
 $(document).ready(function() {
     // инициализация плагинов
     FlashAlertHelper.initialization();
-    MagicModal.initialization();
+    magicModal = new MagicModal();
+    callbackHelper = new CallbackHelper();
+    urlHelper = new UrlHelper();
+
     componentChekboxes.uniform();
     componentChekboxes.switchery();
     componentChekboxes.bootstrap();
@@ -316,94 +369,64 @@ $(document).ready(function() {
         });
     });
 
-    var $magicModalPjax = $(MagicModal.pjax.selector);
-    $(document).on('click', '.magic-modal-control', function(e){
+    var $magicModalPjax = $(magicModal.pjax.selector);
+    $(document).on('click', '.magic-modal-control', function(e) {
         e.preventDefault();
-        var data = $(this).data();
-        // // callback = $(this).attr('data-callback');
-        MagicModal.applySize( data.modalSize );
-        MagicModal.setCallback( data.callback );
-        MagicModal.pjax.settings.url = data.url;
-        //если элемент находится в форме
-        var $serializeElement = $(this).closest('form');
-        if($serializeElement.length === 0) {
-            var selector = data.serializeSelector;
-            if(typeof selector !== 'undefined') {
-                //TODO реализовать пригодится
-                //parts = selector.split('||');
-                $serializeElement = $(selector);
-            }
-        }
-
-        var formData = null;
-        //TODO сбор данных с более одного селектора
-        if($serializeElement.length === 1) {
-            formData = serializeControl.serialize();
-            //удаление параметра _csrf из серилизованной строки
-            formData = formData.replace( /_csrf=(.*?)\&/g, "" );
-            MagicModal.pjax.settings.data = formData;
-            delete MagicModal.pjax.settings.data['_scrf'];
-        }
-        MagicModal.pjax.reload();
+        magicModal.run($(this))
     });
 
-    $(document).on('submit', MagicModal.pjax.selector + ' form', function(event) {
+    $(document).on('submit', magicModal.pjax.selector + ' form', function(event) {
         var $form = $(this);
-        MagicModal.pjax.settings.url = $form.attr('action');
-        delete MagicModal.pjax.settings.data;
-        MagicModal.pjax.submit(event);
-
+        magicModal.pjax.extendSettings({ url: $form.attr('action')});
+        delete magicModal.pjax.settings.data;
+        magicModal.pjax.submit(event);
     });
 
     $magicModalPjax.on('pjax:timeout', function (event, data) {
         event.preventDefault();
     });
 
-    $magicModalPjax.on('pjax:beforeSend', function (event, data) {
-        MagicModal.reset();
-    });
-
     $magicModalPjax.on('pjax:success', function(data, status, xhr, options) {
         try {
             var response = $.parseJSON(status);
-            MagicModal.isJsonResponse = true;
+            magicModal.isJsonResponse = true;
             Yii2Admin.notify(response);
-            if(typeof MagicModal.callback !== 'undefined') {
-                Yii2Admin.runCallback(callback, response.data);
-                MagicModal.callback = null;
+            if(magicModal.callback !== null) {
+                Yii2Admin.runCallback(magicModal.callback, response.data);
             }
+
+            // magicModal.reset();
+            magicModal.$modal.modal('hide');
         } catch (e) {
             var content = $(status);
             var title = content.filter('title');
             if(title.length > 0) {
-                MagicModal.$modal.find('.modal-title').html(title.html());
+                magicModal.$modal.find('.modal-title').html(title.html());
             }
-            // reinitPlugins();
         }
     });
     //подгрузка контента с удаленного роута
     $magicModalPjax.on('pjax:end', function(object, xhr) {
-        if(xhr.status != 200) {
+        if(xhr.status != 200 || magicModal.isJsonResponse) {
             return;
         }
 
-        if(MagicModal.isJsonResponse) {
-            return;
-        }
-
-        // var panels = $('#magic-modal').find('.panel');
-        // $.each(panels, function(el) {
-        //     el.removeClass
-        // });
-        // $magicModalPjax.find('.panel').removeClass('panel')
-        MagicModal.$modal.modal('show');
+        $magicModalPjax.find('.card').each(function(el) {
+            $(this).removeClass('card');
+        });
+        magicModal.$modal.modal('show');
     });
 
     $magicModalPjax.on('pjax:error', function (xhr, response) {
-        MagicModal.reset();
+        // случаи с abort
+        if(response.status == 0) {
+            return;
+        }
+
         var message = response.status + ' : ' + response.statusText;
         componentNotify.pNotify(componentNotify.statuses.error, message);
+        magicModal.reset();
 
-        return false;
+        return true;
     });
 });

@@ -114,6 +114,7 @@ class View extends Base
      */
     public function setTitle(string $title)
     {
+//        d($title);
         $this->title = $title;
     }
 
@@ -152,30 +153,30 @@ class View extends Base
      *
      * @inheritDoc
      */
-    public function render($view, $params = [], $context = null)
-    {
-        $result = $this->getOverrideView($view, $params, $context);
-        if($result) {
-            return $result;
-        }
-
-        return parent::render($view, $params, $context);
-    }
-
-    /**
-     * Поиск сначало проектного представления, после компонента админки
-     *
-     * @inheritDoc
-     */
-    public function renderAjax($view, $params = [], $context = null)
-    {
-        $result = $this->getOverrideView($view, $params, $context);
-        if($result) {
-            return $result;
-        }
-
-        return parent::renderAjax($view, $params, $context);
-    }
+//    public function render($view, $params = [], $context = null)
+//    {
+//        $result = $this->getOverrideView($view, $params, $context);
+//        if($result) {
+//            return $result;
+//        }
+//
+//        return parent::render($view, $params, $context);
+//    }
+//
+//    /**
+//     * Поиск сначало проектного представления, после компонента админки
+//     *
+//     * @inheritDoc
+//     */
+//    public function renderAjax($view, $params = [], $context = null)
+//    {
+//        $result = $this->getOverrideView($view, $params, $context);
+//        if($result) {
+//            return $result;
+//        }
+//
+//        return parent::renderAjax($view, $params, $context);
+//    }
 
     /**
      * Поиск переопределенного представления проекта
