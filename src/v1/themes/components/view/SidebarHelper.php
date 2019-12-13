@@ -25,12 +25,15 @@ class SidebarHelper
      *
      * @return string|null
      */
-    public static function c(string $c, $class = self::ACTIVE_CLASS)
+    public static function c($c, $class = self::ACTIVE_CLASS)
     {
         $state = false;
         $controller = Yii::$app->controller;
 
-        if(($controller->id == $c)) {
+        if (
+            (is_array($c) && ($c && in_array($controller->id, $c)))
+            || ($c && $controller->id == $c)
+        ){
             $state = true;
         }
 
