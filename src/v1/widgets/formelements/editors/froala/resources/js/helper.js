@@ -29,8 +29,8 @@ EditorHelper.prototype.initIcon = function() {
     FroalaEditor.DefineIconTemplate('iconmoon', '<i class="icon-[NAME]"></i>');
 }
 
-var EditorHelper = new EditorHelper();
+var editorHelper = new EditorHelper();
 
 document.addEventListener('DOMContentLoaded', function() {
-    EditorHelper.initIcon();
+    editorHelper.initIcon();
 })
