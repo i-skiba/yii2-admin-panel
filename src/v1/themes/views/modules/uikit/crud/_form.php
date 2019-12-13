@@ -14,6 +14,7 @@
     use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
     use kamaelkz\yii2cdnuploader\widgets\Uploader;
+    use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 
 ?>
 <?php Pjax::begin(['formSelector' => '#uiikit-form']); ?>
@@ -23,7 +24,15 @@
                 <?=  Html::submitButton(
                     '<b><i class="icon-checkmark3"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
                     [
-                        'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1'
+                        'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1',
+                    ]
+                ); ?>
+                <?=  Html::submitButton(
+                    '<b><i class="icon-list"></i></b>' . Yii::t('yii2admin', 'Сохранить и перейти к списку'),
+                    [
+                        'class' => 'btn bg-info btn-labeled btn-labeled-left ml-1',
+                        'name' => RequestHelper::REDIRECT_BTN_PARAM,
+                        'value' => 'index'
                     ]
                 ); ?>
             </div>
@@ -301,6 +310,14 @@
                     '<b><i class="icon-checkmark3"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
                     [
                         'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1'
+                    ]
+                ); ?>
+                <?=  Html::submitButton(
+                    '<b><i class="icon-list"></i></b>' . Yii::t('yii2admin', 'Сохранить и перейти к списку'),
+                    [
+                        'class' => 'btn bg-info btn-labeled btn-labeled-left ml-1',
+                        'name' => RequestHelper::REDIRECT_BTN_PARAM,
+                        'value' => 'index'
                     ]
                 ); ?>
             </div>
