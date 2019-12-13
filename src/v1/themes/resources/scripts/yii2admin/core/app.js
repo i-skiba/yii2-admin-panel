@@ -1,82 +1,85 @@
-var Yii2Admin = {
-    t : function (key) {
-        if(typeof this.i18n.dictionary[key] === 'undefined') {
-            return null;
-        }
-
-        return  this.i18n.dictionary[key];
-    },
-    i18n : {
+var Yii2Admin = function() {
+    this.i18n = {
         dictionary : {},
         extend : function (object) {
             this.dictionary = _.extend(this.dictionary, object);
         }
-    },
-    sendRequest : function (action , params, options, callback) {
-        var self = this;
-        $.ajax({
-            type : 'POST',
-            url : action,
-            data : params,
-            success : function(data) {
-                try {
-                    var response = $.parseJSON(data);
-                } catch(e) {
-                    var response = data;
-                }
+    };
+};
 
-                if(typeof options.pjax_id !== 'undefined') {
-                    var pjaxOptions = {
-                        push : false,
-                        replace : false
-                    };
-                    if(typeof options.pjax_url !== 'undefined') {
-                        pjaxOptions['url'] = options.pjax_url;
-                    }
-
-                    $.pjax.reload('#' + options.pjax_id , pjaxOptions);
-                    self.notify(response);
-                }
-
-                if(typeof callback !== 'undefined') {
-                    self.runCallback(callback, response)
-                }
-
-                if(typeof response.redirectUrl !== 'undefined') {
-                    location.href = response.redirectUrl;
-                }
-
-            }, error : function(data) {
-                // alert(data);
-                var messaga = data.status + ' : ' + data.statusText;
-                componentNotify.pNotify(componentNotify.statuses.error, messaga);
-            }
-        });
-    },
-    notify : function(response) {
-        if(typeof response.flash !== 'undefined') {
-            flashAlert.interval = flashAlert.show(response);
-        }
-
-        if(
-            typeof response.type !== 'undefined'
-            && typeof response.message !== 'undefined'
-        ) {
-            componentNotify.pNotify(response.type, response.message);
-        }
-    },
-    // рецепт, понаблюдать
-    runCallback : function(callback, data) {
-        if(typeof callback === 'function') {
-            return eval(callback)(data);
-        }
-
-        var wrap = s => "{ return " + callback.trim() + " };"
-        var func = new Function( wrap(callback) );
-        try{
-            func.call(null).call(null, data);
-        } catch(e) {}
+Yii2Admin.prototype.t = function (key) {
+    if(typeof this.i18n.dictionary[key] === 'undefined') {
+        return null;
     }
+
+    return  this.i18n.dictionary[key];
+};
+
+Yii2Admin.prototype.sendRequest = function (action , params, options, callback) {
+    var self = this;
+    $.ajax({
+        type : 'POST',
+        url : action,
+        data : params,
+        success : function(data) {
+            try {
+                var response = $.parseJSON(data);
+            } catch(e) {
+                var response = data;
+            }
+
+            if(typeof options.pjax_id !== 'undefined') {
+                var pjaxOptions = {
+                    push : false,
+                    replace : false
+                };
+                if(typeof options.pjax_url !== 'undefined') {
+                    pjaxOptions['url'] = options.pjax_url;
+                }
+
+                $.pjax.reload('#' + options.pjax_id , pjaxOptions);
+                self.notify(response);
+            }
+
+            if(typeof callback !== 'undefined') {
+                self.runCallback(callback, response)
+            }
+
+            if(typeof response.redirectUrl !== 'undefined') {
+                location.href = response.redirectUrl;
+            }
+
+        }, error : function(data) {
+            // alert(data);
+            var messaga = data.status + ' : ' + data.statusText;
+            componentNotify.pNotify(componentNotify.statuses.error, messaga);
+        }
+    });
+};
+
+Yii2Admin.prototype.notify = function(response) {
+    if(typeof response.flash !== 'undefined') {
+        flashAlert.interval = flashAlert.show(response);
+    }
+
+    if(
+        typeof response.type !== 'undefined'
+        && typeof response.message !== 'undefined'
+    ) {
+        componentNotify.pNotify(response.type, response.message);
+    }
+};
+// рецепт, понаблюдать
+Yii2Admin.prototype.runCallback = function(callback, data) {
+    if(typeof callback === 'function') {
+        return eval(callback)(data);
+    }
+
+    var wrap = s => "{ return " + callback.trim() + " };"
+    var func = new Function( wrap(callback) );
+    try{
+        func.call(null).call(null, data);
+    } catch(e) {}
 };
 
 var FlashAlertHelper = function() {
@@ -255,13 +258,13 @@ CallbackHelper.prototype.reloadPjax = function(selector) {
     this.pjax.reload();
 }
 
-$(document).ready(function() {
-    // инициализация плагинов
-    magicModal = new MagicModal();
-    callbackHelper = new CallbackHelper();
-    urlHelper = new UrlHelper();
-    flashAlert = new FlashAlertHelper();
+var yii2admin = new Yii2Admin();
+var magicModal = new MagicModal();
+var callbackHelper = new CallbackHelper();
+var urlHelper = new UrlHelper();
+var flashAlert = new FlashAlertHelper();
 
+$(document).ready(function() {
     componentChekboxes.uniform();
     componentChekboxes.switchery();
     componentChekboxes.bootstrap();
@@ -360,11 +363,11 @@ $(document).ready(function() {
         };
 
         if(typeof data.swal === 'undefined') {
-            return Yii2Admin.sendRequest(action, data.params, options, data.callback)
+            return yii2admin.sendRequest(action, data.params, options, data.callback)
         }
 
         componentNotify.sweetAlert(data.swal, function () {
-            Yii2Admin.sendRequest(action, data.params, options, data.callback)
+            yii2admin.sendRequest(action, data.params, options, data.callback)
         });
     });
 
@@ -389,9 +392,9 @@ $(document).ready(function() {
         try {
             var response = $.parseJSON(status);
             magicModal.isJsonResponse = true;
-            Yii2Admin.notify(response);
+            yii2admin.notify(response);
             if(magicModal.callback !== null) {
-                Yii2Admin.runCallback(magicModal.callback, response.data);
+                yii2admin.runCallback(magicModal.callback, response.data);
             }
 
             // magicModal.reset();
