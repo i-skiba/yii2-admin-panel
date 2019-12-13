@@ -3,6 +3,7 @@
 namespace kamaelkz\yii2admin\v1\controllers\traits;
 
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
+use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 use Yii;
 use yii\helpers\Html;
 
@@ -27,7 +28,10 @@ trait ControllerTrait
      */
     public function redirect($url, $statusCode = 302)
     {
-        if(! Yii::$app->request->isPjax) {
+        if(
+            ! Yii::$app->request->isPjax
+            || ! RequestHelper::isMagicModal()
+        ) {
             return parent::redirect($url, $statusCode);
         }
 
@@ -44,7 +48,10 @@ trait ControllerTrait
      */
     public function render($view, $params = [])
     {
-        if(! Yii::$app->request->isPjax) {
+        if(
+            ! Yii::$app->request->isPjax
+            || ! RequestHelper::isMagicModal()
+        ) {
             return parent::render($view, $params);
         }
 

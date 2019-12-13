@@ -55,7 +55,7 @@ var Yii2Admin = {
     },
     notify : function(response) {
         if(typeof response.flash !== 'undefined') {
-            FlashAlertHelper.interval = FlashAlertHelper.show(response);
+            flashAlert.interval = flashAlert.show(response);
         }
 
         if(
@@ -79,45 +79,44 @@ var Yii2Admin = {
     }
 };
 
-var FlashAlertHelper = {
-    interval : null,
-    $container : null,
-    duration : 7000,
-    show : function( response ) {
-        this.$container.html('');
-        if(typeof response.flash !== 'undefined') {
-            data = response.flash;
-        } else {
-            data = response;
-        }
+var FlashAlertHelper = function() {
+    this.interval = this.hide();
+    this.$container = $('.admin-flash');
+    this.duration = 7000;
+}
 
-        if(! data) {
-            return false;
-        }
-
-        this.$container.html(data);
-
-        return this.hide();
-    },
-    hide : function() {
-        var self = this;
-        self.reset();
-
-        return setTimeout(
-            function() {
-                self.$container.html('');
-            } ,
-            self.duration
-        );
-    },
-    reset : function() {
-        clearTimeout(this.interval);
-    },
-    initialization : function () {
-        this.$container = $('.admin-flash');
-        this.interval = this.hide();
+FlashAlertHelper.prototype.show = function( response ) {
+    this.$container.html('');
+    if(typeof response.flash !== 'undefined') {
+        data = response.flash;
+    } else {
+        data = response;
     }
+
+    if(! data) {
+        return false;
+    }
+
+    this.$container.html(data);
+
+    return this.hide();
 };
+
+FlashAlertHelper.prototype.hide = function() {
+    var self = this;
+    self.reset();
+
+    return setTimeout(
+        function() {
+            self.$container.html('');
+        } ,
+        self.duration
+    );
+}
+
+FlashAlertHelper.prototype.reset = function() {
+    clearTimeout(this.interval);
+}
 
 var UrlHelper = function() {}
 
@@ -258,10 +257,10 @@ CallbackHelper.prototype.reloadPjax = function(selector) {
 
 $(document).ready(function() {
     // инициализация плагинов
-    FlashAlertHelper.initialization();
     magicModal = new MagicModal();
     callbackHelper = new CallbackHelper();
     urlHelper = new UrlHelper();
+    flashAlert = new FlashAlertHelper();
 
     componentChekboxes.uniform();
     componentChekboxes.switchery();
@@ -344,7 +343,7 @@ $(document).ready(function() {
     // действия в админке
     $(document).on('click','.admin-action',function(e){
         e.preventDefault();
-        FlashAlertHelper.reset();
+        flashAlert.reset();
         var action = $(this).attr('href');
         var data = $(this).data();
         if(typeof data.params !== 'undefined') {
