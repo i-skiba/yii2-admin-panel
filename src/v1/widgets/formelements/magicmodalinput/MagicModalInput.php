@@ -60,6 +60,7 @@ class MagicModalInput extends InputWidget
             'callback' => $this->callback,
             'icon' => $this->icon,
             'label_attribute' => $this->label_attribute,
+            'index' => static::$counter
         ]);
     }
 }

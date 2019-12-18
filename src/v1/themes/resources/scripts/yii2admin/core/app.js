@@ -82,6 +82,17 @@ Yii2Admin.prototype.runCallback = function(callback, data) {
     } catch(e) {}
 };
 
+Yii2Admin.prototype.reinitPlugins = function() {
+    componentChekboxes.bootstrap();
+    componentChekboxes.uniform();
+    componentSelects.uniform();
+    if(typeof componentCdnUploader !== 'undefined') {
+        componentCdnUploader.initialization();
+    }
+
+    App.initCardActions();
+}
+
 var FlashAlertHelper = function() {
     this.interval = this.hide();
     this.$container = $('.admin-flash');
@@ -175,7 +186,7 @@ Pjax.prototype.submit = function(event) {
     $.pjax.submit(event, this.selector, this.settings);
 }
 
-var MagicModal = function(pjax) {
+var MagicModal = function() {
     this.$modal = $('#magic-modal');
     this.$container = null;
     this.modalSizes = [
@@ -191,11 +202,16 @@ var MagicModal = function(pjax) {
     if(this.$modal.length > 0) {
         this.$container = this.$modal.find('.modal-dialog');
     }
+
     this.pjax = new Pjax();
     this.pjax.setSelector('#magic-modal-pjax');
 }
 
 MagicModal.prototype.run = function($el) {
+    if(typeof this.pjax.settings.data !== 'undefined') {
+        this.pjax.settings.data = {};
+    }
+
     this.isStop = false;
     var data = $el.data();
     this.applySize( data.modalSize );
@@ -219,22 +235,20 @@ MagicModal.prototype.run = function($el) {
         //удаление параметра _csrf из серилизованной строки
         formData = formData.replace( /_csrf=(.*?)\&/g, "" );
         this.pjax.extendSettings({data : formData});
-        delete this.pjax.settings.data['_scrf'];
+        delete this.pjax.settings.data['_csrf'];
     }
 
     this.pjax.reload();
 }
 
 MagicModal.prototype.applySize = function(size_class) {
-    if(
-        typeof size_class == 'undefined'
-        || this.$container.hasClass(size_class)
-    ) {
-        return false;
-    }
-
     this.$container.removeClass(this.modalSizes.join(' '));
-    this.$container.addClass(size_class);
+    if(
+        typeof size_class !== 'undefined'
+        || ! this.$container.hasClass(size_class)
+    ) {
+        this.$container.addClass(size_class);
+    }
 }
 
 MagicModal.prototype.setCallback = function(value) {
@@ -309,14 +323,7 @@ $(document).ready(function() {
             return;
         }
 
-        componentChekboxes.bootstrap();
-        componentChekboxes.uniform();
-        componentSelects.uniform();
-        if(typeof componentCdnUploader !== 'undefined') {
-            componentCdnUploader.initialization();
-        }
-
-        App.initCardActions();
+        yii2admin.reinitPlugins();
     });
 
     $listPjax.on('pjax:error', function(xhr, response) {
@@ -411,6 +418,8 @@ $(document).ready(function() {
             if(title.length > 0) {
                 magicModal.$modal.find('.modal-title').html(title.html());
             }
+            
+            yii2admin.reinitPlugins();
         }
 
         return true;
@@ -427,6 +436,8 @@ $(document).ready(function() {
             });
             magicModal.$modal.modal('show');
         }
+
+        return true;
     });
 
     $magicModalPjax.on('pjax:error', function (xhr, response) {
