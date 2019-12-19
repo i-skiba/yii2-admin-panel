@@ -20,6 +20,11 @@ class DefaultController extends BaseController
 {
     use UserServices;
 
+    public $defaultAction = 'login';
+
+    /**
+     * @inheritDoc
+     */
     protected function getAccessRules()
     {
         return [
