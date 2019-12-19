@@ -17,9 +17,7 @@
         }
     ],
     "require": {
-        "concepture/yii2-logic-core" : "dev-master",
-        "concepture/yii2-user-module" : "dev-master",
-        "kamaelkz/yii2-cdn-uploader" : "dev-master"
+
     },
     "autoload": {
         "psr-4": {
