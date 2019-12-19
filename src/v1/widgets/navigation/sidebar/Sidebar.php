@@ -20,7 +20,7 @@ class Sidebar extends NavigationWidget
     /**
      * @inheritDoc
      */
-    protected function getGroup($item) : string
+    protected function getGroup($item)
     {
         if(! $this->isVisible($item)) {
             return null;
@@ -43,7 +43,7 @@ class Sidebar extends NavigationWidget
     /**
      * @inheritDoc
      */
-    protected function getElement($item) : string
+    protected function getElement($item)
     {
         if(! $this->isVisible($item)) {
             return null;
