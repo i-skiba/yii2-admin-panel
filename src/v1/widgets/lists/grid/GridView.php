@@ -44,7 +44,7 @@ class GridView extends Base
      * @inheritdoc
      */
     public $tableOptions = [
-        'class' => 'table table-bordered table-striped'
+        'class' => 'table table-bordered table-striped table-responsive'
     ];
 
     /**
