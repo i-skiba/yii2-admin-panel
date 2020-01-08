@@ -7,7 +7,7 @@
 
 ?>
 
-<?php if($searchViewPath):?>
+<?php if(isset($searchViewPath)) :?>
     <div class='card search-box <?= ($collapsed ? 'card-collapsed' : null) ;?>'>
         <div class="card-header header-elements-inline">
             <h6 class="card-title">
