@@ -39,6 +39,9 @@
                                 <?php endif;?>
                                 <?= $this->getTitle() ?>
                             </h4>
+                            <a href="#" class="header-elements-toggle text-default d-md-none">
+                                <i class="icon-more"></i>
+                            </a>
                         </div>
                         <div class="header-elements d-none">
                             <div class="d-flex justify-content-center">

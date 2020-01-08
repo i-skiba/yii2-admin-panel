@@ -58,7 +58,7 @@
         </div>
     </div>
 <?php endif;?>
-    <div class='card admin-grid-box'>
+<div class='card admin-grid-box table-responsive'>
     <div class='datatable-header length-left'>
         <div class='dataTables_info'>
             {summary}
@@ -67,9 +67,7 @@
             {pager}
         </div>
     </div>
-    <div class="table-responsive">
-        {items}
-    </div>
+    {items}
     <div class='datatable-footer info-right'>
         <div class='dataTables_paginate'>
             {pager}
