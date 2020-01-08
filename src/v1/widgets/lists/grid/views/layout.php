@@ -67,7 +67,9 @@
             {pager}
         </div>
     </div>
-    {items}
+    <div class="table-responsive">
+        {items}
+    </div>
     <div class='datatable-footer info-right'>
         <div class='dataTables_paginate'>
             {pager}
