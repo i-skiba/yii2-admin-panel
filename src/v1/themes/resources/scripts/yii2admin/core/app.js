@@ -75,7 +75,7 @@ Yii2Admin.prototype.runCallback = function(callback, data) {
         return eval(callback)(data);
     }
 
-    var wrap = s => "{ return " + callback.trim() + " };"
+    var wrap = s => "{ return " + callback.trim() + " };";
     var func = new Function( wrap(callback) );
     try{
         func.call(null).call(null, data);
@@ -91,13 +91,15 @@ Yii2Admin.prototype.reinitPlugins = function() {
     }
 
     App.initCardActions();
-}
+};
 
 var FlashAlertHelper = function() {
-    this.interval = this.hide();
+    // todo: криво пашет, скрывает сразу
+    // this.interval = this.hide();
+    this.interval = null;
     this.$container = $('.admin-flash');
     this.duration = 7000;
-}
+};
 
 FlashAlertHelper.prototype.show = function( response ) {
     this.$container.html('');
@@ -126,13 +128,13 @@ FlashAlertHelper.prototype.hide = function() {
         } ,
         self.duration
     );
-}
+};
 
 FlashAlertHelper.prototype.reset = function() {
     clearTimeout(this.interval);
-}
+};
 
-var UrlHelper = function() {}
+var UrlHelper = function() {};
 
 UrlHelper.prototype.addParam = function(queryString, param, value) {
     queryParameters = this._getQueryParameters(queryString);
@@ -155,7 +157,7 @@ UrlHelper.prototype._getQueryParameters = function(queryString) {
     }
 
     return queryParameters;
-}
+};
 
 var Pjax = function() {
     this.selector = '#list-pjax';
@@ -164,27 +166,27 @@ var Pjax = function() {
         scrollTo : false,
         replace : false
     };
-}
+};
 
 Pjax.prototype.setSelector = function(value) {
     this.selector = value;
-}
+};
 
 Pjax.prototype.setSettings = function(object) {
     this.settings = object;
-}
+};
 
 Pjax.prototype.extendSettings = function(object) {
     this.settings = _.extend(this.settings, object);
-}
+};
 
 Pjax.prototype.reload = function() {
     $.pjax.reload(this.selector, this.settings);
-}
+};
 
 Pjax.prototype.submit = function(event) {
     $.pjax.submit(event, this.selector, this.settings);
-}
+};
 
 var MagicModal = function() {
     this.$modal = $('#magic-modal');
@@ -205,7 +207,7 @@ var MagicModal = function() {
 
     this.pjax = new Pjax();
     this.pjax.setSelector('#magic-modal-pjax');
-}
+};
 
 MagicModal.prototype.run = function($el) {
     if(typeof this.pjax.settings.data !== 'undefined') {
@@ -239,7 +241,7 @@ MagicModal.prototype.run = function($el) {
     }
 
     this.pjax.reload();
-}
+};
 
 MagicModal.prototype.applySize = function(size_class) {
     this.$container.removeClass(this.modalSizes.join(' '));
@@ -249,7 +251,7 @@ MagicModal.prototype.applySize = function(size_class) {
     ) {
         this.$container.addClass(size_class);
     }
-}
+};
 
 MagicModal.prototype.setCallback = function(value) {
     if(typeof value == 'undefined') {
@@ -257,14 +259,14 @@ MagicModal.prototype.setCallback = function(value) {
     }
 
     this.callback = value
-},
+};
 
 MagicModal.prototype.stop = function() {
     this.callback = null;
     this.isJsonResponse = false;
     this.response = null;
     this.isStop = true;
-}
+};
 
 var CallbackHelper = function() {
     this.pjax = new Pjax();
@@ -273,7 +275,7 @@ var CallbackHelper = function() {
 CallbackHelper.prototype.reloadPjax = function(selector) {
     this.pjax.setSelector(selector);
     this.pjax.reload();
-}
+};
 
 var yii2admin = new Yii2Admin();
 var magicModal = new MagicModal();

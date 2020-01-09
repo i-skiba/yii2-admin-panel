@@ -2,7 +2,7 @@
     <button type="button" class="close" data-dismiss="alert">
         <span>×</span>
         <span class="sr-only">
-            <?= $closeLabel;?>
+            <?= Yii::t('yii2admin','Закрыть');?>
         </span>
     </button>
     <?= $message;?>

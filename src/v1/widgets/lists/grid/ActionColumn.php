@@ -82,7 +82,7 @@ class ActionColumn extends BaseColumn
                     $this->buttonOptions
                 );
                 $icon = Html::tag('i', '', ['class' => "icon-$iconName"]);
-                $label = $this->dropdown ? $icon . $title : $icon;
+                $label = $this->dropdown ? ($icon . $title) : $icon;
 
                 return Html::a($label, $url, $options);
             };
@@ -96,7 +96,11 @@ class ActionColumn extends BaseColumn
     {
         $content = parent::renderDataCellContent($model, $key, $index);
         if(! $this->dropdown) {
-            return $content;
+            return <<<HTML
+            <div class="list-icons">
+                $content
+            </div>
+HTML;
         }
 
         return <<<HTML

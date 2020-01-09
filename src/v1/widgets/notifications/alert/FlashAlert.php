@@ -8,7 +8,7 @@ use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 
 /**
  * Виджет уведомлений bootrtrap
- * 
+ *
  * @property string $type
  * 
  * @author kamaelkz <kamaelkz@yandex.kz>
@@ -36,7 +36,6 @@ class FlashAlert extends Widget
      */
     public function run() 
     {
-        $closeLabel = Yii::t('yii2admin','Закрыть');
         $message = Yii::$app->session->getFlash($this->type);
         if(! $message ) {
             return null;
@@ -44,7 +43,6 @@ class FlashAlert extends Widget
 
         return $this->render('view', [
             'type' => $this->type,
-            'label' => $closeLabel,
             'message' => $message,
         ]);
     }
