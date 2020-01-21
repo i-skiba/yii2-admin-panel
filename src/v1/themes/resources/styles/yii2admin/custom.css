@@ -49,3 +49,8 @@ form div.required label.control-label::after{
     min-width: 10%;
     display:inline-block;
 }
+
+.card-img.img-fluid {
+    width: auto;
+    max-width: 100%;
+}
