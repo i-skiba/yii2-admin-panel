@@ -15,10 +15,10 @@ trait ListsTrait
 { 
     /**
      * Виджет оборачивается в форму
-     * 
+     *
      * @return string HTML
      */
-    public function renderItems() 
+    public function renderItems()
     {
         $result = null;
         $table = parent::renderItems();
@@ -37,7 +37,7 @@ trait ListsTrait
         if(RequestHelper::isMagicModal()) {
             $result .= Html::endForm();
         }
-        
+
         return $result;
     }
       

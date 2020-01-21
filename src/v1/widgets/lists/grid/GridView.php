@@ -148,6 +148,7 @@ class GridView extends Base
             return "<tbody>\n<tr><td colspan=\"$colspan\">" . $this->renderEmpty() . "</td></tr>\n</tbody>";
         }
 
+        $options = [];
         if($this->dragAndDrop) {
             $sortColumn = $this->dragAndDropOptions['column'] ?? null;
             if(! $sortColumn) {
