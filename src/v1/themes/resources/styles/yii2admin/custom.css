@@ -42,3 +42,10 @@ form div.required label.control-label::after{
 .no-margin {
     margin: 0px; !important;
 }
+
+.admin-grid-box .editable-column {
+    border-bottom: dashed 1px #42A5F5;
+    cursor: pointer;
+    min-width: 10%;
+    display:inline-block;
+}

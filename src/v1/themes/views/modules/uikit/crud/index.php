@@ -2,6 +2,7 @@
 
 use yii\grid\GridView;
 use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
+use kamaelkz\yii2admin\v1\widgets\lists\grid\EditableColumn;
 
 /* @var $this \kamaelkz\yii2admin\v1\themes\components\view\View */
 /* @var $searchModel \kamaelkz\yii2admin\v1\modules\uikit\search\CrudSearch */
@@ -20,10 +21,25 @@ $this->viewHelper()->pushPageHeader();
         'searchParams' => [
             'model' => $searchModel
         ],
+        'dragAndDrop' => true,
         'columns' => [
             'id',
+            [
+                'attribute' => 'text_input',
+                'class' => EditableColumn::class
+            ],
             'mask',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'sort',
+                'class' => EditableColumn::class,
+                'contentOptions' => [
+                    'style' => 'width:15%',
+                    'class'=> 'text-center'
+                ]
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn'
+            ],
         ],
     ]); ?>
 <?php Pjax::end();?>

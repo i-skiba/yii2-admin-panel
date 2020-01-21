@@ -1,4 +1,5 @@
 <?php
+
 namespace kamaelkz\yii2admin\v1\actions;
 
 use Yii;

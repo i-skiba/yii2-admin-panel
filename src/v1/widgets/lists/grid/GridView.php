@@ -4,14 +4,20 @@ namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView as Base;
 use kamaelkz\yii2admin\v1\forms\BaseForm;
-use frontend\common\components\columns\CopyColumn;
+use kamaelkz\yii2admin\v1\widgets\lists\grid\CopyColumn;
 use kamaelkz\yii2admin\v1\helpers\RequestHelper;
+use kamaelkz\yii2admin\v1\widgets\lists\grid\DragAndDropColumn;
+use kamaelkz\yii2admin\v1\actions\SortAction;
 
 /**
  * Грид для проекта
- * 
+ *
+ * @todo : dragAndDrop и $dragAndDropOptions - как то не красиво
+ *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
 class GridView extends Base
@@ -41,6 +47,18 @@ class GridView extends Base
     ];
 
     /**
+     * @var bool
+     */
+    public $dragAndDrop = false;
+
+    /**
+     * @var array
+     */
+    public $dragAndDropOptions = [
+        'column' => 'sort'
+    ];
+
+    /**
      * @inheritdoc
      */
     public $tableOptions = [
@@ -67,6 +85,7 @@ class GridView extends Base
     
     public function init() 
     {
+        $this->initDragAndDrop();
         $this->setMagicModalSettings();
         $this->prepareLayout();
         parent::init();
@@ -95,11 +114,55 @@ class GridView extends Base
         $this->layout = $this->render('layout', $this->searchParams);
 
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function renderTableBody()
+    {
+        $models = array_values($this->dataProvider->getModels());
+        $keys = $this->dataProvider->getKeys();
+        $rows = [];
+        foreach ($models as $index => $model) {
+            $key = $keys[$index];
+            if ($this->beforeRow !== null) {
+                $row = call_user_func($this->beforeRow, $model, $key, $index, $this);
+                if (!empty($row)) {
+                    $rows[] = $row;
+                }
+            }
+
+            $rows[] = $this->renderTableRow($model, $key, $index);
+
+            if ($this->afterRow !== null) {
+                $row = call_user_func($this->afterRow, $model, $key, $index, $this);
+                if (!empty($row)) {
+                    $rows[] = $row;
+                }
+            }
+        }
+
+        if (empty($rows) && $this->emptyText !== false) {
+            $colspan = count($this->columns);
+
+            return "<tbody>\n<tr><td colspan=\"$colspan\">" . $this->renderEmpty() . "</td></tr>\n</tbody>";
+        }
+
+        if($this->dragAndDrop) {
+            $sortColumn = $this->dragAndDropOptions['column'] ?? null;
+            if(! $sortColumn) {
+                throw new InvalidConfigException('dragAndDropOptions `column` must be set.');
+            }
+
+            $options['class'] = 'dnd-grid-view';
+            $options['data-url'] = Url::to([SortAction::actionName() , 'sortColumn' => $sortColumn]);
+        }
+
+        return Html::tag('tbody', implode("\n", $rows), $options);
+    }
     
     /**
      * Настройки грида для магической модалки
-     *
-     *
      */
     private function setMagicModalSettings()
     {
@@ -121,5 +184,24 @@ class GridView extends Base
         $this->searchVisible = false;
         array_unshift($this->columns, $copyColumn);
         array_pop($this->columns);
+    }
+
+    /**
+     * Инициализация колонки
+     */
+    private function initDragAndDrop()
+    {
+        if(! $this->dragAndDrop) {
+            return ;
+        }
+
+        $column = &$this->columns[0];
+        if(is_string($column)) {
+            $column = [
+                'attribute' => $column,
+            ];
+        }
+
+        $column['class'] = DragAndDropColumn::class;
     }
 }

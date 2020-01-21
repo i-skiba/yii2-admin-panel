@@ -2,10 +2,13 @@
 
 namespace kamaelkz\yii2admin\v1\modules\uikit\controllers;
 
+use Yii;
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 use kamaelkz\yii2admin\v1\modules\uikit\forms\UikitForm;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
 use concepture\yii2user\enum\UserRoleEnum;
+use kamaelkz\yii2admin\v1\actions\EditableColumnAction;
+use kamaelkz\yii2admin\v1\actions\SortAction;
 
 /**
  * Пример CRUD
@@ -31,6 +34,9 @@ class CrudController extends BaseController
                     'flash',
                     'redirect',
                     'callback',
+                    EditableColumnAction::actionName(),
+                    SortAction::actionName(),
+
                 ],
                 'allow' => true,
                 'roles' => [
@@ -47,6 +53,8 @@ class CrudController extends BaseController
     {
         $parent = parent::actions();
         unset($parent['delete']);
+        $parent[EditableColumnAction::actionName()] = EditableColumnAction::class;
+        $parent[SortAction::actionName()] = SortAction::class;
 
         return $parent;
     }

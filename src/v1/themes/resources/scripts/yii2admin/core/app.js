@@ -83,9 +83,11 @@ Yii2Admin.prototype.runCallback = function(callback, data) {
 };
 
 Yii2Admin.prototype.reinitPlugins = function() {
-    componentChekboxes.bootstrap();
     componentChekboxes.uniform();
+    componentChekboxes.switchery();
+    componentChekboxes.bootstrap();
     componentSelects.uniform();
+    componentDragAndDrop.init();
     if(typeof componentCdnUploader !== 'undefined') {
         componentCdnUploader.initialization();
     }
@@ -288,6 +290,7 @@ $(document).ready(function() {
     componentChekboxes.switchery();
     componentChekboxes.bootstrap();
     componentSelects.uniform();
+    componentDragAndDrop.init();
     $('.history-back').click(function() {
         window.history.back();
     });
