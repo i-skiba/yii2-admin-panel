@@ -32,11 +32,12 @@ class Yii2Admin implements BootstrapInterface
      */
     public function bootstrap($app)
     {
+        $this->setClassmap();
         Yii::$container->setDefinitions($this->getDefinations());
     }
 
     /**
-     * Подмена классов
+     * Подмена классов в контейнере
      *
      * @return array
      */
@@ -49,6 +50,14 @@ class Yii2Admin implements BootstrapInterface
             'yii\grid\GridView' => GridView::class,
             'yii\grid\ActionColumn' => ActionColumn::class,
         ];
+    }
+
+    /**
+     * Подмена классов в карте
+     */
+    private function setClassmap()
+    {
+        Yii::$classMap['yii\helpers\Html'] = '@yii2admin/dependency_injection/classmap/Html.php';
     }
 
     /**

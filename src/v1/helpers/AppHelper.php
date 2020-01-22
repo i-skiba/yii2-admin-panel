@@ -11,6 +11,4 @@ class AppHelper
 {
     const MAIN_LAYOUT_PATH = 'main';
     const SINGLE_LAYOUT_PATH = 'single';
-
-
 }
