@@ -4,13 +4,12 @@ namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView as Base;
 use kamaelkz\yii2admin\v1\forms\BaseForm;
-use kamaelkz\yii2admin\v1\widgets\lists\grid\CopyColumn;
 use kamaelkz\yii2admin\v1\helpers\RequestHelper;
-use kamaelkz\yii2admin\v1\widgets\lists\grid\DragAndDropColumn;
 use kamaelkz\yii2admin\v1\actions\SortAction;
 
 /**
@@ -28,6 +27,11 @@ class GridView extends Base
      * @var boolean признак отображения поиска
      */
     public $searchVisible = false;
+
+    /**
+     * @var bool признак поиска с разворачивающимся блоком
+     */
+    public $searchCollapsed = true;
 
     /**
      * @var string представление поиска
@@ -107,11 +111,12 @@ class GridView extends Base
             $this->searchParams['searchViewPath'] = "{$viewPath}/{$this->searchView}.php";
             # признак открытой формы поиска
             $this->searchParams['collapsed'] = (Yii::$app->request->get(BaseForm::$refreshParam) === null);
+            $this->searchParams['searchCollapsed'] = $this->searchCollapsed;
             $this->searchParams['selectedFilterCount'] = $model->getSelectedFilterCount();
         }
 
-
-        $this->layout = $this->render('layout', $this->searchParams);
+        $params = ArrayHelper::merge($this->searchParams, ['searchParams' => $this->searchParams]);
+        $this->layout = $this->render('layout', $params);
 
     }
 
