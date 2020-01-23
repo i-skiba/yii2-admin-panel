@@ -29,8 +29,9 @@ trait ControllerTrait
     public function redirect($url, $statusCode = 302)
     {
         if(
-            ! Yii::$app->request->isPjax
-            || ! RequestHelper::isMagicModal()
+            ! Yii::$app->request->isAjax
+            && ! Yii::$app->request->isPjax
+            && ! RequestHelper::isMagicModal()
         ) {
             return parent::redirect($url, $statusCode);
         }
