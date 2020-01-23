@@ -16,6 +16,11 @@ use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 class EditableColumnAction extends Action
 {
     /**
+     * @var string
+     */
+    public $serviceClass;
+
+    /**
      * Название дейстия
      *
      * @return string
@@ -30,18 +35,27 @@ class EditableColumnAction extends Action
      */
     public function run($column, $pk, $type, $required)
     {
-        $service = $this->getService();
+        if(! $this->serviceClass) {
+            $service = $this->getService();
+        } else {
+            $service = Yii::createObject($this->serviceClass);
+        }
+
         if(! $service) {
             throw new NotFoundHttpException('Service is not defined.');
         }
 
         $model = $service->getOneByCondition(['id' => $pk]);
+        if(! $model) {
+            throw new NotFoundHttpException('Model not found.');
+        }
+
         $class = get_class($model);
         if(! isset($model->{$column})) {
             throw new NotFoundHttpException("Column `{$column}` in class {$class} not found.");
         }
 
-        if($model->{$column} == $model->getPrimaryKey()) {
+        if($column == $model::primaryKey()) {
             throw new NotFoundHttpException("Unable to edit primary key.");
         }
 

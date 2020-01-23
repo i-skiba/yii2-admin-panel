@@ -36,7 +36,6 @@ class CrudController extends BaseController
                     'callback',
                     EditableColumnAction::actionName(),
                     SortAction::actionName(),
-
                 ],
                 'allow' => true,
                 'roles' => [

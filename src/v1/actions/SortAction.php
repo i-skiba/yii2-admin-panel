@@ -16,6 +16,11 @@ use PDO;
 class SortAction extends Action
 {
     /**
+     * @var string
+     */
+    public $serviceClass;
+
+    /**
      * @inheritDoc
      */
     public function init()
@@ -39,7 +44,11 @@ class SortAction extends Action
      */
     public function run($sortColumn = 'sort')
     {
-        $service = $this->getService();
+        if(! $this->serviceClass) {
+            $service = $this->getService();
+        } else {
+            $service = Yii::createObject($this->serviceClass);
+        }
         # todo: перенести в logic core с проверкой на mysql
         $connection = $service->getDb();
         $connection->createCommand('SET sql_mode=""')->execute();
