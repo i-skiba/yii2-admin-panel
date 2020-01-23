@@ -25,11 +25,11 @@ class Pjax extends Base
     {
         $custom = [
             'id' => (! RequestHelper::isMagicModal() ? self::DEFAULT_ID : null ),
-            'scrollTo' => 'false',
+            'scrollTo' => false,
             'enablePushState' => false
         ];
         $config = ArrayHelper::merge($custom, $config);
-        
+
         return parent::begin($config);
     }
 }

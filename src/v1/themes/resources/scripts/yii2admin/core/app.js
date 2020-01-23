@@ -222,7 +222,8 @@ MagicModal.prototype.run = function($el) {
     this.setCallback( data.callback );
     this.pjax.extendSettings({url : data.url});
     //если элемент находится в форме
-    var $serializeElement = $el.closest('form');
+    // todo : всю форму нельзя сериализовать
+    // var $serializeElement = $el.closest('form');
     if($serializeElement.length === 0) {
         var selector = data.serializeSelector;
         if(typeof selector !== 'undefined') {

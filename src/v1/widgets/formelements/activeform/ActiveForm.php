@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements\activeform;
 
+use yii\base\Model;
 use yii\helpers\Html;
 use concepture\yii2logic\widgets\WidgetTrait;
 use kamaelkz\yii2admin\v1\forms\BaseForm;
@@ -17,6 +18,15 @@ use kamaelkz\yii2admin\v1\forms\BaseForm;
 class ActiveForm extends \yii\widgets\ActiveForm
 {
     use WidgetTrait;
+
+    const EVENT_BEFORE_RENDER = 'beforeRender';
+
+    const EVENT_AFTER_RENDER = 'afterRender';
+
+    /**
+     * @var Model
+     */
+    public $model;
 
     /**
      * @var bool
@@ -51,10 +61,10 @@ class ActiveForm extends \yii\widgets\ActiveForm
         $content = ob_get_clean();
         echo Html::beginForm($this->action, $this->method, $this->options);
         echo Html::hiddenInput(BaseForm::$refreshParam, null, ['class' => 'active-form-refresh-value']);
-        # TODO потом
-//        echo $this->errorSummary($this->model);
 
+        echo $this->beforeRender();
         echo $content;
+        echo $this->afterRender();
 
         if ($this->enableClientScript) {
             $this->registerBundle();
@@ -63,19 +73,26 @@ class ActiveForm extends \yii\widgets\ActiveForm
 
         echo Html::endForm();
     }
-//
-//    /**
-//     * @inheritDoc
-//     */
-//    public function errorSummary($models, $options = array())
-//    {
-//        if(! $models->hasErrors()) {
-//            return;
-//        }
-//
-//        return Alert::widget([
-//            'message' => parent::errorSummary($models),
-//            'type' => FlashAlertEnum::ERROR,
-//        ]);
-//    }
+
+    /**
+     * Событие до отрисовки контента формы
+     */
+    private function beforeRender()
+    {
+        $event = new ActiveFormEvent();
+        $event->model = $this->model;
+
+        return $this->trigger(static::EVENT_BEFORE_RENDER, $event);
+    }
+
+    /**
+     * Событие после отрисовки контента формы
+     */
+    private function afterRender()
+    {
+        $event = new ActiveFormEvent();
+        $event->model = $this->model;
+
+        return $this->trigger(static::EVENT_AFTER_RENDER, $event);
+    }
 }
