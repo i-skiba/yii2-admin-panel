@@ -57,16 +57,22 @@ class EditableColumn extends \yii\grid\DataColumn
      *
      * @return array
      */
-    protected function getOptions(ActiveRecord $model)
+    protected function getOptions($model)
     {
         if(! $this->attribute) {
             return [];
         }
 
+        if(is_array($model)) {
+            $pk = $model['id'];
+        } else {
+            $pk = $model->getPrimaryKey();
+        }
+
         $url = Url::to([
             EditableColumnAction::actionName(),
             'column' => $this->attribute,
-            'pk' => $model->getPrimaryKey(),
+            'pk' => $pk,
             'type' => $this->type,
             'required' => $this->required
         ]);
