@@ -224,7 +224,8 @@ MagicModal.prototype.run = function($el) {
     //если элемент находится в форме
     // todo : всю форму нельзя сериализовать
     // var $serializeElement = $el.closest('form');
-    if($serializeElement.length === 0) {
+    var $serializeElement;
+    if(typeof $serializeElement !== 'undefined' && $serializeElement.length === 0) {
         var selector = data.serializeSelector;
         if(typeof selector !== 'undefined') {
             //TODO реализовать пригодится
@@ -235,7 +236,7 @@ MagicModal.prototype.run = function($el) {
 
     var formData = null;
     //TODO сбор данных с более одного селектора
-    if($serializeElement.length === 1) {
+    if(typeof $serializeElement !== 'undefined' && $serializeElement.length === 1) {
         formData = $serializeElement.serialize();
         //удаление параметра _csrf из серилизованной строки
         formData = formData.replace( /_csrf=(.*?)\&/g, "" );
