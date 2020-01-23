@@ -39,12 +39,12 @@
                     ]
                 ])
             ?>
-                <?php if(isset($extendBeforeContent)) :?>
-                    <?= $extendBeforeContent;?>
+                <?php if(isset($beforeContent)) :?>
+                    <?= $beforeContent;?>
                 <?php endif;?>
                 <?= $this->renderFile($searchViewPath, ['form' => $form, 'model' => $model, 'searchParams' => $searchParams]);?>
-                <?php if(isset($extendAfterContent)) :?>
-                    <?= $extendAfterContent;?>
+                <?php if(isset($afterContent)) :?>
+                    <?= $afterContent;?>
                 <?php endif;?>
                 <div class="text-right">
                     <?=  Html::button(
