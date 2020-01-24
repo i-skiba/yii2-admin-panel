@@ -37,7 +37,7 @@ class CrudController extends BaseController
                     'redirect',
                     'callback',
                     'sort-crud',
-                    'editable-column-crud',
+                    EditableColumnAction::actionName(),
                     SortAction::actionName(),
                     PositionSortIndexAction::actionName(),
                     EditableColumnAction::actionName(),
@@ -57,7 +57,7 @@ class CrudController extends BaseController
     {
         $parent = parent::actions();
         unset($parent['delete']);
-        $parent['editable-column-crud'] = EditableColumnAction::class;
+        $parent[EditableColumnAction::actionName()] = EditableColumnAction::class;
         $parent['sort-crud'] = SortAction::class;
         $parent[PositionSortIndexAction::actionName()] = [
             'class' => PositionSortIndexAction::class,

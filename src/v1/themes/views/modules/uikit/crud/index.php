@@ -35,14 +35,12 @@ $this->viewHelper()->pushPageHeader();
             'id',
             [
                 'attribute' => 'text_input',
-                'class' => EditableColumn::class,
-                'actionName' => 'editable-column-crud'
+                'class' => EditableColumn::class
             ],
             'mask',
             [
                 'attribute' => 'sort',
                 'class' => EditableColumn::class,
-                'actionName' => 'editable-column-crud',
                 'contentOptions' => [
                     'style' => 'width:15%',
                     'class'=> 'text-center'
