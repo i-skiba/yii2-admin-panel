@@ -32,6 +32,11 @@ class EditableColumn extends \yii\grid\DataColumn
     public $options = [];
 
     /**
+     * @var string
+     */
+    public $actionName;
+
+    /**
      * @inheritDoc
      */
     public function renderDataCell($model, $key, $index)
@@ -70,7 +75,7 @@ class EditableColumn extends \yii\grid\DataColumn
         }
 
         $url = Url::to([
-            EditableColumnAction::actionName(),
+            $this->actionName ?? EditableColumnAction::actionName(),
             'column' => $this->attribute,
             'pk' => $pk,
             'type' => $this->type,
