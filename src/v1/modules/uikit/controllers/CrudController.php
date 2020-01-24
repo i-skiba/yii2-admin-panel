@@ -9,6 +9,8 @@ use kamaelkz\yii2admin\v1\controllers\BaseController;
 use concepture\yii2user\enum\UserRoleEnum;
 use kamaelkz\yii2admin\v1\actions\EditableColumnAction;
 use kamaelkz\yii2admin\v1\actions\SortAction;
+use concepture\yii2handbook\actions\PositionSortIndexAction;
+use concepture\yii2handbook\services\EntityTypePositionSortService;
 
 /**
  * Пример CRUD
@@ -34,8 +36,11 @@ class CrudController extends BaseController
                     'flash',
                     'redirect',
                     'callback',
+                    'sort-crud',
                     EditableColumnAction::actionName(),
                     SortAction::actionName(),
+                    PositionSortIndexAction::actionName(),
+                    EditableColumnAction::actionName(),
                 ],
                 'allow' => true,
                 'roles' => [
@@ -53,7 +58,23 @@ class CrudController extends BaseController
         $parent = parent::actions();
         unset($parent['delete']);
         $parent[EditableColumnAction::actionName()] = EditableColumnAction::class;
-        $parent[SortAction::actionName()] = SortAction::class;
+        $parent['sort-crud'] = SortAction::class;
+        $parent[PositionSortIndexAction::actionName()] = [
+            'class' => PositionSortIndexAction::class,
+            'entityColumns' => [
+                'id',
+                'text_input',
+            ],
+            'labelColumn' => 'text_input',
+        ];
+        $parent[EditableColumnAction::actionName()] = [
+            'class' => EditableColumnAction::class,
+            'serviceClass' => EntityTypePositionSortService::class
+        ];
+        $parent[SortAction::actionName()] = [
+            'class' => SortAction::class,
+            'serviceClass' => EntityTypePositionSortService::class
+        ];
 
         return $parent;
     }

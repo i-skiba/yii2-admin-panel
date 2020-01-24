@@ -22,7 +22,7 @@ use kamaelkz\yii2admin\v1\actions\SortAction;
 class GridView extends Base
 {
     use \kamaelkz\yii2admin\v1\widgets\lists\traits\ListsTrait;
-    
+
     /**
      * @var boolean признак отображения поиска
      */
@@ -58,9 +58,7 @@ class GridView extends Base
     /**
      * @var array
      */
-    public $dragAndDropOptions = [
-        'column' => 'sort'
-    ];
+    public $dragAndDropOptions = [];
 
     /**
      * @inheritdoc
@@ -155,13 +153,10 @@ class GridView extends Base
 
         $options = [];
         if($this->dragAndDrop) {
-            $sortColumn = $this->dragAndDropOptions['column'] ?? null;
-            if(! $sortColumn) {
-                throw new InvalidConfigException('dragAndDropOptions `column` must be set.');
-            }
-
+            $sortColumn = $this->dragAndDropOptions['column'] ?? 'sort';
+            $sortActionName = $this->dragAndDropOptions['sortActionName'] ?? SortAction::actionName();
             $options['class'] = 'dnd-grid-view';
-            $options['data-url'] = Url::to([SortAction::actionName() , 'sortColumn' => $sortColumn]);
+            $options['data-url'] = Url::to([$sortActionName , 'sortColumn' => $sortColumn]);
         }
 
         return Html::tag('tbody', implode("\n", $rows), $options);

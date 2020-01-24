@@ -45,6 +45,11 @@ class Crud extends ActiveRecord
         return $scenarios;
     }
 
+    public static function label()
+    {
+        return 'Интерфейс';
+    }
+
     /**
      * @inheritDoc
      */
