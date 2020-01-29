@@ -18,6 +18,8 @@
     ],
     "autoload": {
         "psr-4": {
+            "symfony/dom-crawler": "*",
+            "symfony/css-selector": "*",
             "kamaelkz\\yii2admin\\": "src"
         }
     },
