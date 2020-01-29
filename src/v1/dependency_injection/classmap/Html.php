@@ -12,6 +12,15 @@ use kamaelkz\yii2admin\v1\helpers\RequestHelper;
  */
 class Html extends BaseHtml
 {
+    const FIELD_TEXT_INPUT = 'textInput';
+    const FIELD_HIDDEN_INPUT = 'hiddenInput';
+    const FIELD_PASSWORD_INPUT = 'passwordInput';
+    const FIELD_TEXT_AREA = 'textarea';
+    const FIELD_RADIO = 'radio';
+    const FIELD_CHECKBOX = 'checkbox';
+    const FIELD_DROPDOWN = 'dropDownList';
+    const FIELD_WIDGET = 'widget';
+
     /**
      * Кнопка сохранения с редиректом на список
      *

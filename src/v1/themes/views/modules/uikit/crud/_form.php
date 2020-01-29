@@ -307,17 +307,43 @@
                     'formId' => 'uiikit-form',
                     'attributes' => [
                         'text_input' => [
-
+                            'type' => Html::FIELD_TEXT_INPUT,
+                            'params' => []
                         ],
                         'dropdown' => [
-
+                            'type' => Html::FIELD_DROPDOWN,
+                            'params' => [
+                                UiikitEnum::getDropdownList(),
+                                [
+                                    'class' => 'form-control custom-select',
+                                    'prompt' => ''
+                                ]
+                            ]
                         ],
                         'image' => [
+                            'type' => Html::FIELD_WIDGET,
+                            'params' => function ($collection, $key, $value) {
 
+                                return CdnUploader::widget([
+                                        'small' => true,
+                                        'name' => "{$collection->formName()}[$key][image]",
+                                        'value' => $value,
+                                        'strategy' => StrategiesEnum::BY_REQUEST,
+                                        'resizeBigger' => false,
+                                        'buttonIconClass' => 'icon-cloud-upload2',
+//                                                'width' => 313,
+//                                                'height' => 235,
+                                        'options' => [
+                                            'plugin-options' => [
+                                                # todo: похоже не пашет
+                                                'maxFileSize' => 2000000,
+                                            ]
+                                        ]
+                                ]);
+                            }
                         ]
                     ]
                 ]); ?>
-
             </div>
         </div>
         <div class="card">

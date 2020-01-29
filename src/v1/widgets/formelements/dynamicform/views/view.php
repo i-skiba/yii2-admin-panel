@@ -1,3 +1,6 @@
+<?php
+    use yii\helpers\Html;
+?>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 text-left">
         <table class="table table-bordered table-striped dynamic-form-items">
@@ -20,8 +23,24 @@
                         </button>
                     </td>
                     <?php foreach ($attributes as $attribute => $settings) :?>
+                        <?php
+                            list($fieldType, $fieldParams) = array_values($settings);
+                        ?>
                         <td class="text-center">
-                            <?= $form->field($collection, "[$key]{$attribute}")->textInput()->label(false);?>
+                            <?
+                                $value = $collections[$key][$attribute] ?? null;
+                                if($fieldType === Html::FIELD_WIDGET) {
+                                    echo call_user_func($fieldParams, $collection, $key, $value);
+                                } else {
+                                    $instance = $form->field($collection, "[$key]{$attribute}")->label(false);
+                                    echo call_user_func_array(
+                                        [$instance, $fieldType],
+                                        ! is_callable($fieldParams)
+                                            ? $fieldParams
+                                            : call_user_func($fieldParams, $collection, $key,  $value)
+                                    );
+                                }
+                            ?>
                         </td>
                     <?php endforeach; ?>
                 </tr>
