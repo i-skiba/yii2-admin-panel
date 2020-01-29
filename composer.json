@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-
+        "wbraganca/yii2-dynamicform": "*"
     },
     "autoload": {
         "psr-4": {
