@@ -331,8 +331,8 @@
                                         'strategy' => StrategiesEnum::BY_REQUEST,
                                         'resizeBigger' => false,
                                         'buttonIconClass' => 'icon-cloud-upload2',
-//                                                'width' => 313,
-//                                                'height' => 235,
+                                        'width' => 313,
+                                        'height' => 235,
                                         'options' => [
                                             'plugin-options' => [
                                                 # todo: похоже не пашет
