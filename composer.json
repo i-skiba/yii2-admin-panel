@@ -16,9 +16,6 @@
             "role": "Developer"
         }
     ],
-    "require": {
-        "wbraganca/yii2-dynamicform": "*"
-    },
     "autoload": {
         "psr-4": {
             "kamaelkz\\yii2admin\\": "src"

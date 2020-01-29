@@ -7,7 +7,8 @@
         formelements\activeform\ActiveForm,
         formelements\Pjax,
         formelements\pickers\DatePicker,
-        formelements\pickers\TimePicker
+        formelements\pickers\TimePicker,
+        formelements\dynamicform\DynamicForm
     };
 
     use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
@@ -15,7 +16,6 @@
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
     use kamaelkz\yii2cdnuploader\widgets\Uploader;
     use kamaelkz\yii2admin\v1\helpers\RequestHelper;
-    use wbraganca\dynamicform\DynamicFormWidget;
 
     $saveRedirectButton = Html::saveRedirectButton();
     $saveButton = Html::saveButton();
@@ -297,94 +297,27 @@
                     <i class="icon-equalizer2  2 mr-2"></i>
                     <?= Yii::t('yii2admin', 'Коллекция');?>
                 </legend>
-                    <?php
-                        $collections = [new \kamaelkz\yii2admin\v1\modules\uikit\forms\CollectionForm()];
-                    ?>
-                    <?php DynamicFormWidget::begin([
-                        'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-                        'widgetBody' => '.dynamic-form-items', // required: css class selector
-                        'widgetItem' => '.dynamic-form-item', // required: css class
-                        'limit' => 4, // the maximum times, an element can be cloned (default 999)
-                        'min' => 1, // 0 or 1 (default 1)
-                        'insertButton' => '.dynamic-form-add-item', // css class
-                        'deleteButton' => '.dynamic-form-remove-item', // css class
-                        'model' => reset($collections),
-                        'formId' => 'uiikit-form',
-                        'formFields' => [
-                            'text_input',
-                            'text_area',
-                            'image',
+                <?= DynamicForm::widget([
+                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                    'min' => 1, // 0 or 1 (default 1)
+                    'form' => $form,
+                    'models' => [
+                        new \kamaelkz\yii2admin\v1\modules\uikit\forms\CollectionForm()
+                    ],
+                    'formId' => 'uiikit-form',
+                    'attributes' => [
+                        'text_input' => [
+
                         ],
-                    ]); ?>
-                    <div class="dynamic-form-items row">
-                        <?php foreach ($collections as $key => $collection) :?>
-                            <div class="col-lg-12 col-md-12 col-sm-12 dynamic-form-item">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-start flex-nowrap">
-                                            <h6 class="no-margin">
-                                                <?= "Элемент";?>
-                                            </h6>
-                                            <div class="list-icons list-icons-extended ml-auto">
-                                                <a href="#" class="list-icons-item file-delete dynamic-form-remove-item">
-                                                    <i class="icon-bin top-0"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                                <?= $form->field($collection, "[$key]text_input")->textInput(); ?>
-                                            </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                                <?= $form
-                                                    ->field($collection, "[$key]dropdown")
-                                                    ->dropDownList(UiikitEnum::getDropdownList(), [
-                                                        'class' => 'form-control custom-select',
-                                                        'prompt' => ''
-                                                    ]);
-                                                ?>
-                                            </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                                <?= $form
-                                                    ->field($collection, 'image')
-                                                    ->widget(CdnUploader::class, [
-                                                        'model' => $collection,
-                                                        'attribute' => "[$key]image",
-                                                        'strategy' => StrategiesEnum::BY_REQUEST,
-                                                        'resizeBigger' => false,
-                                                        'buttonIconClass' => 'icon-cloud-upload2',
-                                                        'width' => 313,
-                                                        'height' => 235,
-                                                        'options' => [
-                                                            'plugin-options' => [
-                                                                # todo: похоже не пашет
-                                                                'maxFileSize' => 2000000,
-                                                            ]
-                                                        ]
-                                                    ])
-                                                    ->error(false)
-                                                    ->hint(false);
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach;?>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 col-md-6 col-sm-12 text-right">
-                            <?= Html::button(
-                                '<b><i class="icon-plus-circle2"></i></b>' . Yii::t('yii2admin', 'Добавить'),
-                                [
-                                    'class' => 'btn bg-primary btn-labeled btn-labeled-left ml-1 dynamic-form-add-item'
-                                ]
-                            );?>
-                        </div>
-                    </div>
-                <?php DynamicFormWidget::end(); ?>
+                        'dropdown' => [
+
+                        ],
+                        'image' => [
+
+                        ]
+                    ]
+                ]); ?>
+
             </div>
         </div>
         <div class="card">
