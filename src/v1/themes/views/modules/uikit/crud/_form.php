@@ -321,7 +321,7 @@
                         'image' => function ($collection, $key, $value) {
                                 return CdnUploader::widget([
                                         'small' => true,
-                                        'name' => "{$collection->formName()}[][image]",
+                                        'name' => "{$collection->formName()}[$key][image]",
                                         'value' => $value,
                                         'strategy' => StrategiesEnum::BY_REQUEST,
                                         'resizeBigger' => false,

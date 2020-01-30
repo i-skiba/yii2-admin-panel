@@ -24,6 +24,9 @@ var componentDragAndDrop = function() {
 
         drake.on('drop', function (el, target, source, sibling) {
             var $container = $(target);
+            if($container.attr('data-without-request') !== undefined ) {
+                return;
+            }
             var $elements = $container.find("tr").not( ".gu-mirror" );
             var sort = [];
             $.each($elements, function(index, target) {

@@ -289,14 +289,17 @@ class DynamicForm extends \yii\base\Widget
             }
 
             $item = ($dragAndDrop . $this->removeControl());
-
             foreach ($this->attributes as $attribute => $settings) {
                 $column = null;
                 $value = $this->models[$key][$attribute] ?? null;
+                if($this->dragAndDrop) {
+                    $key = null;
+                }
+
                 if(is_callable($settings)) {
                     $column = call_user_func($settings, $model, $key, $value);
                 } else {
-                    $instance = $this->form->field($model, "[]{$attribute}")->label(false);
+                    $instance = $this->form->field($model, "[$key]{$attribute}")->label(false);
                     if(! is_array($settings)) {
                         $type = $settings;
                         $params = [];

@@ -7,7 +7,7 @@
             <thead>
                 <?= $header;?>
             </thead>
-            <tbody class="<?= $dragAndDrop ? 'dnd-grid-view' : null;?>">
+            <tbody class="<?= $dragAndDrop ? 'dnd-grid-view' : null;?>" data-without-request="">
                 <?= $body;?>
             </tbody>
         </table>
