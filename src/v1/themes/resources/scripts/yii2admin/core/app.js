@@ -459,4 +459,8 @@ $(document).ready(function() {
 
         return false;
     });
+
+    $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+        yii2admin.reinitPlugins();
+    });
 });
