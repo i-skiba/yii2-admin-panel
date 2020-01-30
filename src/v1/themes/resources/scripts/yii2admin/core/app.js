@@ -459,23 +459,23 @@ $(document).ready(function() {
 
         return false;
     });
+});
 
-    $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
-        yii2admin.reinitPlugins();
-    });
+$(document).on("afterInsert", ".dynamicform_wrapper", function () {
+    yii2admin.reinitPlugins();
+});
 
-    $(".dynamicform_wrapper").on("limitReached", function(e, item) {
-        $container = $(e.target);
-        $button = $container.find('.dynamic-form-add-item');
-        if($button.length === 0) {
-            return true;
-        }
+$(document).on("limitReached", ".dynamicform_wrapper", function () {
+    $container = $(e.target);
+    $button = $container.find('.dynamic-form-add-item');
+    if($button.length === 0) {
+        return true;
+    }
 
-        message = $button.attr('data-message');
-        if(message === undefined) {
-            return true;
-        }
+    message = $button.attr('data-message');
+    if(message === undefined) {
+        return true;
+    }
 
-        componentNotify.pNotify(componentNotify.statuses.info, message + ' - ' + item);
-    });
+    componentNotify.pNotify(componentNotify.statuses.info, message + ' - ' + item);
 });
