@@ -74,6 +74,10 @@ class DynamicForm extends \yii\base\Widget
      */
     public $min = 1;
     /**
+     * @var bool
+     */
+    public $dragAndDrop = false;
+    /**
      * @var string
      */
     private $_options;
@@ -201,10 +205,9 @@ class DynamicForm extends \yii\base\Widget
     public function run()
     {
         $content = $this->render($this->view, [
-            'model' => $this->model,
-            'form' => $this->form,
-            'collections' => $this->models,
-            'attributes' => $this->attributes,
+            'header' => $this->getHeader(),
+            'body' => $this->getBody(),
+            'dragAndDrop' => $this->dragAndDrop
         ]);
 
         $crawler = new Crawler();
@@ -242,5 +245,87 @@ class DynamicForm extends \yii\base\Widget
         $crawler->clear();
         $crawler->add($document);
         return $crawler->filter('body')->eq(0)->html();
+    }
+
+    private function getHeader()
+    {
+        $result = Html::tag('td', '', []);
+        if($this->dragAndDrop) {
+            $result .= Html::tag('td', '', []);
+        }
+
+        foreach ($this->attributes as $attribute => $settings) {
+            $result .= Html::tag('td', $this->model->getAttributeLabel($attribute), ['class' => 'text-center']);
+        }
+
+        return Html::tag('tr', $result);
+    }
+
+    private function getBody()
+    {
+        $result = null;
+        foreach ($this->models as $key => $model) {
+            $dragAndDrop = null;
+            if($this->dragAndDrop) {
+                $dragAndDrop = $this->dragAndDropControl();
+            }
+
+            $item = ($dragAndDrop . $this->removeControl());
+
+            foreach ($this->attributes as $attribute => $settings) {
+                $column = null;
+                $value = $this->models[$key][$attribute] ?? null;
+                if(is_callable($settings)) {
+                    $column = call_user_func($settings, $model, $key, $value);
+                } else {
+                    $instance = $this->form->field($model, "[]{$attribute}")->label(false);
+                    if(! is_array($settings)) {
+                        $type = $settings;
+                        $params = [];
+                    } else {
+                        $type = $settings['type'];
+                        $params = $settings['params'];
+                    }
+
+                    $column = call_user_func_array([$instance, $type], $params);
+                }
+
+                $item .= Html::tag('td', $column, ['class' => 'text-center']);
+            }
+
+            $result .= Html::tag('tr', $item, ['class' => trim($this->widgetItem, '.')]);
+        }
+
+        return $result;
+    }
+
+   /**
+    * Колонка удаления
+    *
+    * @return string
+    */
+    private function removeControl()
+    {
+        $class = trim($this->deleteButton, '.');
+
+        return <<<HTML
+            <td class="text-center" style="min-width: 5%;">
+                <button type="button" class="btn btn-primary btn-icon {$class}">
+                    <i class="icon-minus-circle2 "></i>
+                </button>
+            </td>
+HTML;
+    }
+
+    private function dragAndDropControl()
+    {
+        return $content = <<<HTML
+            <td class="text-center" style="min-width: 5%;">
+                <div class="mr-3 mt-2">
+                    <i class="icon-dots dragula-handle"></i>
+                    <span class="ml-2"></span>
+                </div>
+            </td>
+HTML;
     }
 }

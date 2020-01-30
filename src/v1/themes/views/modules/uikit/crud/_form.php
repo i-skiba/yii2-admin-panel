@@ -304,12 +304,10 @@
                     'models' => [
                         new \kamaelkz\yii2admin\v1\modules\uikit\forms\CollectionForm()
                     ],
+                    'dragAndDrop' => true,
                     'formId' => 'uiikit-form',
                     'attributes' => [
-                        'text_input' => [
-                            'type' => Html::FIELD_TEXT_INPUT,
-                            'params' => []
-                        ],
+                        'text_input' => Html::FIELD_TEXT_INPUT,
                         'dropdown' => [
                             'type' => Html::FIELD_DROPDOWN,
                             'params' => [
@@ -320,13 +318,10 @@
                                 ]
                             ]
                         ],
-                        'image' => [
-                            'type' => Html::FIELD_WIDGET,
-                            'params' => function ($collection, $key, $value) {
-
+                        'image' => function ($collection, $key, $value) {
                                 return CdnUploader::widget([
                                         'small' => true,
-                                        'name' => "{$collection->formName()}[$key][image]",
+                                        'name' => "{$collection->formName()}[][image]",
                                         'value' => $value,
                                         'strategy' => StrategiesEnum::BY_REQUEST,
                                         'resizeBigger' => false,
@@ -340,8 +335,7 @@
                                             ]
                                         ]
                                 ]);
-                            }
-                        ]
+                        }
                     ]
                 ]); ?>
             </div>
