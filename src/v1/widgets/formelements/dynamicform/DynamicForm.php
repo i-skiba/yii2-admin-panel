@@ -24,15 +24,15 @@ class DynamicForm extends \yii\base\Widget
     /**
      * @var string
      */
-    public $widgetContainer = 'dynamicform_wrapper';
+    protected $widgetContainer = 'dynamicform_wrapper';
      /**
      * @var string
      */
-    public $widgetBody = '.dynamic-form-items';
+    protected $widgetBody = '.dynamic-form-items';
     /**
      * @var string
      */
-    public $widgetItem = '.dynamic-form-item';
+    protected $widgetItem = '.dynamic-form-item';
     /**
      * @var string
      */
@@ -40,11 +40,11 @@ class DynamicForm extends \yii\base\Widget
     /**
      * @var string
      */
-    public $insertButton = '.dynamic-form-add-item';
+    protected $insertButton = '.dynamic-form-add-item';
      /**
      * @var string
      */
-    public $deleteButton = '.dynamic-form-remove-item';
+    protected $deleteButton = '.dynamic-form-remove-item';
     /**
      * @var string 'bottom' or 'top';
      */

@@ -298,7 +298,7 @@
                     <?= Yii::t('yii2admin', 'Коллекция');?>
                 </legend>
                 <?= DynamicForm::widget([
-                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                    'limit' => 3, // the maximum times, an element can be cloned (default 999)
                     'min' => 1, // 0 or 1 (default 1)
                     'form' => $form,
                     'models' => [

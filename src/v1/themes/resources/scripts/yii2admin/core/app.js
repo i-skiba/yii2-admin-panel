@@ -464,3 +464,18 @@ $(document).ready(function() {
 $(document).on("afterInsert", ".dynamicform_wrapper", function () {
     yii2admin.reinitPlugins();
 });
+
+$(document).on("limitReached", ".dynamicform_wrapper", function () {
+    $container = $(e.target);
+    $button = $container.find('.dynamic-form-add-item');
+    if($button.length === 0) {
+        return true;
+    }
+
+    message = $button.attr('data-message');
+    if(message === undefined) {
+        return true;
+    }
+
+    componentNotify.pNotify(componentNotify.statuses.info, message + ' - ' + item);
+});
