@@ -166,7 +166,7 @@ class DynamicForm extends \yii\base\Widget
     {
         $encOptions = Json::encode($this->_options);
         $this->_hashVar = static::HASH_VAR_BASE_NAME . hash('crc32', $encOptions);
-        $view->registerJs("var {$this->_hashVar} = {$encOptions};\n", $view::POS_HEAD);
+        $view->registerJs("var {$this->_hashVar} = {$encOptions};\n", $view::POS_END);
     }
 
     /**
@@ -179,23 +179,41 @@ class DynamicForm extends \yii\base\Widget
         $options = Json::encode($this->_options);
         $this->registerOptions($view);
 
-        $js = 'jQuery("#' . $this->formId . '").yiiDynamicForm(' . $this->_hashVar .');' . "\n";
-        $view->registerJs($js, $view::POS_READY);
+//        $js = 'jQuery("#' . $this->formId . '").yiiDynamicForm(' . $this->_hashVar .');' . "\n";
+//        $view->registerJs($js, $view::POS_READY);
+//
+//        // add a click handler for the clone button
+//        $js = 'jQuery("#' . $this->formId . '").on("click", "' . $this->insertButton . '", function(e) {'. "\n";
+//        $js .= "    e.preventDefault();\n";
+//        $js .= '    jQuery(".' .  $this->widgetContainer . '").triggerHandler("beforeInsert", [jQuery(this)]);' . "\n";
+//        $js .= '    jQuery(".' .  $this->widgetContainer . '").yiiDynamicForm("addItem", '. $this->_hashVar . ", e, jQuery(this));\n";
+//        $js .= "});\n";
+//        $view->registerJs($js, $view::POS_READY);
+//
+//        // add a click handler for the remove button
+//        $js = 'jQuery("#' . $this->formId . '").on("click", "' . $this->deleteButton . '", function(e) {'. "\n";
+//        $js .= "    e.preventDefault();\n";
+//        $js .= '    jQuery(".' .  $this->widgetContainer . '").yiiDynamicForm("deleteItem", '. $this->_hashVar . ", e, jQuery(this));\n";
+//        $js .= "});\n";
+//        $view->registerJs($js, $view::POS_READY);
+
+        $js = '$("body").find("#' . $this->formId . '").yiiDynamicForm(' . $this->_hashVar .');' . "\n";
+        $view->registerJs($js, $view::POS_END);
 
         // add a click handler for the clone button
-        $js = 'jQuery("#' . $this->formId . '").on("click", "' . $this->insertButton . '", function(e) {'. "\n";
+        $js = '$("body").find("#' . $this->formId . '").on("click", "' . $this->insertButton . '", function(e) {'. "\n";
         $js .= "    e.preventDefault();\n";
-        $js .= '    jQuery(".' .  $this->widgetContainer . '").triggerHandler("beforeInsert", [jQuery(this)]);' . "\n";
-        $js .= '    jQuery(".' .  $this->widgetContainer . '").yiiDynamicForm("addItem", '. $this->_hashVar . ", e, jQuery(this));\n";
+        $js .= '    $("body").find(".' .  $this->widgetContainer . '").triggerHandler("beforeInsert", [$(this)]);' . "\n";
+        $js .= '    $("body").find(".' .  $this->widgetContainer . '").yiiDynamicForm("addItem", '. $this->_hashVar . ", e, $(this));\n";
         $js .= "});\n";
-        $view->registerJs($js, $view::POS_READY);
+        $view->registerJs($js, $view::POS_END);
 
         // add a click handler for the remove button
-        $js = 'jQuery("#' . $this->formId . '").on("click", "' . $this->deleteButton . '", function(e) {'. "\n";
+        $js = '$("body").find("#' . $this->formId . '").on("click", "' . $this->deleteButton . '", function(e) {'. "\n";
         $js .= "    e.preventDefault();\n";
-        $js .= '    jQuery(".' .  $this->widgetContainer . '").yiiDynamicForm("deleteItem", '. $this->_hashVar . ", e, jQuery(this));\n";
+        $js .= '    $("body").find(".' .  $this->widgetContainer . '").yiiDynamicForm("deleteItem", '. $this->_hashVar . ", e, $(this));\n";
         $js .= "});\n";
-        $view->registerJs($js, $view::POS_READY);
+        $view->registerJs($js, $view::POS_END);
     }
 
     public function run()
