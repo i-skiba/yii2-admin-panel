@@ -318,7 +318,7 @@
                                 ]
                             ]
                         ],
-                        'image' => function ($collection, $key, $value) {
+                        'image' => function ($collection, $form, $key, $value) {
                                 return CdnUploader::widget([
                                         'small' => true,
                                         'name' => "{$collection->formName()}[$key][image]",

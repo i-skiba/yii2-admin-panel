@@ -297,7 +297,7 @@ class DynamicForm extends \yii\base\Widget
                 }
 
                 if(is_callable($settings)) {
-                    $column = call_user_func($settings, $model, $key, $value);
+                    $column = call_user_func($settings, $model, $this->form, $key, $value);
                 } else {
                     $instance = $this->form->field($model, "[$key]{$attribute}")->label(false);
                     if(! is_array($settings)) {
