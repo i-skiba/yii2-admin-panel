@@ -438,9 +438,9 @@ $(document).ready(function() {
         }
 
         if(! magicModal.isStop) {
-            $magicModalPjax.find('.card').each(function(el) {
-                $(this).removeClass('card');
-            });
+            // $magicModalPjax.find('.card').each(function(el) {
+            //     $(this).removeClass('card');
+            // });
             magicModal.$modal.modal('show');
         }
 
