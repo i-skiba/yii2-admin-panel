@@ -7,7 +7,8 @@
         formelements\activeform\ActiveForm,
         formelements\Pjax,
         formelements\pickers\DatePicker,
-        formelements\pickers\TimePicker
+        formelements\pickers\TimePicker,
+        formelements\dynamicform\DynamicForm
     };
 
     use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
@@ -16,25 +17,15 @@
     use kamaelkz\yii2cdnuploader\widgets\Uploader;
     use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 
+    $saveRedirectButton = Html::saveRedirectButton();
+    $saveButton = Html::saveButton();
 ?>
 <?php Pjax::begin(['formSelector' => '#uiikit-form']); ?>
     <?php $form = ActiveForm::begin(['id' => 'uiikit-form']); ?>
         <div class="card">
             <div class="card-body text-right">
-                <?=  Html::submitButton(
-                    '<b><i class="icon-checkmark3"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
-                    [
-                        'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1',
-                    ]
-                ); ?>
-                <?=  Html::submitButton(
-                    '<b><i class="icon-list"></i></b>' . Yii::t('yii2admin', 'Сохранить и перейти к списку'),
-                    [
-                        'class' => 'btn bg-info btn-labeled btn-labeled-left ml-1',
-                        'name' => RequestHelper::REDIRECT_BTN_PARAM,
-                        'value' => 'index'
-                    ]
-                ); ?>
+                <?= $saveRedirectButton?>
+                <?= $saveButton?>
             </div>
         </div>
         <div class="card">
@@ -302,24 +293,57 @@
                         ?>
                     </div>
                 </div>
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <i class="icon-equalizer2  2 mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Коллекция');?>
+                </legend>
+                <?= DynamicForm::widget([
+                    'limit' => 3, // the maximum times, an element can be cloned (default 999)
+                    'min' => 1, // 0 or 1 (default 1)
+                    'form' => $form,
+                    'models' => [
+                        new \kamaelkz\yii2admin\v1\modules\uikit\forms\CollectionForm()
+                    ],
+                    'dragAndDrop' => true,
+                    'formId' => 'uiikit-form',
+                    'attributes' => [
+                        'text_input' => Html::FIELD_TEXT_INPUT,
+                        'dropdown' => [
+                            'type' => Html::FIELD_DROPDOWN,
+                            'params' => [
+                                UiikitEnum::getDropdownList(),
+                                [
+                                    'class' => 'form-control custom-select',
+                                    'prompt' => ''
+                                ]
+                            ]
+                        ],
+                        'image' => function ($collection, $form, $key, $value) {
+                                return CdnUploader::widget([
+                                        'small' => true,
+                                        'name' => "{$collection->formName()}[$key][image]",
+                                        'value' => $value,
+                                        'strategy' => StrategiesEnum::BY_REQUEST,
+                                        'resizeBigger' => false,
+                                        'buttonIconClass' => 'icon-cloud-upload2',
+                                        'width' => 313,
+                                        'height' => 235,
+                                        'options' => [
+                                            'plugin-options' => [
+                                                # todo: похоже не пашет
+                                                'maxFileSize' => 2000000,
+                                            ]
+                                        ]
+                                ]);
+                        }
+                    ]
+                ]); ?>
             </div>
         </div>
         <div class="card">
             <div class="card-body text-right">
-                <?=  Html::submitButton(
-                    '<b><i class="icon-checkmark3"></i></b>' . Yii::t('yii2admin', 'Сохранить'),
-                    [
-                        'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1'
-                    ]
-                ); ?>
-                <?=  Html::submitButton(
-                    '<b><i class="icon-list"></i></b>' . Yii::t('yii2admin', 'Сохранить и перейти к списку'),
-                    [
-                        'class' => 'btn bg-info btn-labeled btn-labeled-left ml-1',
-                        'name' => RequestHelper::REDIRECT_BTN_PARAM,
-                        'value' => 'index'
-                    ]
-                ); ?>
+                <?= $saveRedirectButton?>
+                <?= $saveButton?>
             </div>
         </div>
     <?php ActiveForm::end(); ?>

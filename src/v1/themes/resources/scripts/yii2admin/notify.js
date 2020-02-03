@@ -27,6 +27,7 @@ var componentNotify = {
             addclass: 'alert alert-styled-left ' + this.alertClass[type],
             type: this.statuses[type]
         };
+        PNotify.removeAll();
 
         return new PNotify(opts);
     },

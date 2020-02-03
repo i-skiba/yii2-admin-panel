@@ -1,4 +1,5 @@
 <?php
+
 namespace kamaelkz\yii2admin\v1\actions;
 
 use Yii;
@@ -35,7 +36,11 @@ class ErrorAction extends Action
             $exception = new HttpException(404, Yii::t('yii2admin','Запрашиваемая страница не существует'));
         }
 
-        $code = $exception->statusCode;
+        $code = 0;
+        if (property_exists($exception, 'statusCode')){
+            $code = $exception->statusCode;
+        }
+
         $title = Yii::t('yii2admin' , 'Ошибка {error}' , [ 'error' => $code ]);
         $message = $exception->getMessage();
         $this->controller->view->title = $title;

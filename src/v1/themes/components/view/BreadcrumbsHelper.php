@@ -32,7 +32,7 @@ class BreadcrumbsHelper
         ];
         $serviceName = ClassHelper::getServiceName($model , ["Search", "Form"]);
         $i = 0;
-        $parents = Yii::$app->{$serviceName}->getParentsByTree($model->{$identityAttribute});
+        $parents = Yii::$app->{$serviceName}->getParentsByTree($model->{$identityAttribute}, true);
         if(empty($parents)) {
             unset($breadcrumb[0]['url']);
 

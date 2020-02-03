@@ -68,6 +68,16 @@ if(YII_DEBUG) {
     $config['modules']['uikit'] = [
         'class' => 'kamaelkz\yii2admin\v1\modules\uikit\Module'
     ];
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = [
+        'class' => 'yii\gii\Module',
+        'generators' => [
+            'model' => [
+                'class' => 'concepture\yii2logic\gii\model\Generator',
+            ],
+        ],
+        'allowedIPs' => ['*']
+    ];
 }
 
 return $config;

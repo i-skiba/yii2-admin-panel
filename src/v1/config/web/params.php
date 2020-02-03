@@ -27,7 +27,7 @@ return [
             'color' => 'info',
             'active' => [
                 'rules' => [
-                    'm' => ['uikit']
+                    'm' => [['uikit', 'gii']]
                 ]
             ],
             'visible' => [
@@ -35,6 +35,15 @@ return [
                 'dashboard' => YII_DEBUG
             ],
             'children' => [
+                [
+                    'label' => Yii::t('yii2admin', 'Генератор'),
+                    'url' => ['/gii'],
+                    'active' => [
+                        'rules' => [
+                            'm' => ['gii']
+                        ],
+                    ]
+                ],
                 [
                     'label' => Yii::t('yii2admin', 'Интерфейс'),
                     'url' => ['/uikit/crud'],
@@ -54,9 +63,9 @@ return [
                     ]
                 ],
                 [
-                    'label' => Yii::t('yii2admin', 'Модальные окна'),
+                    'label' => Yii::t('yii2admin', 'Магические модалки'),
                     'url' => ['/uikit/magic-modal'],
-                    'icon' => 'icon-magic-wand2',
+//                    'icon' => 'icon-magic-wand2',
                     'active' => [
                         'rules' => [
                             'mc' => ['uikit', ['magic-modal']]

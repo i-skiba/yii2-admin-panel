@@ -75,7 +75,7 @@ Yii2Admin.prototype.runCallback = function(callback, data) {
         return eval(callback)(data);
     }
 
-    var wrap = s => "{ return " + callback.trim() + " };"
+    var wrap = s => "{ return " + callback.trim() + " };";
     var func = new Function( wrap(callback) );
     try{
         func.call(null).call(null, data);
@@ -83,21 +83,25 @@ Yii2Admin.prototype.runCallback = function(callback, data) {
 };
 
 Yii2Admin.prototype.reinitPlugins = function() {
-    componentChekboxes.bootstrap();
     componentChekboxes.uniform();
+    componentChekboxes.switchery();
+    componentChekboxes.bootstrap();
     componentSelects.uniform();
+    componentDragAndDrop.init();
     if(typeof componentCdnUploader !== 'undefined') {
         componentCdnUploader.initialization();
     }
 
     App.initCardActions();
-}
+};
 
 var FlashAlertHelper = function() {
-    this.interval = this.hide();
+    // todo: криво пашет, скрывает сразу
+    // this.interval = this.hide();
+    this.interval = null;
     this.$container = $('.admin-flash');
     this.duration = 7000;
-}
+};
 
 FlashAlertHelper.prototype.show = function( response ) {
     this.$container.html('');
@@ -126,13 +130,13 @@ FlashAlertHelper.prototype.hide = function() {
         } ,
         self.duration
     );
-}
+};
 
 FlashAlertHelper.prototype.reset = function() {
     clearTimeout(this.interval);
-}
+};
 
-var UrlHelper = function() {}
+var UrlHelper = function() {};
 
 UrlHelper.prototype.addParam = function(queryString, param, value) {
     queryParameters = this._getQueryParameters(queryString);
@@ -155,7 +159,7 @@ UrlHelper.prototype._getQueryParameters = function(queryString) {
     }
 
     return queryParameters;
-}
+};
 
 var Pjax = function() {
     this.selector = '#list-pjax';
@@ -164,27 +168,27 @@ var Pjax = function() {
         scrollTo : false,
         replace : false
     };
-}
+};
 
 Pjax.prototype.setSelector = function(value) {
     this.selector = value;
-}
+};
 
 Pjax.prototype.setSettings = function(object) {
     this.settings = object;
-}
+};
 
 Pjax.prototype.extendSettings = function(object) {
     this.settings = _.extend(this.settings, object);
-}
+};
 
 Pjax.prototype.reload = function() {
     $.pjax.reload(this.selector, this.settings);
-}
+};
 
 Pjax.prototype.submit = function(event) {
     $.pjax.submit(event, this.selector, this.settings);
-}
+};
 
 var MagicModal = function() {
     this.$modal = $('#magic-modal');
@@ -205,7 +209,7 @@ var MagicModal = function() {
 
     this.pjax = new Pjax();
     this.pjax.setSelector('#magic-modal-pjax');
-}
+};
 
 MagicModal.prototype.run = function($el) {
     if(typeof this.pjax.settings.data !== 'undefined') {
@@ -218,8 +222,10 @@ MagicModal.prototype.run = function($el) {
     this.setCallback( data.callback );
     this.pjax.extendSettings({url : data.url});
     //если элемент находится в форме
-    var $serializeElement = $el.closest('form');
-    if($serializeElement.length === 0) {
+    // todo : всю форму нельзя сериализовать
+    // var $serializeElement = $el.closest('form');
+    var $serializeElement;
+    if(typeof $serializeElement !== 'undefined' && $serializeElement.length === 0) {
         var selector = data.serializeSelector;
         if(typeof selector !== 'undefined') {
             //TODO реализовать пригодится
@@ -230,7 +236,7 @@ MagicModal.prototype.run = function($el) {
 
     var formData = null;
     //TODO сбор данных с более одного селектора
-    if($serializeElement.length === 1) {
+    if(typeof $serializeElement !== 'undefined' && $serializeElement.length === 1) {
         formData = $serializeElement.serialize();
         //удаление параметра _csrf из серилизованной строки
         formData = formData.replace( /_csrf=(.*?)\&/g, "" );
@@ -239,7 +245,7 @@ MagicModal.prototype.run = function($el) {
     }
 
     this.pjax.reload();
-}
+};
 
 MagicModal.prototype.applySize = function(size_class) {
     this.$container.removeClass(this.modalSizes.join(' '));
@@ -249,7 +255,7 @@ MagicModal.prototype.applySize = function(size_class) {
     ) {
         this.$container.addClass(size_class);
     }
-}
+};
 
 MagicModal.prototype.setCallback = function(value) {
     if(typeof value == 'undefined') {
@@ -257,14 +263,14 @@ MagicModal.prototype.setCallback = function(value) {
     }
 
     this.callback = value
-},
+};
 
 MagicModal.prototype.stop = function() {
     this.callback = null;
     this.isJsonResponse = false;
     this.response = null;
     this.isStop = true;
-}
+};
 
 var CallbackHelper = function() {
     this.pjax = new Pjax();
@@ -273,7 +279,7 @@ var CallbackHelper = function() {
 CallbackHelper.prototype.reloadPjax = function(selector) {
     this.pjax.setSelector(selector);
     this.pjax.reload();
-}
+};
 
 var yii2admin = new Yii2Admin();
 var magicModal = new MagicModal();
@@ -286,6 +292,7 @@ $(document).ready(function() {
     componentChekboxes.switchery();
     componentChekboxes.bootstrap();
     componentSelects.uniform();
+    componentDragAndDrop.init();
     $('.history-back').click(function() {
         window.history.back();
     });
@@ -431,9 +438,9 @@ $(document).ready(function() {
         }
 
         if(! magicModal.isStop) {
-            $magicModalPjax.find('.card').each(function(el) {
-                $(this).removeClass('card');
-            });
+            // $magicModalPjax.find('.card').each(function(el) {
+            //     $(this).removeClass('card');
+            // });
             magicModal.$modal.modal('show');
         }
 
@@ -451,5 +458,24 @@ $(document).ready(function() {
         magicModal.stop();
 
         return false;
+    });
+
+    $(document).on("afterInsert", ".dynamicform_wrapper", function () {
+        yii2admin.reinitPlugins();
+    });
+
+    $(document).on("limitReached", ".dynamicform_wrapper", function (e, item) {
+        $container = $(e.target);
+        $button = $container.find('.dynamic-form-add-item');
+        if($button.length === 0) {
+            return true;
+        }
+
+        message = $button.attr('data-message');
+        if(message === undefined) {
+            return true;
+        }
+
+        componentNotify.pNotify(componentNotify.statuses.info, message + ' - ' + item);
     });
 });

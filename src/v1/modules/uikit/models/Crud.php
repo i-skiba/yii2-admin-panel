@@ -27,6 +27,7 @@ use concepture\yii2logic\validators\ModelValidator;
  * @property integer $dropdown_depend
  * @property integer $dropdown_depend_2
  * @property integer $radio
+ * @property integer $sort
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
@@ -42,6 +43,11 @@ class Crud extends ActiveRecord
         $scenarios[UiikitEnum::SCENARIO_DEPEND_SELECTS] = $this->attributes();
 
         return $scenarios;
+    }
+
+    public static function label()
+    {
+        return 'Интерфейс';
     }
 
     /**
@@ -195,6 +201,7 @@ class Crud extends ActiveRecord
             'dropdown_depend' => Yii::t('yii2admin', 'Зависимые элементы 1'),
             'dropdown_depend_2' => Yii::t('yii2admin', 'Зависимый элемент 2'),
             'radio' => Yii::t('yii2admin', 'Набор радиобатонов'),
+            'sort' => Yii::t('yii2admin', 'Сортировка'),
         ];
     }
 }
