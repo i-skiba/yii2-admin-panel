@@ -161,9 +161,6 @@ class DynamicForm extends \yii\base\Widget
                 'name' => Html::getInputName($this->model, '[{}]' . $attribute)
             ];
         }
-
-        ob_start();
-        ob_implicit_flush(false);
     }
 
     protected function registerOptions($view)
