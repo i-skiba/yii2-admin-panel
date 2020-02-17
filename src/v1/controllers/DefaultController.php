@@ -204,7 +204,7 @@ class DefaultController extends BaseController
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        $this->authService()->signOut();
 
         return $this->redirect(['/site/login']);
     }
