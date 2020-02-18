@@ -25,7 +25,7 @@ class DynamicForm extends \yii\base\Widget
      * @var string
      */
     protected $widgetContainer = 'dynamicform_wrapper';
-     /**
+    /**
      * @var string
      */
     protected $widgetBody = '.dynamic-form-items';
@@ -41,7 +41,7 @@ class DynamicForm extends \yii\base\Widget
      * @var string
      */
     protected $insertButton = '.dynamic-form-add-item';
-     /**
+    /**
      * @var string
      */
     protected $deleteButton = '.dynamic-form-remove-item';
@@ -53,7 +53,7 @@ class DynamicForm extends \yii\base\Widget
      * @var Model|ActiveRecord the model used for the form
      */
     private $model;
-     /**
+    /**
      * @var array
      */
     public $models = [];
@@ -156,7 +156,7 @@ class DynamicForm extends \yii\base\Widget
         $this->_options['fields']          = [];
 
         foreach ($this->attributes as $attribute => $settings) {
-             $this->_options['fields'][] = [
+            $this->_options['fields'][] = [
                 'id' => Html::getInputId($this->model, '[{}]' . $attribute),
                 'name' => Html::getInputName($this->model, '[{}]' . $attribute)
             ];
@@ -203,6 +203,7 @@ class DynamicForm extends \yii\base\Widget
     {
         $content = $this->render($this->view, [
             'form' => $this->form,
+            'model' => $this->model,
             'header' => $this->getHeader(),
             'body' => $this->getBody(),
             'dragAndDrop' => $this->dragAndDrop
@@ -300,11 +301,11 @@ class DynamicForm extends \yii\base\Widget
         return $result;
     }
 
-   /**
-    * Колонка удаления
-    *
-    * @return string
-    */
+    /**
+     * Колонка удаления
+     *
+     * @return string
+     */
     private function removeControl()
     {
         $class = trim($this->deleteButton, '.');
