@@ -202,6 +202,7 @@ class DynamicForm extends \yii\base\Widget
     public function run()
     {
         $content = $this->render($this->view, [
+            'form' => $this->form,
             'header' => $this->getHeader(),
             'body' => $this->getBody(),
             'dragAndDrop' => $this->dragAndDrop
