@@ -4,6 +4,7 @@ namespace kamaelkz\yii2admin\v1\widgets\formelements\dynamicform;
 
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\CssSelector\CssSelector;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\Html;
 use yii\base\InvalidConfigException;
@@ -21,6 +22,9 @@ class DynamicForm extends \yii\base\Widget
      * @var string
      */
     public $view = 'view';
+
+    public $viewParams = [];
+
     /**
      * @var string
      */
@@ -202,13 +206,13 @@ class DynamicForm extends \yii\base\Widget
 
     public function run()
     {
-        $content = $this->render($this->view, [
+        $content = $this->render($this->view, ArrayHelper::merge([
             'form' => $this->form,
             'model' => $this->model,
             'header' => $this->getHeader(),
             'body' => $this->getBody(),
             'dragAndDrop' => $this->dragAndDrop
-        ]);
+        ], $this->viewParams));
 
         $crawler = new Crawler();
         $crawler->addHTMLContent($content, \Yii::$app->charset);
