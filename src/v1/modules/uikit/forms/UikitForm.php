@@ -33,6 +33,7 @@ class UikitForm extends BaseModel
     public $radio;
     public $checkboxList = [];
     public $multiInput = [];
+    public $select2 = [];
 
     /**
      * @inheritDoc
@@ -65,7 +66,8 @@ class UikitForm extends BaseModel
                             'time_picker',
                             'dropdown',
                             'dropdown_root',
-                            'radio'
+                            'radio',
+                            'select2'
                         ],
                         'required',
                     ],
@@ -204,6 +206,7 @@ class UikitForm extends BaseModel
             'dropdown_depend_2' => Yii::t('yii2admin', 'Зависимый элемент 2'),
             'checkboxList' => Yii::t('yii2admin', 'Набор чекбоксов'),
             'radio' => Yii::t('yii2admin', 'Набор радиобатонов'),
+            'select2' => Yii::t('yii2admin', 'Раскрывающийся список Select2'),
         ];
     }
 //

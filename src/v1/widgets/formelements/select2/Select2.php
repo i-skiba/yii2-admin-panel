@@ -49,10 +49,14 @@ class Select2 extends InputWidget
 {
     use WidgetTrait;
 
+    const HASH_VAR_BASE_NAME = 'select2_';
+
     /** @var ActiveForm */
     public $form;
     /** @var array */
     public $data = [];
+    /** @var string the hashed global variable name storing the pluginOptions */
+    private $_hashVar;
 
     /**
      * Initializes the widget
@@ -84,7 +88,9 @@ class Select2 extends InputWidget
         }
 
         $encOptions = $this->options ? Json::encode($this->options) : '';
-        $view->registerJs("$('.select').select2({$encOptions});\n", $view::POS_END);
+        $this->_hashVar = static::HASH_VAR_BASE_NAME . hash('crc32', $encOptions);
+        $this->options['id'] = $this->_hashVar;
+        $view->registerJs("var {$this->_hashVar} = {$encOptions};\n", $view::POS_END);
     }
 
     /**
@@ -92,8 +98,10 @@ class Select2 extends InputWidget
      */
     private function registerClientScript()
     {
+        $view = $this->getView();
         $this->registerBundle();
-        $this->registerOptions($this->getView());
+        $this->registerOptions($view);
+        $view->registerJs("$('#{$this->_hashVar}').select2({$this->_hashVar});\n", View::POS_END);
     }
 
     /**
