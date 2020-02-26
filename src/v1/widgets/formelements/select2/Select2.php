@@ -56,12 +56,11 @@ class Select2 extends InputWidget
      */
     protected function registerOptions($view)
     {
-        $this->options = [
+        $this->options = array_merge($this->options, [
             'class' => 'select',
             'minimumResultsForSearch' => 'Infinity', // не показывать search
             'minimumResultsForSearch' => 20,
             'width' => 1000,
-            'placeholder' => 'Выберите валюту',
             'containerCssClass' => 'bg-teal-400',
             'dropdownCssClass' => 'bg-teal-400',
             'minimumInputLength' => 2,
@@ -71,7 +70,11 @@ class Select2 extends InputWidget
             'tokenSeparators' => [",", " "],
             'maximumSelectionLength' => 3,
             'maximumSelectionSize' => 3,
-        ];
+        ]);
+        if (isset($this->options['prompt'])) {
+            $this->options['data-placeholder'] = $this->options['prompt'];
+        }
+
         $encOptions = $this->options ? Json::encode($this->options) : '';
         $view->registerJs("$('.select').select2({$encOptions});\n", $view::POS_END);
     }
