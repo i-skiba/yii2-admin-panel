@@ -208,7 +208,10 @@ class DefaultController extends BaseController
      */
     public function actionLogout()
     {
-        $this->authService()->signOut();
+        $data = $this->authService()->signOut();
+        if (is_array($data) && isset($data['redirect'])){
+            return $this->redirect($data['redirect'], 301);
+        }
 
         return $this->redirect(['/site/login']);
     }
