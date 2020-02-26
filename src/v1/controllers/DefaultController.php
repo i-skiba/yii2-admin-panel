@@ -108,8 +108,12 @@ class DefaultController extends BaseController
         if (
             $model->load(Yii::$app->request->post())
             && $model->validate()
-            && $this->authService()->signIn($model)
+            && ($data = $this->authService()->signIn($model))
         ) {
+            if (is_array($data) && isset($data['redirect'])){
+                return $this->redirect($data['redirect'], 301);
+            }
+
             return $this->redirect(['/site/index']);
         }
 
