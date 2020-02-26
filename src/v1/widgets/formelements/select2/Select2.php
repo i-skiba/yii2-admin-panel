@@ -15,10 +15,26 @@ use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 
 /**
  * Class Select2
+ *
+ * Options:
+ * @see Documentaion https://select2.org/
+ * ================================================================
+ * Options examples:
+ * 'minimumResultsForSearch' => 'Infinity', // не показывать search
+ * 'minimumResultsForSearch' => 20,
+ * 'width' => 1000, // Фиксированная ширина
+ * 'containerCssClass' => 'bg-teal-400', // Класс контейнера селекта
+ * 'dropdownCssClass' => 'bg-teal-400', // Класс выпадающего меню
+ * 'minimumInputLength' => 2, // Сколько символов минимум нужно ввести для начала поиска
+ * 'maximumInputLength' => 5, // Максимальное количество вводимых символов в поиск
+ * 'allowClear' => true, // Добавляет крестик для очистки инпута
+ * 'tags' => true, // Tagging support Select2 can be used to quickly set up fields used for tagging. When tagging is
+ *                 // enabled the user can select from pre-existing tags or create a new tag by picking the first choice
+ * 'maximumSelectionSize' => 3, // Максимальное количество выбираемых элементов
+ * ================================================================
  * 
  * @package kamaelkz\yii2admin\v1\widgets\formelements\select2
  * @author Poletaev Eugene <evgstn7@gmail.com>
- * @see Documentaion https://select2.org/
  */
 class Select2 extends InputWidget
 {
@@ -28,11 +44,6 @@ class Select2 extends InputWidget
     public $form;
     /** @var array */
     public $data = [];
-    /** @var string */
-    public $viewName = 'view';
-    /** @var bool */
-    public $multiple = false;
-
 
     /**
      * Initializes the widget
@@ -58,18 +69,6 @@ class Select2 extends InputWidget
     {
         $this->options = array_merge($this->options, [
             'class' => 'select',
-            'minimumResultsForSearch' => 'Infinity', // не показывать search
-            'minimumResultsForSearch' => 20,
-            'width' => 1000,
-            'containerCssClass' => 'bg-teal-400',
-            'dropdownCssClass' => 'bg-teal-400',
-            'minimumInputLength' => 2,
-            'maximumInputLength' => 5,
-            'allowClear' => true,
-            'tags' => true,
-            'tokenSeparators' => [",", " "],
-            'maximumSelectionLength' => 3,
-            'maximumSelectionSize' => 3,
         ]);
         if (isset($this->options['prompt'])) {
             $this->options['data-placeholder'] = $this->options['prompt'];

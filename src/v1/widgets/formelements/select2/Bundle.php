@@ -7,31 +7,15 @@ use kamaelkz\yii2admin\v1\helpers\LanguageHelper;
 use concepture\yii2logic\bundles\Bundle as BaseBundle;
 
 /**
- * Ресурсы для виджета
+ * Class Bundle
  *
- * @author Kamaelkz <kamaelkz@yandex.kz>
+ * @package kamaelkz\yii2admin\v1\widgets\formelements\select2
+ * @author Poletaev Eugene <evgstn7@gmail.com>
  */
 class Bundle extends BaseBundle
 {
-//    public $sourcePath = '@vendor/select2/select2/dist';
-//    public $css = [
-//        'css/select2',
-//    ];
-
+    /** @var array  */
     public $js = [
-
-//        'js/init.js',
         'js/select2.min.js',
-
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function init()
-    {
-        parent::init();
-//        $iso = LanguageHelper::getIso(true);
-//        $this->js[] = "js/translations/{$iso}.js";
-    }
 }
