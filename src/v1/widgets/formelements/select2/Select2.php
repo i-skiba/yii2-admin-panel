@@ -48,6 +48,7 @@ class Select2 extends InputWidget
             );
         }
         $this->registerClientScript();
+        echo $this->renderSelectHtml();
     }
 
     /**
@@ -56,6 +57,7 @@ class Select2 extends InputWidget
     protected function registerOptions($view)
     {
         $this->options = [
+            'class' => 'select',
             'minimumResultsForSearch' => 'Infinity', // не показывать search
             'minimumResultsForSearch' => 20,
             'width' => 1000,
@@ -86,14 +88,11 @@ class Select2 extends InputWidget
     /**
      * @return string
      */
-    public function run()
+    protected function renderSelectHtml()
     {
-        return $this->render($this->viewName, [
-            'model' => $this->model,
-            'form' => $this->form,
-            'data' => $this->data,
-            'multiple' => $this->multiple,
-            'options' => $this->options ? $this->options : [],
-        ]);
+        if ($this->hasModel()) {
+            return Html::activeDropDownList($this->model, $this->attribute, $this->data, $this->options);
+        }
+        return Html::dropDownList($this->name, $this->value, $this->data, $this->options);
     }
 }
