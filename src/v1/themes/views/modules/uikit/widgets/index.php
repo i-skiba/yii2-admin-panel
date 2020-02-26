@@ -293,9 +293,11 @@ use yii\widgets\MaskedInput;
                             )
                         ?>
                     </div>
-                    <legend class="font-weight-semibold text-uppercase font-size-sm">
-                        <?= $uikitForm->getAttributeLabel('select2') ?>
-                    </legend>
+                </div>
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <?= $uikitForm->getAttributeLabel('select2') ?>
+                </legend>
+                <div class="row">
                     <div class="col-md-6">
                         <?= $form
                             ->field($uikitForm, 'select2')
