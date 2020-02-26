@@ -16,6 +16,15 @@ use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 /**
  * Class Select2
  *
+ * $form->field($model, 'currency_code')->widget(Select2::class, [
+ *     'form' => $form,
+ *     'data' => $data,
+ *     'options' => [
+ *         'multiple' => true,
+ *         'prompt' => 'Select something...'
+ *      ],
+ * ]);
+ *
  * Options:
  * @see Documentaion https://select2.org/
  * ================================================================
