@@ -15,6 +15,7 @@ use yii\widgets\MaskedInput;
     use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
     use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
+    use kamaelkz\yii2admin\v1\widgets\formelements\select2\Select2;
 
     $title = Yii::t('yii2admin', 'Виджеты');
     $this->setTitle($title);
@@ -290,6 +291,61 @@ use yii\widgets\MaskedInput;
                                     'class' => 'row ml-0'
                                 ]
                             )
+                        ?>
+                    </div>
+                </div>
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <?= $uikitForm->getAttributeLabel('select2') ?>
+                </legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form
+                            ->field($uikitForm, 'select2')
+                            ->widget(Select2::class, [
+                                'form' => $form,
+                                'data' => $dropdownList,
+                                'options' => [
+                                    'minimumResultsForSearch' => 'Infinity',
+                                ],
+                            ])->label(Yii::t('yii2admin', 'Базовый select'));
+                        ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?= $form
+                            ->field($uikitForm, 'select2')
+                            ->widget(Select2::class, [
+                                'form' => $form,
+                                'data' => $dropdownList,
+                                'options' => [
+                                    'multiple' => true,
+                                ],
+                            ])->label(Yii::t('yii2admin', 'Мульти select'));
+                        ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?= $form
+                            ->field($uikitForm, 'select2')
+                            ->widget(Select2::class, [
+                                'form' => $form,
+                                'data' => $dropdownList,
+                                'options' => [
+                                    'prompt' => Yii::t('yii2admin', 'Выберите элемент'),
+                                    'containerCssClass' => 'bg-teal-400',
+                                    'dropdownCssClass' => 'bg-teal-400',
+                                ],
+                            ])->label(Yii::t('yii2admin', 'Плейсхолдер и цвет бэкграунда'));
+                        ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?= $form
+                            ->field($uikitForm, 'select2')
+                            ->widget(Select2::class, [
+                                'form' => $form,
+                                'data' => $dropdownList,
+                                'options' => [
+                                    'width' => 400,
+                                ],
+                            ])->label(Yii::t('yii2admin', 'Фиксированная ширина'));
                         ?>
                     </div>
                 </div>
