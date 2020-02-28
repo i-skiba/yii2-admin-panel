@@ -1,6 +1,6 @@
 <?php
-use yii\helpers\Html;
-use yii\widgets\MaskedInput;
+    use yii\helpers\Html;
+    use yii\widgets\MaskedInput;
     use kamaelkz\yii2admin\v1\widgets\ {
         notifications\alert\Alert,
         formelements\multiinput\MultiInput,
@@ -16,6 +16,7 @@ use yii\widgets\MaskedInput;
     use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
     use kamaelkz\yii2admin\v1\widgets\formelements\select2\Select2;
+    use kamaelkz\yii2admin\v1\widgets\formelements\dynamicform\DynamicForm;
 
     $title = Yii::t('yii2admin', 'Виджеты');
     $this->setTitle($title);
@@ -330,8 +331,8 @@ use yii\widgets\MaskedInput;
                                 'data' => $dropdownList,
                                 'options' => [
                                     'prompt' => Yii::t('yii2admin', 'Выберите элемент'),
-                                    'containerCssClass' => 'bg-teal-400',
-                                    'dropdownCssClass' => 'bg-teal-400',
+                                    'containerCssClass' => 'bg-pink',
+                                    'dropdownCssClass' => 'bg-pink',
                                 ],
                             ])->label(Yii::t('yii2admin', 'Плейсхолдер и цвет бэкграунда'));
                         ?>
@@ -349,6 +350,50 @@ use yii\widgets\MaskedInput;
                         ?>
                     </div>
                 </div>
+                <legend class="font-weight-semibold text-uppercase font-size-sm">
+                    <?= Yii::t('yii2admin', 'Коллекция') ;?>
+                </legend>
+                <?= DynamicForm::widget([
+                    'limit' => 3, // the maximum times, an element can be cloned (default 999)
+                    'min' => 1, // 0 or 1 (default 1)
+                    'form' => $form,
+                    'models' => [
+                        new \kamaelkz\yii2admin\v1\modules\uikit\forms\CollectionForm()
+                    ],
+                    'dragAndDrop' => true,
+                    'formId' => 'uiikit-form',
+                    'attributes' => [
+                        'text_input' => Html::FIELD_TEXT_INPUT,
+                        'dropdown' => [
+                            'type' => Html::FIELD_DROPDOWN,
+                            'params' => [
+                                UiikitEnum::getDropdownList(),
+                                [
+                                    'class' => 'form-control custom-select',
+                                    'prompt' => ''
+                                ]
+                            ]
+                        ],
+                        'image' => function ($collection, $form, $key, $value) {
+                            return CdnUploader::widget([
+                                'small' => true,
+                                'name' => "{$collection->formName()}[$key][image]",
+                                'value' => $value,
+                                'strategy' => StrategiesEnum::BY_REQUEST,
+                                'resizeBigger' => false,
+                                'buttonIconClass' => 'icon-cloud-upload2',
+                                'width' => 313,
+                                'height' => 235,
+                                'options' => [
+                                    'plugin-options' => [
+                                        # todo: похоже не пашет
+                                        'maxFileSize' => 2000000,
+                                    ]
+                                ]
+                            ]);
+                        }
+                    ]
+                ]); ?>
             </div>
         </div>
         <div class="card">
