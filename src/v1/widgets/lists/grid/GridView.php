@@ -105,12 +105,12 @@ class GridView extends Base
 
         if($this->searchVisible) {
             $model = $this->searchParams['model'];
-            $viewPath = $this->getView()->context->getViewPath();
-            $this->searchParams['searchViewPath'] = "{$viewPath}/{$this->searchView}.php";
+            $this->searchParams['searchView'] = "{$this->searchView}.php";
             # признак открытой формы поиска
             $this->searchParams['collapsed'] = (Yii::$app->request->get(BaseForm::$refreshParam) === null);
             $this->searchParams['searchCollapsed'] = $this->searchCollapsed;
             $this->searchParams['selectedFilterCount'] = $model->getSelectedFilterCount();
+            $this->searchParams['context'] = $this->getView()->context;
         }
 
         $params = ArrayHelper::merge($this->searchParams, ['searchParams' => $this->searchParams]);

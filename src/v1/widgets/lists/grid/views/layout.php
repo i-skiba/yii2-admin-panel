@@ -1,13 +1,13 @@
 <?php
 
-    use kamaelkz\yii2admin\v1\forms\BaseForm;
-    use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
-    use yii\helpers\Html;
-    use yii\helpers\Url;
+use kamaelkz\yii2admin\v1\forms\BaseForm;
+use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
-<?php if(isset($searchViewPath)) :?>
+<?php if(isset($searchView)) :?>
     <div class='card search-box <?= ($collapsed ? 'card-collapsed' : null) ;?>'>
         <?php if($searchCollapsed):?>
             <div class="card-header header-elements-inline">
@@ -30,38 +30,38 @@
         <?php endif;?>
         <div class="card-body">
             <?php
-                $form = ActiveForm::begin([
-                    'id' => $form_id ??  'search-form',
-                    'method' => 'GET',
-                    'action' => Url::canonical(),
-                    'fieldConfig' => [
-                        'template' => '{label} {input}'
-                    ]
-                ])
+            $form = ActiveForm::begin([
+                'id' => $form_id ??  'search-form',
+                'method' => 'GET',
+                'action' => Url::canonical(),
+                'fieldConfig' => [
+                    'template' => '{label} {input}'
+                ]
+            ])
             ?>
-                <?php if(isset($beforeContent)) :?>
-                    <?= $beforeContent;?>
-                <?php endif;?>
-                <?= $this->renderFile($searchViewPath, ['form' => $form, 'model' => $model, 'searchParams' => $searchParams]);?>
-                <?php if(isset($afterContent)) :?>
-                    <?= $afterContent;?>
-                <?php endif;?>
-                <div class="text-right">
-                    <?=  Html::button(
-                        '<b><i class="icon-cross2"></i></b>' . Yii::t('yii2admin', 'Сбросить'),
-                        [
-                            'class' => 'btn bg-grey btn-labeled btn-labeled-left search-clear',
-                        ]
-                    );
-                    ?>
-                    <?=  Html::submitButton(
-                        '<b><i class="icon-search4"></i></b>' . Yii::t('yii2admin', 'Применить'),
-                        [
-                            'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1',
-                        ]
-                    );
-                    ?>
-                </div>
+            <?php if(isset($beforeContent)) :?>
+                <?= $beforeContent;?>
+            <?php endif;?>
+            <?= $this->render($searchView, ['form' => $form, 'model' => $model, 'searchParams' => $searchParams], $searchParams['context']);?>
+            <?php if(isset($afterContent)) :?>
+                <?= $afterContent;?>
+            <?php endif;?>
+            <div class="text-right">
+                <?=  Html::button(
+                    '<b><i class="icon-cross2"></i></b>' . Yii::t('yii2admin', 'Сбросить'),
+                    [
+                        'class' => 'btn bg-grey btn-labeled btn-labeled-left search-clear',
+                    ]
+                );
+                ?>
+                <?=  Html::submitButton(
+                    '<b><i class="icon-search4"></i></b>' . Yii::t('yii2admin', 'Применить'),
+                    [
+                        'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1',
+                    ]
+                );
+                ?>
+            </div>
             <?php ActiveForm::end() ?>
         </div>
     </div>
