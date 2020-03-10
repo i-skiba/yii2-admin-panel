@@ -80,8 +80,8 @@ class Select2 extends InputWidget
      */
     protected function registerOptions($view)
     {
-        $this->options = array_merge($this->options, [
-            'class' => 'select',
+        $this->options['class'] = join(' ', [
+            'select', isset($this->options['class']) ? $this->options['class'] : ''
         ]);
         if (isset($this->options['prompt'])) {
             $this->options['data-placeholder'] = $this->options['prompt'];
