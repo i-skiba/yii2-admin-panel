@@ -5,6 +5,7 @@ var Yii2Admin = function() {
             this.dictionary = _.extend(this.dictionary, object);
         }
     };
+    this.showPreloader = true;
 };
 
 Yii2Admin.prototype.t = function (key) {
@@ -299,6 +300,10 @@ $(document).ready(function() {
     // preloader при ajax запросах
     $(document)
         .ajaxStart(function() {
+            if(! yii2admin.showPreloader) {
+                return;
+            }
+
             $.blockUI({
                 message: '<i class="icon-spinner4 spinner"></i>',
                 overlayCSS: {
@@ -316,8 +321,12 @@ $(document).ready(function() {
                 }
             });
         }).ajaxStop(function(){
-            $.unblockUI();
-        });
+        if(! yii2admin.showPreloader) {
+            return;
+        }
+
+        $.unblockUI();
+    });
 
     var $listPjax = $('#list-pjax');
     // убиваем таймаут
@@ -425,7 +434,7 @@ $(document).ready(function() {
             if(title.length > 0) {
                 magicModal.$modal.find('.modal-title').html(title.html());
             }
-            
+
             yii2admin.reinitPlugins();
         }
 
