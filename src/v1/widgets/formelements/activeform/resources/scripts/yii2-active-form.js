@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     $(document).on('blur', 'form .form-group', function() {
         var form = $(this).closest('form');
-        if(form.attr('data-validate-attribute-form') !== 'undefined') {
+        if(typeof form.attr('data-validate-attribute-form') === 'undefined') {
             return;
         }
 

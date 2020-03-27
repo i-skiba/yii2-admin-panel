@@ -4,6 +4,7 @@ namespace kamaelkz\yii2admin\v1\widgets\formelements\activeform;
 
 use yii\base\Model;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use concepture\yii2logic\widgets\WidgetTrait;
 use kamaelkz\yii2admin\v1\forms\BaseForm;
 
@@ -48,7 +49,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
         ],
     ];
 
-    public $options = [
+    private $defaultOptions = [
         'validateOnSubmit' => true,
         'class' => 'form-vertical'
     ];
@@ -58,6 +59,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
      */
     public function run()
     {
+        $this->options = ArrayHelper::merge($this->defaultOptions, $this->options);
         $content = ob_get_clean();
         echo Html::beginForm($this->action, $this->method, $this->options);
         echo Html::hiddenInput(BaseForm::$refreshParam, null, ['class' => 'active-form-refresh-value']);
