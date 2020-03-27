@@ -1,4 +1,5 @@
 <?php
+
 namespace kamaelkz\yii2admin\v1\forms;
 
 use Yii;
@@ -21,6 +22,14 @@ abstract class BaseForm extends Form
     public static $refreshParam = 'refresh-form';
 
     /**
+     * Параметр для валидации одного поля
+     * Используется в ActiveForm
+     *
+     * @var string
+     */
+    public static $validateAttributeParam = 'validate-attribute';
+
+    /**
      * @inheritDoc
      */
     public function validate($attributeNames = null, $clearErrors = true , $model = null)
@@ -33,6 +42,19 @@ abstract class BaseForm extends Form
                 )
         ) {
             $this->beforeValidate();
+
+            return false;
+        }
+
+        if(
+            Yii::$app instanceof Application
+            && (
+                ( $attribute = Yii::$app->request->post(static::$validateAttributeParam) )
+                || ( $attribute = Yii::$app->request->get(static::$validateAttributeParam) )
+            )
+            && $this->hasAttribute($attribute)
+        ) {
+            parent::validate($attribute, true);
 
             return false;
         }

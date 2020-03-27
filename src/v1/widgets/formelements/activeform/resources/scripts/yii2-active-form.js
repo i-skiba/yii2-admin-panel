@@ -14,4 +14,23 @@ $(document).ready(function() {
         object.closest('.active-form-dependent-container').nextAll().remove();
         form.submit();
     }
+
+    $(document).on('blur', 'form .form-group', function() {
+        var form = $(this).closest('form');
+        if(form.attr('data-validate-attribute-form') !== 'undefined') {
+            return;
+        }
+
+        var clasees = $(this).attr('class');
+        var matches = clasees.match(/field\-[a-z]+\-([a-z_]+)/);
+        var attribute = matches[1];
+        form.find('.active-form-validate-attribute').val(attribute);
+        yii2admin.showPreloader = false;
+        form.submit();
+    });
+
+    $('#list-pjax').on('pjax:end', function(object, xhr) {
+        $('.active-form-validate-attribute').val('');
+        yii2admin.showPreloader = true;
+    });
 });

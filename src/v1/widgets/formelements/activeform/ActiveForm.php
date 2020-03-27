@@ -61,6 +61,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
         $content = ob_get_clean();
         echo Html::beginForm($this->action, $this->method, $this->options);
         echo Html::hiddenInput(BaseForm::$refreshParam, null, ['class' => 'active-form-refresh-value']);
+        echo Html::hiddenInput(BaseForm::$validateAttributeParam, null, ['class' => 'active-form-validate-attribute']);
 
         echo $this->beforeRender();
         echo $content;
