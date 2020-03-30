@@ -21,16 +21,26 @@ $(document).ready(function() {
             return;
         }
 
+        var self = $(this);
+        var attributeSelector = '.active-form-validate-attribute';
         var clasees = $(this).attr('class');
         var matches = clasees.match(/field\-[a-z]+\-([a-z_]+)/);
+        var elSelector = matches[0];
         var attribute = matches[1];
-        form.find('.active-form-validate-attribute').val(attribute);
-        yii2admin.showPreloader = false;
-        form.submit();
-    });
 
-    $('#list-pjax').on('pjax:end', function(object, xhr) {
-        $('.active-form-validate-attribute').val('');
-        yii2admin.showPreloader = true;
+        $hidden = form.find(attributeSelector)
+        $hidden.val(attribute);
+        yii2admin.showPreloader = false;
+        yii2admin.sendRequest(form.attr('action'), form.serialize(), {'type' : 'POST'}, function (html) {
+            var $html = $(html);
+            var $replaceableEl = self.find(' .text-danger');
+            var $replacementEl = $html.find('.' + elSelector + ' .text-danger');
+            if( $replacementEl.length === 1 && $replaceableEl.length === 1) {
+                $replaceableEl.replaceWith($replacementEl);
+            }
+
+            $hidden.val('');
+            yii2admin.showPreloader = true;
+        });
     });
 });
