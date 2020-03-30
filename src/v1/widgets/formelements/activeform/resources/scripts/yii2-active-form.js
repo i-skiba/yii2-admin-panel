@@ -15,6 +15,7 @@ $(document).ready(function() {
         form.submit();
     }
 
+    $(document).off('blur', 'form .form-group');
     $(document).on('blur', 'form .form-group', function() {
         var form = $(this).closest('form');
         if(typeof form.attr('data-validate-attribute-form') === 'undefined') {
@@ -24,7 +25,12 @@ $(document).ready(function() {
         var self = $(this);
         var attributeSelector = '.active-form-validate-attribute';
         var clasees = $(this).attr('class');
-        var matches = clasees.match(/field\-[a-z]+\-([a-z_]+)/);
+        if($(this).closest('.dynamicform_wrapper').length > 0) {
+            var matches = clasees.match(/field\-([a-z_]+)\-[0-9]+\-[a-z_]+/);
+        } else {
+            var matches = clasees.match(/field\-[a-z]+\-([a-z_]+)/);
+        }
+
         var elSelector = matches[0];
         var attribute = matches[1];
 
