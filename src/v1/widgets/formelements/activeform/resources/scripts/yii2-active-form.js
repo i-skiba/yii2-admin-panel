@@ -31,6 +31,10 @@ $(document).ready(function() {
             var matches = clasees.match(/field\-[a-z]+\-([a-z_]+)/);
         }
 
+        if(matches == null) {
+            return;
+        }
+
         var elSelector = matches[0];
         var attribute = matches[1];
 
