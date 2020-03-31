@@ -1,6 +1,6 @@
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
-        <a href="/" class="d-inline-block">
+        <a href="/" target="_blank" class="d-inline-block">
             <?= $this->render('logo');?>
         </a>
     </div>

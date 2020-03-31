@@ -22,10 +22,6 @@
                             <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA
                         </div>
                     </div>
-
-                    <div class="ml-3 align-self-center">
-                        <a href="#" class="text-white"><i class="icon-cog3"></i></a>
-                    </div>
                 </div>
             </div>
         </div>

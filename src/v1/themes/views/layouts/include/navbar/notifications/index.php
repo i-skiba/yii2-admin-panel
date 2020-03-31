@@ -9,7 +9,7 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-bubbles4"></i>
             <span class="visible-xs-inline-block position-right">
-                <?= Yii::t('yii2admin', 'Оповещения');?>
+                <?= Yii::t('w', 'Оповещения');?>
             </span>
             <?php if($count > 0) :?>
                 <span class="badge bg-danger-400">
@@ -37,7 +37,7 @@
 //                ]);
 //            ?>
             <div class="dropdown-content-footer">
-                    <a href="<?= Url::to(['/notice/admin-notification/index']);?>" data-popup="tooltip" title="<?= Yii::t(F_T_K, 'Все оповещения');?>">
+                    <a href="<?= Url::to(['/notice/admin-notification/index']);?>" data-popup="tooltip" title="<?= Yii::t('yii2admin', 'Все оповещения');?>">
                         <i class="icon-menu display-block"></i>
                     </a>
             </div>

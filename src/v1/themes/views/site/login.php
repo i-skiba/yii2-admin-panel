@@ -2,8 +2,11 @@
 
 use yii\helpers\Html;
 use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
+use kamaelkz\yii2admin\v1\themes\bundles\ImagesBundle;
 
 $this->title = \Yii::t('backend', "Авторизация");
+$imagePath = $this->assetBundles[ImagesBundle::class]->baseUrl;
+
 ?>
 <?php
     $form = ActiveForm::begin([
@@ -27,13 +30,13 @@ $this->title = \Yii::t('backend', "Авторизация");
     <div class="card mb-0">
         <div class="card-body">
             <div class="text-center mb-3">
-                <i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
+                <img style="width:120px;" class="p-3 mb-2 mt-1" src="<?= $imagePath;?>/yii_logo.png" alt="">
                 <h5 class="mb-0">
-                    <?= \Yii::t('yii2admin', "Авторизация");?>
+                    <?= \Yii::t('xray', "Авторизация");?>
                 </h5>
                 <span class="d-block text-muted">
-                    <?= Yii::t('yii2admin','Введите свои учетные данные ниже');?>
-                </span>
+                        <?= Yii::t('xray','Введите свои учетные данные ниже');?>
+                    </span>
             </div>
             <?= $form
                     ->field($model,'identity' ,[

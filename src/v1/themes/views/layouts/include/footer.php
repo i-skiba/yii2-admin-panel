@@ -6,7 +6,7 @@
     </div>
     <div class="navbar-collapse collapse" id="navbar-footer">
         <span class="navbar-text">
-            © 2019. <a href="#">Xray Admin panel</a>
+            © 2019. <a href="#">Yii2 Admin panel</a>
         </span>
         <ul class="navbar-nav ml-lg-auto">
             <li class="nav-item"><a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
