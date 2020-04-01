@@ -23,6 +23,11 @@ Yii2Admin.prototype.setFormChangedEvents = function (key) {
         return null;
     };
 
+    $(document).on('submit', '*', function(event) {
+        yii2admin.formChanged = false;
+        return true;
+    });
+
     $('form').on('keyup change paste', 'input, select, textarea', function(){
         yii2admin.formChanged = true;
     });
