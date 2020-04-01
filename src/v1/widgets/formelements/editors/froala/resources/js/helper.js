@@ -1,7 +1,13 @@
 function EditorHelper() {
     this.editors = [];
     this.config = {
-        default: {}
+        default: {
+            events:  {
+                'contentChanged': function () {
+                    yii2admin.formChanged=true;
+                },
+            }
+        }
     }
 }
 
@@ -13,7 +19,6 @@ EditorHelper.prototype.add = function(selector, type) {
     var editor = new FroalaEditor(selector, this.config[type]);
     editor.$box.addClass('isolated-styles');
     editor.$el.addClass('content-body');
-
     this.editors.push(editor);
 };
 
