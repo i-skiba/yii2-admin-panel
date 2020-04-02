@@ -7,6 +7,11 @@ $config = [
     'bootstrap' => [
         'kamaelkz\yii2admin\v1\Yii2Admin',
     ],
+    'modules' => [
+        'hints' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\hints\Module'
+        ]
+    ],
     'components' => [
         'view' => [
             'class' => 'kamaelkz\yii2admin\v1\themes\components\view\View',

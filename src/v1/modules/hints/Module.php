@@ -1,12 +1,12 @@
 <?php
 
-namespace kamaelkz\yii2admin\v1\modules\uikit;
+namespace kamaelkz\yii2admin\v1\modules\hints;
 
 use Yii;
 use kamaelkz\yii2admin\v1\modules\Module as BaseModule;
 
 /**
- * Модуль разработчику
+ * Модуль компонентов XRayAdmin
  *
  * @author Kamaelkz <kamaelkz@yandex.kz>
  */
@@ -20,13 +20,13 @@ class Module extends BaseModule
     /**
      * @var string
      */
-    public $defaultRoute = 'widgets';
+    public $defaultRoute = 'hints';
 
     /**
      * @return string|null
      */
     public static function getModuleLabel()
     {
-        return Yii::t('yii2admin', 'Разработчику');
+        return Yii::t('yii2admin', 'Подсказки');
     }
 }

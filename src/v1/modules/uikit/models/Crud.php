@@ -55,7 +55,7 @@ class Crud extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{crud}}';
+        return 'yii2_admin_crud';
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\modules\uikit\controllers;
 
+use Yii;
 use kamaelkz\yii2admin\v1\modules\uikit\forms\MagicModalFormInput;
 use kamaelkz\yii2admin\v1\modules\uikit\forms\MagicModalForm;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
@@ -69,7 +70,7 @@ class MagicModalController extends BaseController
      */
     public function actionIndex()
     {
-        $model = new MagicModalFormInput();
+        $model = Yii::createObject(MagicModalFormInput::class);
 
         return $this->render('index', [
             'model' => $model

@@ -2,16 +2,15 @@
 
 namespace kamaelkz\yii2admin\v1\modules\uikit\forms;
 
-
 use Yii;
-use kamaelkz\yii2admin\v1\forms\BaseForm;
+use kamaelkz\yii2admin\v1\forms\BaseModel;
 
 /**
  * Форма для UIkit
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
-class MagicModalForm extends BaseForm
+class MagicModalForm extends BaseModel
 {
     public $image;
     public $text_input;
