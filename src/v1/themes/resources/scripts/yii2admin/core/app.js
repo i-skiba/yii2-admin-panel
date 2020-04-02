@@ -6,7 +6,39 @@ var Yii2Admin = function() {
         }
     };
     this.showPreloader = true;
+    this.formChanged = false;
+    this.enableFormChangedAlert = true;
 };
+
+Yii2Admin.prototype.setFormChangedEvents = function (key) {
+    if (! yii2admin.enableFormChangedAlert) {
+        return;
+    }
+
+    window.onbeforeunload = function() {
+        if(yii2admin.formChanged) {
+            return true;
+        }
+
+        return null;
+    };
+
+    $(document).on('submit', '*', function(event) {
+        yii2admin.formChanged = false;
+        return true;
+    });
+
+    $('form').on('keyup change paste', 'input, select, textarea', function(){
+        yii2admin.formChanged = true;
+    });
+
+    $('form').find('input[type=hidden]').each(function (e) {
+        $(document).on('change', this,  function(e) {
+            yii2admin.formChanged = true;
+        });
+    });
+};
+
 
 Yii2Admin.prototype.t = function (key) {
     if(typeof this.i18n.dictionary[key] === 'undefined') {
@@ -297,6 +329,9 @@ $(document).ready(function() {
     $('.history-back').click(function() {
         window.history.back();
     });
+
+    yii2admin.setFormChangedEvents();
+
     // preloader при ajax запросах
     $(document)
         .ajaxStart(function() {
