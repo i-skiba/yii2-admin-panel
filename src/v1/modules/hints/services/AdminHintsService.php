@@ -182,7 +182,7 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
                 $items[$item['name']] = [
                     'name' => $item['name'],
                     'caption' => $item['caption'],
-                    'value' => $item['value'],
+                    'value' => nl2br($item['value']),
                 ];
             }
         }

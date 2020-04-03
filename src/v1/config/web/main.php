@@ -60,6 +60,12 @@ $config = [
                 ],
             ],
         ],
+        'adminHintsService' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\hints\services\AdminHintsService',
+        ],
+        'crudService' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\uikit\services\CrudService',
+        ]
     ],
     'controllerMap' => [
         'site' => [

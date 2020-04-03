@@ -64,7 +64,7 @@ class HintWidget extends Widget
         $object = AdminHintsDto::make($this->name, $this->caption);
         $this->getService()->pushStack($object);
         $this->options['id'] = "yii2admin_hint_{$this->name}";
-        $this->options['class'] = "icon-question6 yii2admin_hints d-none {$this->textColor}";
+        $this->options['class'] = "icon-question4 yii2admin_hints d-none {$this->textColor}";
         if( $this->extendClassOptions) {
             $this->options['class'] .= " {$this->extendClassOptions}";
         }

@@ -1,5 +1,6 @@
 <?php
-    use yii\helpers\Html;
+
+use yii\helpers\Html;
     use yii\widgets\MaskedInput;
     use kamaelkz\yii2admin\v1\widgets\ {
         formelements\multiinput\MultiInput,
@@ -15,7 +16,7 @@
     use kamaelkz\yii2cdnuploader\enum\StrategiesEnum;
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
     use kamaelkz\yii2cdnuploader\widgets\Uploader;
-    use kamaelkz\yii2admin\v1\helpers\RequestHelper;
+    use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
 
     $saveRedirectButton = Html::saveRedirectButton();
     $saveButton = Html::saveButton();
@@ -33,6 +34,7 @@
                 <legend class="font-weight-semibold text-uppercase font-size-sm">
                     <i class="icon-file-empty  mr-2"></i>
                     <?= Yii::t('yii2admin', 'Однострочные текстовые поля');?>
+                    <?= HintWidget::widget(['name' => 'from_view']);?>
                 </legend>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">

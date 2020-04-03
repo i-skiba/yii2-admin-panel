@@ -2,6 +2,7 @@
 
 namespace yii\helpers;
 
+use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
 use Yii;
 use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 
@@ -66,5 +67,20 @@ class Html extends BaseHtml
         $options['type'] = 'submit';
 
         return static::button($content, $options);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function activeLabel($model, $attribute, $options = [])
+    {
+        $name = Inflector::underscore($model->formName(), '-') . "_" . Inflector::underscore($attribute, '-');
+        $for = ArrayHelper::remove($options, 'for', static::getInputId($model, $attribute));
+        $attribute = static::getAttributeName($attribute);
+        $label = ArrayHelper::remove($options, 'label', static::encode($model->getAttributeLabel($attribute)));
+        $hint = HintWidget::widget(['name' => $name]);
+        $label = "{$label} {$hint}";
+
+        return static::label($label, $for, $options);
     }
 }
