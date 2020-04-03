@@ -24,9 +24,17 @@ class HintsController extends Controller
         return [
             [
                 'actions' => [
+                    'create',
+                ],
+                'allow' => true,
+                'roles' => [
+                    UserRoleEnum::SUPER_ADMIN,
+                ],
+            ],
+            [
+                'actions' => [
                     'index',
                     'view',
-//                    'create',
                     'update',
                     'delete',
                     'undelete',
@@ -34,9 +42,10 @@ class HintsController extends Controller
                 ],
                 'allow' => true,
                 'roles' => [
-                    UserRoleEnum::ADMIN
+                    UserRoleEnum::SUPER_ADMIN,
+                    UserRoleEnum::ADMIN,
                 ],
-            ]
+            ],
         ];
     }
 

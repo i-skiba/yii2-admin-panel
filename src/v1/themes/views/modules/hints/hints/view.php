@@ -2,15 +2,18 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use concepture\yii2handbook\converters\LocaleConverter;
 use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
 use yii\helpers\Url;
+use concepture\yii2user\enum\UserRoleEnum;
 
 $this->setTitle(Yii::t('yii2admin', 'Просмотр'));
 $this->pushBreadcrumbs(['label' => $model::label(), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
 
-//$this->viewHelper()->pushPageHeader();
+if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
+    $this->viewHelper()->pushPageHeader();
+}
+
 $this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id, 'locale' => $model->locale], Yii::t('yii2admin','Редактирование'), 'icon-pencil6');
 $this->viewHelper()->pushPageHeader(['index'], $model::label(),'icon-list');
 ?>

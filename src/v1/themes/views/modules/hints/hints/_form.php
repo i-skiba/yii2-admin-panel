@@ -6,6 +6,7 @@ use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 
 $saveRedirectButton = Html::saveRedirectButton();
 $saveButton = Html::saveButton();
+use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
 ?>
 
 <?php Pjax::begin(['formSelector' => '#hints-form']); ?>
@@ -29,6 +30,10 @@ $saveButton = Html::saveButton();
     ?>
     <div class="card">
         <div class="card-body">
+<!--            <legend class="font-weight-semibold text-uppercase font-size-sm">-->
+<!--                ОСНОВНЫЕ ДАННЫЕ-->
+<!--                --><?//= HintWidget::widget(['name' => 'from_view']);?>
+<!--            </legend>-->
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <?= $form->field($model, 'name')->textInput([

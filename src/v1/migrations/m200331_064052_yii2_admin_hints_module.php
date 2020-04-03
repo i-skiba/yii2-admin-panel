@@ -25,7 +25,7 @@ class m200331_064052_yii2_admin_hints_module extends Migration
         $this->addTable([
             'entity_id' => $this->bigInteger()->notNull(),
             'locale' => $this->bigInteger()->notNull(),
-            'caption' => $this->string(1024)->notNull(),
+            'caption' => $this->string(1024),
             'value' => $this->text(),
         ]);
         $this->addPK(['entity_id', 'locale'], true);

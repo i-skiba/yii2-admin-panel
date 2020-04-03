@@ -6,13 +6,14 @@ use yii\grid\GridView;
 use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
 use concepture\yii2logic\enum\StatusEnum;
 use concepture\yii2logic\enum\IsDeletedEnum;
+use \concepture\yii2user\enum\UserRoleEnum;
 
 $this->setTitle(Yii::t('yii2admin', 'Список'));
 $this->pushBreadcrumbs($this->title);
-//$this->viewHelper()->pushPageHeader();
-
+if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
+    $this->viewHelper()->pushPageHeader();
+}
 ?>
-
 <?php Pjax::begin();?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
