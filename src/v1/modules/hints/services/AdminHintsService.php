@@ -2,14 +2,11 @@
 
 namespace kamaelkz\yii2admin\v1\modules\hints\services;
 
-use kamaelkz\yii2admin\v1\modules\hints\widgets\Bundle;
-use kamaelkz\yii2admin\v1\themes\components\view\View;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\base\Event;
 use yii\helpers\Json;
-use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 use concepture\yii2handbook\services\LocaleService;
 use concepture\yii2user\enum\UserRoleEnum;
 use concepture\yii2logic\forms\Model;
@@ -19,8 +16,9 @@ use concepture\yii2handbook\services\traits\ModifySupportTrait as HandbookModify
 use concepture\yii2handbook\services\traits\ReadSupportTrait as HandbookReadSupportTrait;
 use concepture\yii2logic\services\traits\LocalizedReadTrait;
 use concepture\yii2user\services\UserService;
-use kamaelkz\yii2admin\v1\modules\hints\dto\AdminHintsDto;
-use yii\web\Application;
+use kamaelkz\yii2admin\v1\modules\hints\widgets\Bundle;
+use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
+use kamaelkz\yii2admin\v1\themes\components\view\View;
 
 /**
  * Сервис для работы с подсказками
@@ -102,7 +100,7 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
      *
      * @param $item
      */
-    public function pushStack(AdminHintsDto $item)
+    public function pushStack(HintWidget $item)
     {
         $this->stack[$item->name] = $item;
     }
@@ -135,11 +133,16 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
         }
 
         foreach ($insertItems as $item) {
-            $form = Yii::createObject([
+            $config = [
                 'class' => $this->getRelatedFormClass(),
                 'name' => $item->name,
                 'locale' => $this->getLocaleService()->getCurrentLocaleId()
-            ]);
+            ];
+            if($item->caption) {
+                $config['caption'] = $item->caption;
+            }
+
+            $form = Yii::createObject($config);
             $result = $this->create($form);
             if(! $result) {
                 throw new InvalidConfigException("Write stack failed, name: {$form->name}");
