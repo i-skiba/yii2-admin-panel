@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    Yii2Admin.prototype.showAdminHints = function (json) {
+    yii2admin.showPopover = false;
+    Yii2Admin.prototype.initAdminHints = function (json) {
         _.each(json, function(value) {
             var hint = $('#yii2admin_hint_' + value.name);
             hint.attr('data-original-title', value.caption);
@@ -7,33 +8,29 @@ $(document).ready(function () {
             hint.removeClass('d-none');
         });
     };
-    var $elements = $('.yii2admin_hints');
-    $elements.popover();
 
+    var elementClass = 'yii2admin_hints';
+    var $elements = $('.' + elementClass);
+    $elements.popover();
     $(document).on('click', function(e) {
         var $target = $(e.target);
+        var is_hint = $target.hasClass(elementClass);
         if(
-            ! $target.hasClass('yii2admin_hints')
+            ! is_hint
             && $target.closest('.popover').length === 0
+            && yii2admin.showPopover === true
         ) {
             $elements.popover('hide');
+            yii2admin.showPopover = false;
         }
+
+        if(is_hint) {
+            return false;
+        }
+    });
+
+    $elements.on('show.bs.popover', function () {
+        $elements.popover('hide');
+        yii2admin.showPopover = true;
     })
-    // $('.yii2admin_hints').on('click', function() {
-    //     var title = $(this).attr('data-title');
-    //     var content = $(this).attr('data-content');
-    //     var init = $(this).attr('data-init');
-    //     var self = $(this);
-    //     if(init === false) {
-    //         self.popover({
-    //             title: title,
-    //             content: content,
-    //             trigger: 'click',
-    //             html: true
-    //         });
-    //         self.attr('data-init', true);
-    //     }
-    //
-    //     self.popover('show');
-    // });
-})
+});
