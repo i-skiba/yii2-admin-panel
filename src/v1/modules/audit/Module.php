@@ -16,12 +16,8 @@ use kamaelkz\yii2admin\v1\modules\audit\services\AuditService;
  */
 class Module extends BaseModule implements BootstrapInterface
 {
-    public $handlers = [];
-
     /** @var array Модели разрешенные для аудита */
     public $auditModels = [];
-    /** @var array Роли с доступом к аудиту */
-    public $accessRoles = ['superadmin'];
     /** @var array */
     private $oldAttributes = [];
     /** @var array */
