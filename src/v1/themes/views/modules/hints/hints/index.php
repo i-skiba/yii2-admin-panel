@@ -11,7 +11,14 @@ use \concepture\yii2user\enum\UserRoleEnum;
 $this->setTitle(Yii::t('yii2admin', 'Список'));
 $this->pushBreadcrumbs($this->title);
 if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
-    $this->viewHelper()->pushPageHeader();
+    $this->viewHelper()->pushPageHeader(null, null, null,
+        [
+            'class' => 'magic-modal-control',
+            'data-url' => Url::to(['create']),
+            'data-modal-size' => 'modal-lg',
+            'data-callback' => 'function(){callbackHelper.reloadPjax("#list-pjax")}'
+        ]
+    );
 }
 ?>
 <?php Pjax::begin();?>
@@ -63,12 +70,15 @@ if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
 
                         return Html::a(
                             '<i class="icon-pencil6"></i>'. Yii::t('yii2admin', 'Редактировать'),
-                            ['update', 'id' => $model['id'], 'locale' => $model['locale']],
+                            null,
                             [
-                                'class' => 'dropdown-item',
+                                'data-url' => Url::to(['update', 'id' => $model['id'], 'locale' => $model['locale']]),
+                                'class' => 'dropdown-item magic-modal-control',
                                 'aria-label' => Yii::t('yii2admin', 'Редактировать'),
                                 'title' => Yii::t('yii2admin', 'Редактировать'),
-                                'data-pjax' => '0'
+                                'data-pjax' => '0',
+                                'data-modal-size' => 'modal-lg',
+                                'data-callback' => 'function(){callbackHelper.reloadPjax("#list-pjax")}'
                             ]
                         );
                     },

@@ -13,7 +13,7 @@ $(document).ready(function () {
             hint.attr('data-content', value.value);
             hint.removeClass('d-none');
         });
-        
+
         yii2admin.popover.elements.popover();
         yii2admin.popover.elements.off('show.bs.popover');
         yii2admin.popover.elements.on('show.bs.popover', function () {
