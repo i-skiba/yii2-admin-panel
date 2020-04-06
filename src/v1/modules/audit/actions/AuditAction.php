@@ -3,8 +3,8 @@
 namespace kamaelkz\yii2admin\v1\modules\audit\actions;
 
 use yii\web\NotFoundHttpException;
-use backend\modules\audit\models\Audit;
 use concepture\yii2logic\actions\Action;
+use kamaelkz\yii2admin\v1\modules\audit\models\Audit;
 
 /**
  * Class AuditAction

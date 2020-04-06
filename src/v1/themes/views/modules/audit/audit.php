@@ -8,8 +8,8 @@ use yii\grid\GridView;
 use yii\db\ActiveQuery;
 use yii\data\ActiveDataProvider;
 use concepture\yii2user\models\User;
-use backend\modules\audit\search\AuditSearch;
-use backend\modules\audit\themes\bundles\AuditBundle;
+use kamaelkz\yii2admin\v1\modules\audit\search\AuditSearch;
+use kamaelkz\yii2admin\v1\modules\audit\themes\bundles\AuditBundle;
 
 /**
  * @var View $this
@@ -61,7 +61,7 @@ $auditDataProvider = new ActiveDataProvider([
         'searchParams' => [
             'model' => $auditSearch
         ],
-        'searchView' => '@backend/modules/audit/views/_search',
+        'searchView' => '@yii2admin/themes/views/modules/audit/_search',
         'columns' => [
             [
                 'attribute' => 'user_id',

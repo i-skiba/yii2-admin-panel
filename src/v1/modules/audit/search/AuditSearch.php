@@ -3,7 +3,7 @@
 namespace kamaelkz\yii2admin\v1\modules\audit\search;
 
 use yii\db\ActiveQuery;
-use backend\modules\audit\models\Audit;
+use kamaelkz\yii2admin\v1\modules\audit\models\Audit;
 
 /**
  * Class AuditSearch

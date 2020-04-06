@@ -5,9 +5,9 @@ namespace kamaelkz\yii2admin\v1\modules\audit\services;
 use yii\helpers\Json;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use backend\modules\audit\enum\AuditEnum;
 use concepture\yii2logic\services\Service;
 use concepture\yii2logic\helpers\ClassHelper;
+use kamaelkz\yii2admin\v1\modules\audit\enum\AuditEnum;
 use concepture\yii2handbook\services\traits\ReadSupportTrait;
 use concepture\yii2handbook\services\traits\ModifySupportTrait;
 

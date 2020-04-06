@@ -5,9 +5,9 @@ namespace kamaelkz\yii2admin\v1\modules\audit\actions;
 use ReflectionException;
 use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
-use backend\modules\audit\models\Audit;
 use concepture\yii2logic\actions\Action;
 use concepture\yii2logic\services\Service;
+use kamaelkz\yii2admin\v1\modules\audit\models\Audit;
 use concepture\yii2logic\services\events\modify\AfterUpdateEvent;
 
 /**

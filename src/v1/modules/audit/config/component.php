@@ -2,6 +2,6 @@
 
 return [
     'auditService' => [
-        'class' => 'backend\modules\audit\services\AuditService',
+        'class' => 'kamaelkz\yii2admin\v1\modules\audit\services\AuditService',
     ],
 ];
