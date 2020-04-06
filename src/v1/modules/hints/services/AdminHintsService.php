@@ -81,14 +81,18 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
      */
     public function getDataProvider($queryParams = [], $config = [], $searchModel = null, $formName = null, $condition = null)
     {
-        $user_id = Yii::$app->getUser()->getId();
-        $roles = $this->getUserRoleService()->getRolesByUserId($user_id);
         # показываем в списке только записи с заполненым caption
-        if(! isset($roles[UserRoleEnum::SUPER_ADMIN])) {
+        if(! $condition) {
             $condition = function(ActiveQuery $query) {
-                $class  = $this->getRelatedModelClass();
-                $alias = $class::localizationAlias();
-                $query->andWhere("{$alias}.caption IS NOT NULL");
+                $user_id = Yii::$app->getUser()->getId();
+                $roles = $this->getUserRoleService()->getRolesByUserId($user_id);
+                if(! isset($roles[UserRoleEnum::SUPER_ADMIN])) {
+                    $class  = $this->getRelatedModelClass();
+                    $alias = $class::localizationAlias();
+                    $query->andWhere("{$alias}.caption IS NOT NULL");
+                };
+
+                $query->orderBy(['id' => SORT_DESC]);
             };
         }
 

@@ -42,9 +42,12 @@ class HintWidget extends Widget
      * @var array
      */
     public $options = [
-        'data-title' => null,
+        'data-origin-title' => null,
         'data-content' => null,
-        'data-init' => false,
+//        'data-init' => false,
+        'data-trigger' => 'click',
+        'data-html' => 'true',
+        'data-placement' =>'top'
     ];
 
     /**
