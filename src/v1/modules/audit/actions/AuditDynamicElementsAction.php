@@ -19,7 +19,7 @@ class AuditDynamicElementsAction extends Action
      */
     public static function actionName()
     {
-        return 'view';
+        return 'audit-dynamic-elements';
     }
 
     /**

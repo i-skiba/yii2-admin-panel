@@ -1,16 +1,14 @@
 <?php
 
-//namespace backend\modules\audit\migrations;
-
 use concepture\yii2logic\console\migrations\Migration;
 
 /**
- * Class m200330_063113_create_audit_table
+ * Class m200406_082602_create_audit_table
  *
  * @package backend\modules\audit\migrations
  * @author Poletaev Eugene <evgstn7@gmail.com>
  */
-class m200330_063113_create_audit_table extends Migration
+class m200406_082602_create_audit_table extends Migration
 {
     /**
      * @return string

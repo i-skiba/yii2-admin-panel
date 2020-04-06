@@ -30,16 +30,6 @@ class Module extends BaseModule implements BootstrapInterface
     private $newBatchAttributes = [];
 
     /**
-     * {@inheritDoc}
-     */
-    public function init()
-    {
-        parent::init();
-        $components  = require_once __DIR__ . '/config/component.php';
-        Yii::$app->setComponents($components);
-    }
-
-    /**
      * @return string|null
      */
     public static function getModuleLabel()
