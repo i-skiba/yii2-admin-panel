@@ -9,7 +9,17 @@ $this->setTitle(Yii::t('yii2admin', 'Просмотр'));
 $this->pushBreadcrumbs(['label' => $model::label(), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
 
-$this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id, 'locale' => $model->locale], Yii::t('yii2admin','Редактирование'), 'icon-pencil6');
+$this->viewHelper()->pushPageHeader(
+        null,
+        Yii::t('yii2admin','Редактирование'),
+        'icon-pencil6',
+        [
+            'data-url' => Url::to(['update', 'id' => $model['id'], 'locale' => $model['locale']]),
+            'class' => 'magic-modal-control',
+            'data-modal-size' => 'modal-lg',
+            'data-callback' => 'function(){callbackHelper.reloadPjax("#list-pjax")}'
+        ]
+);
 $this->viewHelper()->pushPageHeader(['index'], $model::label(),'icon-list');
 ?>
 
@@ -60,10 +70,15 @@ $this->viewHelper()->pushPageHeader(['index'], $model::label(),'icon-list');
                             <div class="dropdown-divider"></div>
                             <?= Html::a(
                                 '<i class="icon-pencil6"></i>' . Yii::t('yii2admin', 'Редактирование'),
-                                ['update', 'id' => $model->id, 'locale' => $model->locale],
+                                null,
                                 [
-                                    'class' => 'dropdown-item',
+                                    'data-url' => Url::to(['update', 'id' => $model['id'], 'locale' => $model['locale']]),
+                                    'class' => 'dropdown-item magic-modal-control',
+                                    'aria-label' => Yii::t('yii2admin', 'Редактировать'),
+                                    'title' => Yii::t('yii2admin', 'Редактировать'),
                                     'data-pjax' => '0',
+                                    'data-modal-size' => 'modal-lg',
+                                    'data-callback' => 'function(){callbackHelper.reloadPjax("#list-pjax")}'
                                 ]
                             );?>
                         </ul>
