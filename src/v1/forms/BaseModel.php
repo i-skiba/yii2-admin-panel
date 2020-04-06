@@ -4,8 +4,9 @@ namespace kamaelkz\yii2admin\v1\forms;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use concepture\yii2logic\forms\Model;
 use yii\web\Application;
+use concepture\yii2logic\forms\Model;
+use kamaelkz\yii2admin\v1\forms\traits\ModelTrait;
 
 /**
  * Базовая форма
@@ -14,6 +15,8 @@ use yii\web\Application;
  */
 abstract class BaseModel extends Model
 {
+    use ModelTrait;
+
     /**
      * Параметр для перезагрузки модели без валидации
      * Используется в ActiveForm
