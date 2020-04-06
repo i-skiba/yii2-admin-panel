@@ -23,7 +23,9 @@ use kamaelkz\yii2admin\v1\modules\audit\themes\bundles\AuditBundle;
 $this->setTitle(Yii::t('yii2admin', 'Аудит'));
 $this->pushBreadcrumbs(['label' => $model::label(), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
-$this->viewHelper()->pushPageHeader(['update', 'id' => $originModel->id], Yii::t('yii2admin', 'Редактирование'),'icon-file-eye2');
+if (isset($originModel)) {
+    $this->viewHelper()->pushPageHeader(['update', 'id' => $originModel->id], Yii::t('yii2admin', 'Редактирование'),'icon-file-eye2');
+}
 $this->viewHelper()->pushPageHeader(['index'], $model::label(),'icon-list');
 
 
@@ -50,7 +52,7 @@ $auditDataProvider = new ActiveDataProvider([
 ?>
 
 <?php Pjax::begin(['id' => 'list-pjax']); ?>
-<?php if (method_exists($originModel, 'toString')): ?>
+<?php if (isset($originModel) && method_exists($originModel, 'toString')): ?>
     <h4><?= $originModel->toString(); ?></h4>
 <?php endif; ?>
 <div class="table-responsive">
@@ -82,7 +84,14 @@ $auditDataProvider = new ActiveDataProvider([
             'action',
 //            'model',
             'model_pk',
-            'field',
+            isset($models) ? [
+                'attribute' => 'field',
+                // TODO do something with this
+                'value' => function ($data) use ($models) {
+                    return $models[(int) $data->model_pk]->caption;
+                },
+                'format' => 'raw',
+            ] : 'field',
             [
                 'label' => Yii::t('audit', 'Разница'),
                 'value' => function ($model) {

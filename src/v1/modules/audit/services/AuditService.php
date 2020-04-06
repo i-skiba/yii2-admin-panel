@@ -119,7 +119,7 @@ class AuditService extends Service
 
         foreach ($newAttributes as $pk => $attributes) {
             $modelClass = $service->getRelatedModelClass();
-            $this->auditAttributes($oldAttributes[$pk], $newAttributes, $modelClass, $pk);
+            $this->auditAttributes($oldAttributes[$pk], $attributes, $modelClass, $pk);
         }
 
         return true;
@@ -133,7 +133,7 @@ class AuditService extends Service
      * @param array $fields
      * @return array - [массив_старых_значений, массив_новых_значений]
      */
-    public function prepareAttributesForBatchInsertAudit(ActiveRecord $model, $insertedRows, $fields)
+    public function prepareAttributesForBatchInsertAudit($model, $insertedRows, $fields)
     {
         $service = $this->getModelService($model);
         if (!$service) {

@@ -21,7 +21,7 @@ class AuditRollbackAction extends Action
      */
     public static function actionName()
     {
-        return 'rollback';
+        return 'audit-rollback';
     }
 
     /**
