@@ -51,7 +51,7 @@ $saveButton = Html::saveButton();
                             'options' => [
                                 'data-type' => 'basic'
                             ],
-                            'clientPlugins' => ['url']
+                            'clientPlugins' => ['link']
                         ]);
                     ?>
                 </div>
