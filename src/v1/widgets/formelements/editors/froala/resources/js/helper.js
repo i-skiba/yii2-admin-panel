@@ -9,7 +9,7 @@ function EditorHelper() {
             }
         },
         basic: {
-            enter : 0,
+            enter : FroalaEditor.ENTER_BR,
             attribution : false,
             heightMin: 300,
             toolbarSticky: true,
