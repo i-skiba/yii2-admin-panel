@@ -133,7 +133,7 @@ class AuditService extends Service
      * @param array $fields
      * @return array - [массив_старых_значений, массив_новых_значений]
      */
-    public function prepareAttributesForBatchInsertAudit($model, $insertedRows, $fields)
+    public function prepareAttributesForBatchInsert($model, $insertedRows, $fields)
     {
         $service = $this->getModelService($model);
         if (!$service) {

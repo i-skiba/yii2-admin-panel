@@ -62,7 +62,7 @@ class Module extends BaseModule implements BootstrapInterface
                 list(
                     $this->oldBatchAttributes,
                     $this->newBatchAttributes
-                ) = $this->getAuditService()->prepareAttributesForBatchInsertAudit($model, $event->rows, $event->fields);
+                ) = $this->getAuditService()->prepareAttributesForBatchInsert($model, $event->rows, $event->fields);
             });
             /* ===================================================================================================== */
 
