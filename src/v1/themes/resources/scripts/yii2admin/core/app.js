@@ -8,19 +8,21 @@ var Yii2Admin = function() {
     this.showPreloader = true;
     this.formChanged = false;
     this.enableFormChangedAlert = true;
-    this.changeLockCheckUrl = '/admin/changelock/change-lock/check';
+    this.updateLockUrl = '/admin/changelock/change-lock/update-lock';
+    this.checkLockUrl = '/admin/changelock/change-lock/check';
     this.changeLockAfkLimit = 20;
-    this.enableChangeLock = false;
+    this.enableChangeLock = true;
 };
 
 Yii2Admin.prototype.setChangeLockEvents = function (key) {
+    let self = this;
     if (! self.enableChangeLock) {
         return;
     }
 
-    let self = this;
     var lastActionDate = new Date();
     var checkLockInterval = null;
+
     $(document).on('mousemove', '*', function(event) {
         lastActionDate = new Date();
         return true;
@@ -37,7 +39,14 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
         return;
     }
 
-    this.check = function(){
+    this.lockForm = function(message){
+        componentNotify.pNotify(componentNotify.statuses.warning, message, {hide:false});
+        $('form').find('button[type=submit]').each(function (e) {
+            $(this).closest('.card').remove();
+        });
+    };
+
+    this.update = function(){
         let currentDate = new Date();
         let timeDiff = Math.abs(currentDate.getTime() - lastActionDate.getTime());
         var diffMins = Math.ceil(timeDiff / (1000 * 60));
@@ -46,19 +55,36 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
          */
         if (diffMins > self.changeLockAfkLimit){
             clearInterval(checkLockInterval);
+            self.lockForm(yii2admin.t('EditBlockMessage'));
             return;
         }
 
         self.showPreloader = false;
-        self.sendRequest(self.changeLockCheckUrl, {}, {}, function (data) {
-            console.log(data);
+        let url = window.location.href;
+        url = window.location.href.replace(window.location.origin + '/', '');
+        self.sendRequest(self.updateLockUrl, {'url': url}, {}, function (data) {});
+        self.showPreloader = true;
+    };
+
+    this.check = function(){
+        self.showPreloader = false;
+        let url = window.location.href;
+        url = window.location.href.replace(window.location.origin + '/', '');
+        self.sendRequest(self.checkLockUrl, {'url': url}, {}, function (data) {
+            if (data['can'] == true){
+                checkLockInterval = setInterval(function() {
+                    self.update();
+                }, 10000);
+
+                return;
+            }
+
+            self.lockForm(yii2admin.t('СhangeUrlBlockMessage') + data['blocked_by'].username);
         });
         self.showPreloader = true;
     };
+
     self.check();
-    checkLockInterval = setInterval(function() {
-        self.check();
-    }, 10000);
 };
 
 Yii2Admin.prototype.setFormChangedEvents = function (key) {

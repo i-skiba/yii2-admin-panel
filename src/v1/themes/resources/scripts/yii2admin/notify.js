@@ -15,18 +15,20 @@ var componentNotify = {
         info : 'alert-info',
         danger : 'alert-danger'
     },
-    pNotify : function(type, message) {
+    pNotify : function(type, message, options) {
         if (typeof PNotify == 'undefined') {
             console.error('Warning - pnotify.min.js is not loaded.');
             return;
         }
 
-        var opts = {
+        var defaultOptions = {
             // title: 'Left icon',
             text: (message !== undefined ? message :"Check me out. I'm in a different stack." ),
             addclass: 'alert alert-styled-left ' + this.alertClass[type],
-            type: this.statuses[type]
+            type: this.statuses[type],
         };
+
+        var opts =  _.merge(options, defaultOptions);
         PNotify.removeAll();
 
         return new PNotify(opts);
@@ -44,11 +46,11 @@ var componentNotify = {
         });
 
         Swal({
-                title: message + " ?",
-                type: "info",
-                showCancelButton: true,
-                confirmButtonText: yii2admin.t('Confirm'),
-                cancelButtonText: yii2admin.t('Cancel'),
+            title: message + " ?",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonText: yii2admin.t('Confirm'),
+            cancelButtonText: yii2admin.t('Cancel'),
         }).then(function (result) {
             if(! result.value) {
                 return false;
@@ -58,4 +60,3 @@ var componentNotify = {
         })
     }
 };
-

@@ -27,6 +27,7 @@ class AdminChangeLockForm extends BaseForm
                     'url',
                     'user_id',
                     'last_acess_date_time',
+                    'session_id',
                 ],
                 'required'
             ]
