@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\modules\hints\services;
 
+use concepture\yii2logic\enum\StatusEnum;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
@@ -92,7 +93,7 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
                     $query->andWhere("{$alias}.caption IS NOT NULL");
                 };
 
-                $query->orderBy(['id' => SORT_DESC]);
+                $query->orderBy(['id' => SORT_ASC]);
             };
         }
 
@@ -185,13 +186,19 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
 
         $items = [];
         foreach ($this->existsItems as $item) {
-            if($item['caption'] && $item['value']) {
-                $items[$item['name']] = [
-                    'name' => $item['name'],
-                    'caption' => $item['caption'],
-                    'value' => nl2br($item['value']),
-                ];
+            if(
+                ! $item['caption']
+                || ! $item['value']
+                || $item['status'] !== StatusEnum::ACTIVE
+            ) {
+                continue;
             }
+
+            $items[$item['name']] = [
+                'name' => $item['name'],
+                'caption' => $item['caption'],
+                'value' => nl2br($item['value']),
+            ];
         }
 
         if(! $items) {

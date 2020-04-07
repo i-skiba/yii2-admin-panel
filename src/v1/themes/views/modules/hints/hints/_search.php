@@ -1,11 +1,16 @@
 <?php
     use concepture\yii2logic\enum\StatusEnum;
-    use concepture\yii2logic\enum\IsDeletedEnum;
+    use concepture\yii2user\enum\UserRoleEnum;
+
+    $is_superadmin = Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
+
 ?>
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-12">
-        <?= $form->field($model,'id')->textInput();?>
-    </div>
+    <?php if($is_superadmin) :?>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <?= $form->field($model,'id')->textInput();?>
+        </div>
+    <?php endif;?>
     <div class="col-lg-6 col-md-6 col-sm-12">
         <?= $form->field($model,'name')->textInput();?>
     </div>
@@ -13,15 +18,6 @@
         <?= $form
             ->field($model, 'status')
             ->dropDownList(StatusEnum::arrayList(), [
-                'class' => 'form-control custom-select',
-                'prompt' => ''
-            ]);
-        ?>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-12">
-        <?= $form
-            ->field($model, 'is_deleted')
-            ->dropDownList(IsDeletedEnum::arrayList(), [
                 'class' => 'form-control custom-select',
                 'prompt' => ''
             ]);

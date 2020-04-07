@@ -8,9 +8,11 @@ use concepture\yii2logic\enum\StatusEnum;
 use concepture\yii2logic\enum\IsDeletedEnum;
 use \concepture\yii2user\enum\UserRoleEnum;
 
+$is_superadmin = Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
+
 $this->setTitle(Yii::t('yii2admin', 'Список'));
 $this->pushBreadcrumbs($this->title);
-if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
+if($is_superadmin) {
     $this->viewHelper()->pushPageHeader(null, null, null,
         [
             'class' => 'magic-modal-control',
@@ -29,9 +31,51 @@ if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
             'model' => $searchModel
         ],
         'columns' => [
-            'id',
-            'name',
-            'caption',
+            [
+                'attribute' => 'id',
+                'visible' => $is_superadmin
+            ],
+            [
+                'attribute' => 'name',
+                'visible' => $is_superadmin,
+                'value' => function ($model) use($is_superadmin){
+                    return Html::tag(
+                        'span',
+                        $model->name,
+                        [
+                            'class' => 'editable-column magic-modal-control',
+                            'data-url' => Url::to(['update', 'id' => $model['id'], 'locale' => $model['locale']]),
+                            'data-modal-size' => 'modal-lg',
+                            'data-callback' => "function(){callbackHelper.reloadPjax('#list-pjax')}"
+                        ]
+                    );
+                },
+                'format' => 'raw'
+            ],
+            [
+                'attribute' => 'caption',
+                'contentOptions' => [
+                    'style' => 'width:30%'
+                ],
+                'value' => function ($model) use($is_superadmin){
+
+                    if($is_superadmin) {
+                        return $model->caption;
+                    }
+
+                    return Html::tag(
+                        'span',
+                        $model->caption,
+                        [
+                            'class' => 'editable-column magic-modal-control',
+                            'data-url' => Url::to(['update', 'id' => $model['id'], 'locale' => $model['locale']]),
+                            'data-modal-size' => 'modal-lg',
+                            'data-callback' => "function(){callbackHelper.reloadPjax('#list-pjax')}"
+                        ]
+                    );
+                },
+                'format' => 'raw'
+            ],
             [
                 'attribute'=>'status',
                 'filter'=> StatusEnum::arrayList(),
@@ -39,17 +83,35 @@ if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
                     return $data->statusLabel();
                 }
             ],
-            'created_at',
             [
-                'attribute'=>'is_deleted',
-                'filter'=> IsDeletedEnum::arrayList(),
-                'value'=>function($data) {
-                    return $data->isDeletedLabel();
-                }
+                'label' => Yii::t('yii2admin','Прогресс'),
+                'headerOptions' => [
+                    'class' => 'text-center',
+                ],
+                'contentOptions' => [
+                    'class' => 'text-center'
+                ],
+                'value' => function ($model) {
+                    $i = 0;
+                    $j = 2;
+                    $color = 'danger';
+                    if($model->caption) {
+                        $color = 'warning';
+                        $i ++;
+                    }
+
+                    if($model->value) {
+                        $color = 'success';
+                        $i ++;
+                    }
+
+                    return Html::tag('span', "{$i}/{$j}", ['class' => "badge badge-{$color}"]);
+                },
+                'format' => 'raw'
             ],
             [
                 'class'=>'yii\grid\ActionColumn',
-                'template'=>'{view} {update} <div class="dropdown-divider"></div> {activate} {deactivate} {delete}',
+                'template'=>'{view} {update} <div class="dropdown-divider"></div> {activate} {deactivate}',
                 'buttons'=>[
                     'view'=> function ($url, $model) {
                         return Html::a(
@@ -117,22 +179,6 @@ if(Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN)) {
                                 'data-pjax-id' => 'list-pjax',
                                 'data-pjax-url' => Url::current([], true),
                                 'data-swal' => Yii::t('yii2admin' , 'Деактивировать'),
-                            ]
-                        );
-                    },
-                    'delete'=> function ($url, $model) {
-                        if ($model['is_deleted'] == IsDeletedEnum::DELETED){
-                            return '';
-                        }
-
-                        return Html::a(
-                            '<i class="icon-trash"></i>'. Yii::t('yii2admin', 'Удалить'),
-                            ['delete', 'id' => $model['id'], 'locale' => $model['locale']],
-                            [
-                                'class' => 'admin-action dropdown-item',
-                                'data-pjax-id' => 'list-pjax',
-                                'data-pjax-url' => Url::current([], true),
-                                'data-swal' => Yii::t('yii2admin' , 'Удалить'),
                             ]
                         );
                     }
