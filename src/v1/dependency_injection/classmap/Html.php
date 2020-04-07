@@ -90,8 +90,16 @@ class Html extends BaseHtml
      */
     public static function activeCheckbox($model, $attribute, $options = [])
     {
-        $hint = $hint = static::activeLabelHint($model, $attribute);
-        $options['label'] .= " {$hint}";
+        $hint = static::activeLabelHint($model, $attribute);
+        if (! array_key_exists('label', $options)) {
+            $options['label'] = static::encode($model->getAttributeLabel(static::getAttributeName($attribute)));
+        } elseif ($options['label'] === false) {
+            unset($options['label']);
+        }
+
+        if(isset($options['label'])) {
+            $options['label'] .= " {$hint}";
+        }
 
         return parent::activeCheckbox($model, $attribute, $options);
     }
