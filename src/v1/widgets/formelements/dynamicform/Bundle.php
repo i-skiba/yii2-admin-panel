@@ -14,7 +14,7 @@ class Bundle extends BaseBundle
     ];
 
     public $css = [
-        'styles/yii2-dynamic-form.js',
+        'styles/yii2-dynamic-form.css',
     ];
 
     public $depends = [

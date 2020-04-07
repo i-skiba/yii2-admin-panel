@@ -5,6 +5,7 @@ namespace yii\helpers;
 use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
 use Yii;
 use kamaelkz\yii2admin\v1\helpers\RequestHelper;
+use yii\base\Model;
 
 /**
  * Вспомогательный класс для формирование html элементов
@@ -74,13 +75,43 @@ class Html extends BaseHtml
      */
     public static function activeLabel($model, $attribute, $options = [])
     {
-        $name = Inflector::underscore($model->formName()) . "_" . Inflector::underscore($attribute);
+
         $for = ArrayHelper::remove($options, 'for', static::getInputId($model, $attribute));
         $attribute = static::getAttributeName($attribute);
         $label = ArrayHelper::remove($options, 'label', static::encode($model->getAttributeLabel($attribute)));
-        $hint = HintWidget::widget(['name' => $name]);
+        $hint = static::activeLabelHint($model, $attribute);
         $label = "{$label} {$hint}";
 
         return static::label($label, $for, $options);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function activeCheckbox($model, $attribute, $options = [])
+    {
+        $hint = $hint = static::activeLabelHint($model, $attribute);
+        $options['label'] .= " {$hint}";
+
+        return parent::activeCheckbox($model, $attribute, $options);
+    }
+
+    /**
+     * @param Model $model
+     * @param string $attribute
+     * @return string
+     * @throws \Exception
+     */
+    public static function activeLabelHint($model, $attribute)
+    {
+        if(method_exists($model, 'underscoreFormName')) {
+            $formName = $model->underscoreFormName();
+        } else {
+            $formName = Inflector::underscore($model->formName());
+        }
+
+        $name =  "{$formName}_" . Inflector::underscore($attribute);
+
+        return HintWidget::widget(['name' => $name]);
     }
 }

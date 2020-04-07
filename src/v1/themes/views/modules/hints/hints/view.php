@@ -47,43 +47,6 @@ $this->viewHelper()->pushPageHeader(['index'], $model::label(),'icon-list');
                         <?= $model->toString();?>
                     </h5>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-12 text-right">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-labeled btn-labeled-left dropdown-toggle" data-toggle="dropdown">
-                            <b>
-                                <i class="icon-cog5"></i>
-                            </b>
-                            <?= Yii::t('yii2admin', 'Операции');?>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <?= Html::a(
-                                '<i class="icon-bin2"></i>' . Yii::t('yii2admin', 'Удалить'),
-                                ['delete', 'id' => $model->id],
-                                [
-                                    'class' => 'admin-action dropdown-item',
-                                    'data-pjax-id' => 'list-pjax',
-                                    'data-pjax-url' => Url::current([], true),
-                                    'data-swal' => Yii::t('yii2admin' , 'Удалить'),
-                                ]
-                            );?>
-                            <div class="dropdown-divider"></div>
-                            <?= Html::a(
-                                '<i class="icon-pencil6"></i>' . Yii::t('yii2admin', 'Редактирование'),
-                                null,
-                                [
-                                    'data-url' => Url::to(['update', 'id' => $model['id'], 'locale' => $model['locale']]),
-                                    'class' => 'dropdown-item magic-modal-control',
-                                    'aria-label' => Yii::t('yii2admin', 'Редактировать'),
-                                    'title' => Yii::t('yii2admin', 'Редактировать'),
-                                    'data-pjax' => '0',
-                                    'data-modal-size' => 'modal-lg',
-                                    'data-callback' => 'function(){callbackHelper.reloadPjax("#list-pjax")}'
-                                ]
-                            );?>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="card-body">

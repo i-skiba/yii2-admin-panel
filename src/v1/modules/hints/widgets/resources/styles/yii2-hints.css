@@ -2,3 +2,10 @@
     cursor: pointer;
     font-size: 12px;
 }
+.form-check-inline .yii2admin_hints {
+    margin-left: 3px;
+    margin-top: 5px;
+}
+legend .yii2admin_hints {
+    margin-bottom: 3px;
+}

@@ -30,7 +30,7 @@ protected function getAccessRules()
             [
                 'actions' => [
                     AuditAction::actionName(),
-                    // AuditDynamicElementsAction::actionName() => AuditDynamicElementsAction::class,
+                    // AuditDynamicElementsAction::actionName(),
                     AuditRollbackAction::actionName(),
                 ],
                 'allow' => true,
@@ -57,7 +57,7 @@ public function actions()
 ### Views
 ```php
 /** _form.php */
-if (isset($originModel)) {
+if (isset($originModel) && AuditService::isAuditAllowed(Post::class)) {
     $this->viewHelper()->pushPageHeader(
         [AuditAction::actionName(), 'id' => $originModel->id],
         Yii::t('yii2admin', 'Аудит'),
@@ -66,9 +66,11 @@ if (isset($originModel)) {
 }
 
 /** только для dynamic-elements: update-multiple.php */
-$this->viewHelper()->pushPageHeader(
-    [AuditDynamicElementsAction::actionName(), 'ids' => Yii::$app->request->get('ids')],
-    Yii::t('yii2admin', 'Аудит'),
-    'icon-eye'
-);
+if (AuditService::isAuditAllowed(DynamicElements::class)) {
+    $this->viewHelper()->pushPageHeader(
+        [AuditDynamicElementsAction::actionName(), 'ids' => Yii::$app->request->get('ids')],
+        Yii::t('yii2admin', 'Аудит'),
+        'icon-eye'
+    );
+}
 ```

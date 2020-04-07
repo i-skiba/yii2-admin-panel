@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
 use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
+use kamaelkz\yii2admin\v1\widgets\formelements\editors\froala\FroalaEditor;
 
 $saveRedirectButton = Html::saveRedirectButton();
 $saveButton = Html::saveButton();
@@ -42,7 +43,17 @@ $saveButton = Html::saveButton();
                     <?= $form->field($model, 'caption')->textInput(['maxlength' => true]);?>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <?= $form->field($model, 'value')->textarea();?>
+                    <?= $form
+                        ->field($model, 'value')
+                        ->widget(FroalaEditor::class, [
+                            'model' => $model,
+                            'attribute' => 'value',
+                            'options' => [
+                                'data-type' => 'basic'
+                            ],
+                            'clientPlugins' => ['url']
+                        ]);
+                    ?>
                 </div>
             </div>
         </div>
