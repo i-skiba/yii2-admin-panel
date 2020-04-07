@@ -10,6 +10,9 @@ $config = [
     'modules' => [
         'hints' => [
             'class' => 'kamaelkz\yii2admin\v1\modules\hints\Module'
+        ],
+        'changelock' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\changelock\Module'
         ]
     ],
     'components' => [
@@ -62,6 +65,9 @@ $config = [
         ],
         'adminHintsService' => [
             'class' => 'kamaelkz\yii2admin\v1\modules\hints\services\AdminHintsService',
+        ],
+        'adminChangeLockService' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\changelock\services\AdminChangeLockService',
         ],
         'crudService' => [
             'class' => 'kamaelkz\yii2admin\v1\modules\uikit\services\CrudService',

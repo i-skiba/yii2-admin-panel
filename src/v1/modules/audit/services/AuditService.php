@@ -41,6 +41,18 @@ class AuditService extends Service
             return false;
         }
 
+        foreach ($newAttributes as $key => $value) {
+            if (is_array($newAttributes[$key])) {
+                $newAttributes[$key] = Json::encode($newAttributes[$key]);
+            }
+        }
+
+        foreach ($oldAttributes as $key => $value) {
+            if (is_array($oldAttributes[$key])) {
+                $oldAttributes[$key] = Json::encode($oldAttributes[$key]);
+            }
+        }
+
         $diff = array_diff_assoc($newAttributes, $oldAttributes);
         if ($diff <= 0) {
             return false;
@@ -50,11 +62,11 @@ class AuditService extends Service
         foreach ($newAttributes as $field => $newValue) {
             $oldValue = isset($oldAttributes[$field]) ? $oldAttributes[$field] : '';
 
-            if ($newValue === null) {
+            if ($newValue === null || $newValue === '[]') {
                 $newValue = '';
             }
 
-            if ($oldValue === null) {
+            if ($oldValue === null || $oldValue === '[]') {
                 $oldValue = '';
             }
 
