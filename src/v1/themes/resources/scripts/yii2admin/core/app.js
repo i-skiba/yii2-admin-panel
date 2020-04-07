@@ -124,7 +124,12 @@ Yii2Admin.prototype.reinitPlugins = function() {
     if(typeof componentCdnUploader !== 'undefined') {
         componentCdnUploader.initialization();
     }
+    
+    this.reinitLimitlessPlugins();
+};
 
+Yii2Admin.prototype.reinitLimitlessPlugins = function() {
+    $('.card [data-action=collapse]').off('click');
     App.initCardActions();
 };
 
