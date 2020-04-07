@@ -15,6 +15,7 @@ class AdminHintsForm extends \kamaelkz\yii2admin\v1\forms\BaseForm
     public $name;
     public $caption;
     public $value;
+    public $status;
 
     /**
      * @return array|void
@@ -23,7 +24,7 @@ class AdminHintsForm extends \kamaelkz\yii2admin\v1\forms\BaseForm
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[ScenarioEnum::INSERT] = ['name', 'locale', 'value'];
+        $scenarios[ScenarioEnum::INSERT] = ['name', 'locale', 'value', 'status'];
         $scenarios[ScenarioEnum::UPDATE] = ['name','caption', 'locale', 'value'];
 
         return $scenarios;
