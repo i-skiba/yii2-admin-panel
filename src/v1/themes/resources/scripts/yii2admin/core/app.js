@@ -8,15 +8,93 @@ var Yii2Admin = function() {
     this.showPreloader = true;
     this.formChanged = false;
     this.enableFormChangedAlert = true;
+    this.updateLockUrl = '/admin/changelock/change-lock/update-lock';
+    this.checkLockUrl = '/admin/changelock/change-lock/check';
+    this.changeLockAfkLimit = 20;
+    this.enableChangeLock = true;
+};
+
+Yii2Admin.prototype.setChangeLockEvents = function (key) {
+    let self = this;
+    if (! self.enableChangeLock) {
+        return;
+    }
+
+    var lastActionDate = new Date();
+    var checkLockInterval = null;
+
+    $(document).on('mousemove', '*', function(event) {
+        lastActionDate = new Date();
+        return true;
+    });
+
+    $(document).on('keypress', '*', function(event) {
+        lastActionDate = new Date();
+        return true;
+    });
+
+    let urlArray = window.location.pathname.split('/');
+    let action = urlArray[urlArray.length-1];
+    if (action !== 'update'){
+        return;
+    }
+
+    this.lockForm = function(message){
+        componentNotify.pNotify(componentNotify.statuses.warning, message, {hide:false});
+        $('form').find('button[type=submit]').each(function (e) {
+            $(this).closest('.card').remove();
+        });
+    };
+
+    this.update = function(){
+        let currentDate = new Date();
+        let timeDiff = Math.abs(currentDate.getTime() - lastActionDate.getTime());
+        var diffMins = Math.ceil(timeDiff / (1000 * 60));
+        /**
+         * if diff > self.changeLockAfkLimit stop checkLockInterval
+         */
+        if (diffMins > self.changeLockAfkLimit){
+            clearInterval(checkLockInterval);
+            self.lockForm(yii2admin.t('EditBlockMessage'));
+            return;
+        }
+
+        self.showPreloader = false;
+        let url = window.location.href;
+        url = window.location.href.replace(window.location.origin + '/', '');
+        self.sendRequest(self.updateLockUrl, {'url': url}, {}, function (data) {});
+        self.showPreloader = true;
+    };
+
+    this.check = function(){
+        self.showPreloader = false;
+        let url = window.location.href;
+        url = window.location.href.replace(window.location.origin + '/', '');
+        self.sendRequest(self.checkLockUrl, {'url': url}, {}, function (data) {
+            if (data['can'] == true){
+                checkLockInterval = setInterval(function() {
+                    self.update();
+                }, 10000);
+
+                return;
+            }
+
+            self.lockForm(yii2admin.t('СhangeUrlBlockMessage') + data['blocked_by'].username);
+        });
+        self.showPreloader = true;
+    };
+
+    self.check();
 };
 
 Yii2Admin.prototype.setFormChangedEvents = function (key) {
-    if (! yii2admin.enableFormChangedAlert) {
+    let self = this;
+    if (! self.enableFormChangedAlert) {
         return;
     }
 
     window.onbeforeunload = function() {
-        if(yii2admin.formChanged) {
+        if(self.formChanged) {
             return true;
         }
 
@@ -24,17 +102,17 @@ Yii2Admin.prototype.setFormChangedEvents = function (key) {
     };
 
     $(document).on('submit', '*', function(event) {
-        yii2admin.formChanged = false;
+        self.formChanged = false;
         return true;
     });
 
     $('form').on('keyup change paste', 'input, select, textarea', function(){
-        yii2admin.formChanged = true;
+        self.formChanged = true;
     });
 
     $('form').find('input[type=hidden]').each(function (e) {
         $(document).on('change', this,  function(e) {
-            yii2admin.formChanged = true;
+            self.formChanged = true;
         });
     });
 };
@@ -124,7 +202,12 @@ Yii2Admin.prototype.reinitPlugins = function() {
     if(typeof componentCdnUploader !== 'undefined') {
         componentCdnUploader.initialization();
     }
+    
+    this.reinitLimitlessPlugins();
+};
 
+Yii2Admin.prototype.reinitLimitlessPlugins = function() {
+    $('.card [data-action=collapse]').off('click');
     App.initCardActions();
 };
 
@@ -331,6 +414,7 @@ $(document).ready(function() {
     });
 
     yii2admin.setFormChangedEvents();
+    yii2admin.setChangeLockEvents();
 
     // preloader при ajax запросах
     $(document)
