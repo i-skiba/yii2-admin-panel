@@ -50,6 +50,12 @@ class AdminChangeLockService extends Service
     {
         $lock = $this->getOneByCondition(['url' => $url]);
         if (! $lock){
+            $form = new AdminChangeLockForm();
+            $form->url = $url;
+            $form->session_id = Yii::$app->session->getId();
+            $form->user_id = Yii::$app->user->identity->id;
+            $form->last_acess_date_time = date("Y-m-d H:i:s");
+            $lock = $this->create($form);
 
             return true;
         }
