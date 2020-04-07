@@ -227,4 +227,14 @@ class AuditService extends Service
             Service::EVENT_AFTER_DELETE => AuditEnum::ACTION_DELETE,
         ];
     }
+
+    /**
+     * @param $modelClass
+     * @return bool
+     */
+    public static function isAuditAllowed($modelClass)
+    {
+        $module = \Yii::$app->getModule('audit');
+        return $module ? in_array($modelClass, $module->auditModels) : false;
+    }
 }
