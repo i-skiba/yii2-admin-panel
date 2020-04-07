@@ -82,6 +82,12 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
      */
     public function getDataProvider($queryParams = [], $config = [], $searchModel = null, $formName = null, $condition = null)
     {
+        if(! $config) {
+            $config['pagination'] = [
+                'pageSize' => 75,
+            ];
+        }
+
         # показываем в списке только записи с заполненым caption
         if(! $condition) {
             $condition = function(ActiveQuery $query) {

@@ -7,6 +7,25 @@ function EditorHelper() {
                     yii2admin.formChanged=true;
                 },
             }
+        },
+        basic: {
+            enter : 0,
+            attribution : false,
+            heightMin: 300,
+            toolbarSticky: true,
+            toolbarInline: false,
+            editorClass: 'editor-default contentable',
+            toolbarButtons: [
+                'bold', 'italic', 'underline', '|', 'insertLink'
+            ],
+            linkEditButtons: ['linkOpen', 'linkEdit', 'linkRemove'],
+            linkInsertButtons: ['linkBack'],
+            quickInsertTags: [''],
+            events:  {
+                'contentChanged': function () {
+                    yii2admin.formChanged=true;
+                },
+            }
         }
     }
 }

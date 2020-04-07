@@ -38,7 +38,7 @@ if($is_superadmin) {
             [
                 'attribute' => 'name',
                 'visible' => $is_superadmin,
-                'value' => function ($model) use($is_superadmin){
+                'value' => function ($model) {
                     return Html::tag(
                         'span',
                         $model->name,
@@ -77,13 +77,6 @@ if($is_superadmin) {
                 'format' => 'raw'
             ],
             [
-                'attribute'=>'status',
-                'filter'=> StatusEnum::arrayList(),
-                'value'=>function($data) {
-                    return $data->statusLabel();
-                }
-            ],
-            [
                 'label' => Yii::t('yii2admin','Прогресс'),
                 'headerOptions' => [
                     'class' => 'text-center',
@@ -108,6 +101,13 @@ if($is_superadmin) {
                     return Html::tag('span', "{$i}/{$j}", ['class' => "badge badge-{$color}"]);
                 },
                 'format' => 'raw'
+            ],
+            [
+                'attribute'=>'status',
+                'filter'=> StatusEnum::arrayList(),
+                'value'=>function($data) {
+                    return $data->statusLabel();
+                }
             ],
             [
                 'class'=>'yii\grid\ActionColumn',
