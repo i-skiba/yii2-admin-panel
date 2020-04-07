@@ -147,7 +147,8 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
             $config = [
                 'class' => $this->getRelatedFormClass(),
                 'name' => $item->name,
-                'locale' => $this->getLocaleService()->getCurrentLocaleId()
+                'locale' => $this->getLocaleService()->getCurrentLocaleId(),
+                'status' => StatusEnum::ACTIVE
             ];
             if($item->caption) {
                 $config['caption'] = $item->caption;

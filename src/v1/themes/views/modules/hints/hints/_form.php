@@ -50,7 +50,8 @@ $saveButton = Html::saveButton();
                             'attribute' => 'value',
                             'options' => [
                                 'data-type' => 'basic'
-                            ]
+                            ],
+                            'clientPlugins' => ['url']
                         ]);
                     ?>
                 </div>
