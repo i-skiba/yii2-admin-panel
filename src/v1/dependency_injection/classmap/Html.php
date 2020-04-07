@@ -74,7 +74,7 @@ class Html extends BaseHtml
      */
     public static function activeLabel($model, $attribute, $options = [])
     {
-        $name = Inflector::underscore($model->formName(), '-') . "_" . Inflector::underscore($attribute, '-');
+        $name = Inflector::underscore($model->formName()) . "_" . Inflector::underscore($attribute);
         $for = ArrayHelper::remove($options, 'for', static::getInputId($model, $attribute));
         $attribute = static::getAttributeName($attribute);
         $label = ArrayHelper::remove($options, 'label', static::encode($model->getAttributeLabel($attribute)));

@@ -1,39 +1,41 @@
 $(document).ready(function () {
-    Yii2Admin.prototype.showAdminHints = function (json) {
+    yii2admin.popover = {
+        class: 'yii2admin_hints',
+        elements: {},
+        is_show: false
+    };
+
+    Yii2Admin.prototype.initAdminHints = function (json) {
+        yii2admin.popover.elements = $('.' + yii2admin.popover.class);
         _.each(json, function(value) {
             var hint = $('#yii2admin_hint_' + value.name);
             hint.attr('data-original-title', value.caption);
             hint.attr('data-content', value.value);
             hint.removeClass('d-none');
         });
+
+        yii2admin.popover.elements.popover();
+        yii2admin.popover.elements.off('show.bs.popover');
+        yii2admin.popover.elements.on('show.bs.popover', function () {
+            yii2admin.popover.elements.popover('hide');
+            yii2admin.popover.is_show = true;
+        })
     };
-    var $elements = $('.yii2admin_hints');
-    $elements.popover();
 
     $(document).on('click', function(e) {
         var $target = $(e.target);
+        var is_hint = $target.hasClass(yii2admin.popover.class);
         if(
-            ! $target.hasClass('yii2admin_hints')
+            ! is_hint
             && $target.closest('.popover').length === 0
+            && yii2admin.popover.is_show === true
         ) {
-            $elements.popover('hide');
+            yii2admin.popover.elements.popover('hide');
+            yii2admin.popover.is_show = false;
         }
-    })
-    // $('.yii2admin_hints').on('click', function() {
-    //     var title = $(this).attr('data-title');
-    //     var content = $(this).attr('data-content');
-    //     var init = $(this).attr('data-init');
-    //     var self = $(this);
-    //     if(init === false) {
-    //         self.popover({
-    //             title: title,
-    //             content: content,
-    //             trigger: 'click',
-    //             html: true
-    //         });
-    //         self.attr('data-init', true);
-    //     }
-    //
-    //     self.popover('show');
-    // });
-})
+
+        if(is_hint) {
+            return false;
+        }
+    });
+});

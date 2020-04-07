@@ -3,8 +3,9 @@
 namespace kamaelkz\yii2admin\v1\forms;
 
 use Yii;
-use concepture\yii2logic\forms\Form;
 use yii\web\Application;
+use kamaelkz\yii2admin\v1\forms\traits\ModelTrait;
+use concepture\yii2logic\forms\Form;
 
 /**
  * Базовая форма
@@ -13,6 +14,8 @@ use yii\web\Application;
  */
 abstract class BaseForm extends Form
 {
+    use ModelTrait;
+
     /**
      * Параметр для перезагрузки модели без валидации
      * Используется в ActiveForm

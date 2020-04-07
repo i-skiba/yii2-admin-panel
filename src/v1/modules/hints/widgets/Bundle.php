@@ -30,7 +30,7 @@ class Bundle extends BaseBundle
     {
         $script = <<<JS
         $(document).ready(function() {
-            yii2admin.showAdminHints({$json});
+            yii2admin.initAdminHints({$json});
         })
 JS;
 

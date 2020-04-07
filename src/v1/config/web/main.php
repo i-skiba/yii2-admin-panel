@@ -71,7 +71,10 @@ $config = [
         ],
         'crudService' => [
             'class' => 'kamaelkz\yii2admin\v1\modules\uikit\services\CrudService',
-        ]
+        ],
+        'auditService' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\audit\services\AuditService',
+        ],
     ],
     'controllerMap' => [
         'site' => [
