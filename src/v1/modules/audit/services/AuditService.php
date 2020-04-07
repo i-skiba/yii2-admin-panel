@@ -62,11 +62,11 @@ class AuditService extends Service
         foreach ($newAttributes as $field => $newValue) {
             $oldValue = isset($oldAttributes[$field]) ? $oldAttributes[$field] : '';
 
-            if ($newValue === null) {
+            if ($newValue === null || $newValue === '[]') {
                 $newValue = '';
             }
 
-            if ($oldValue === null) {
+            if ($oldValue === null || $oldValue === '[]') {
                 $oldValue = '';
             }
 
