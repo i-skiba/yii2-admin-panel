@@ -10,17 +10,17 @@ var Yii2Admin = function() {
     this.enableFormChangedAlert = true;
     this.changeLockCheckUrl = '/admin/changelock/change-lock/check';
     this.changeLockAfkLimit = 20;
-    this.enableChangeLock = true;
+    this.enableChangeLock = false;
 };
 
 Yii2Admin.prototype.setChangeLockEvents = function (key) {
-    let self = this;
-    var lastActionDate = new Date();
-    var checkLockInterval = null;
     if (! self.enableChangeLock) {
         return;
     }
 
+    let self = this;
+    var lastActionDate = new Date();
+    var checkLockInterval = null;
     $(document).on('mousemove', '*', function(event) {
         lastActionDate = new Date();
         return true;
