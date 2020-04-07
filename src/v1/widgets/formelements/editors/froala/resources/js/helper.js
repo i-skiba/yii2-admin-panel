@@ -43,18 +43,18 @@ EditorHelper.prototype.add = function(selector, type) {
 
 EditorHelper.prototype.extendConfig = function(type, options) {
     this.config[type] = _.merge(options, this.config[type]);
-}
+};
 
 EditorHelper.prototype.setConfig = function(type, options) {
     this.config[type] = options;
-}
+};
 
 EditorHelper.prototype.initIcon = function() {
     FroalaEditor.DefineIconTemplate('iconmoon', '<i class="icon-[NAME]"></i>');
-}
+};
 
 var editorHelper = new EditorHelper();
 
 document.addEventListener('DOMContentLoaded', function() {
     editorHelper.initIcon();
-})
+});
