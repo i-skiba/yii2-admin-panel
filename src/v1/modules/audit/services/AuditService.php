@@ -133,7 +133,7 @@ class AuditService extends Service
      * @param array $fields
      * @return array - [массив_старых_значений, массив_новых_значений]
      */
-    public function prepareAttributesForBatchInsertAudit($model, $insertedRows, $fields)
+    public function prepareAttributesForBatchInsert($model, $insertedRows, $fields)
     {
         $service = $this->getModelService($model);
         if (!$service) {
@@ -226,5 +226,15 @@ class AuditService extends Service
             Service::EVENT_AFTER_UPDATE => AuditEnum::ACTION_UPDATE,
             Service::EVENT_AFTER_DELETE => AuditEnum::ACTION_DELETE,
         ];
+    }
+
+    /**
+     * @param $modelClass
+     * @return bool
+     */
+    public static function isAuditAllowed($modelClass)
+    {
+        $module = \Yii::$app->getModule('audit');
+        return $module ? in_array($modelClass, $module->auditModels) : false;
     }
 }
