@@ -2,10 +2,11 @@
 
 namespace kamaelkz\yii2admin\v1\controllers\traits;
 
-use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
-use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 use Yii;
 use yii\helpers\Html;
+use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
+use kamaelkz\yii2admin\v1\forms\BaseForm;
+use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 
 /**
  * Трейт для контроллеров административной части
@@ -15,6 +16,18 @@ use yii\helpers\Html;
 trait ControllerTrait
 {
     use ResponseTrait;
+
+    /**
+     * @inheritDoc
+     */
+    public function init()
+    {
+        if(Yii::$app->getRequest()->post(BaseForm::$validateAttributeParam)) {
+            $this->layout = false;
+        }
+
+        parent::init();
+    }
 
     /**
      * Переопределен для формах в модалке

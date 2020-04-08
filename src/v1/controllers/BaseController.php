@@ -19,11 +19,11 @@ abstract class BaseController extends Controller
 {
     use ControllerTrait;
 
-//    public function init()
-//    {
-//        parent::init();
-//        $this->setMainLayout();
-//    }
+    public function init()
+    {
+        parent::init();
+        $this->setMainLayout();
+    }
 
     /**
      * Установка основного макета

@@ -1,34 +1,38 @@
 $(document).ready(function() {
+    yii2admin.activeForm = {
+        validateAttribute : {
+            timeout: null,
+            duration: 500,
+            selector: '.active-form-validate-attribute'
+        },
+        refresh: function (object) {
+            var form = object.closest('form');
+            form.find('.active-form-refresh-value').val('vazgen');
+            object.closest('.active-form-dependent-container').nextAll().remove();
+            form.submit();
+        }
+    };
+
     $(document).off('change', '.active-form-refresh-control');
     $(document).on('change', '.active-form-refresh-control', function(event) {
-        refreshActiveForm($(this));
+        yii2admin.activeForm.refresh($(this));
     });
     $(document).off('switchChange.bootstrapSwitch', '.active-form-refresh-control');
     $(document).on('switchChange.bootstrapSwitch', '.active-form-refresh-control', function (e, state) {
-        refreshActiveForm($(this));
+        yii2admin.activeForm.refresh($(this));
     });
 
-    function refreshActiveForm(object) {
-        var form = object.closest('form');
-        form.find('.active-form-refresh-value').val('vazgen');
-        object.closest('.active-form-dependent-container').nextAll().remove();
-        form.submit();
-    }
-
-    $(document).off('blur', 'form .form-group');
-    $(document).on('blur', 'form .form-group', function() {
-        var form = $(this).closest('form');
-        if(typeof form.attr('data-validate-attribute-form') === 'undefined') {
-            return;
-        }
-
+    $("form[data-validate-attribute-form]").off('keyup change paste', 'input, select, textarea');
+    $("form[data-validate-attribute-form]").on('keyup change paste', 'input, select, textarea', function() {
         var self = $(this);
-        var attributeSelector = '.active-form-validate-attribute';
-        var clasees = $(this).attr('class');
+        var $form = self.closest('form');
+        var $container = self.closest('.form-group');
+        var clasees = $container.attr('class');
+
         if($(this).closest('.dynamicform_wrapper').length > 0) {
-            var matches = clasees.match(/field\-([a-z_]+)\-[0-9]+\-[a-z_]+/);
+            var matches = clasees.match(/field\-([a-z_]+)\-[0-9]+\-[a-z_0-9]+/);
         } else {
-            var matches = clasees.match(/field\-[a-z]+\-([a-z_]+)/);
+            var matches = clasees.match(/field\-[a-z]+\-([a-z_0-9]+)/);
         }
 
         if(matches == null) {
@@ -37,20 +41,23 @@ $(document).ready(function() {
 
         var elSelector = matches[0];
         var attribute = matches[1];
-
-        $hidden = form.find(attributeSelector)
+        var $hidden = $form.find(yii2admin.activeForm.validateAttribute.selector);
         $hidden.val(attribute);
-        yii2admin.showPreloader = false;
-        yii2admin.sendRequest(form.attr('action'), form.serialize(), {'type' : 'POST'}, function (html) {
-            var $html = $(html);
-            var $replaceableEl = self.find(' .text-danger');
-            var $replacementEl = $html.find('.' + elSelector + ' .text-danger');
-            if( $replacementEl.length === 1 && $replaceableEl.length === 1) {
-                $replaceableEl.replaceWith($replacementEl);
-            }
+        clearInterval(yii2admin.activeForm.validateAttribute.timeout);
+        var run = function() {
+            yii2admin.showPreloader = false;
+            yii2admin.sendRequest($form.attr('action'), $form.serialize(), {'type' : 'POST'}, function (html) {
+                var $html = $(html);
+                var $replaceableEl = $container.find('.text-danger');
+                var $replacementEl = $html.find('.' + elSelector + ' .text-danger');
+                if( $replacementEl.length === 1 && $replaceableEl.length === 1) {
+                    $replaceableEl.replaceWith($replacementEl);
+                }
 
-            $hidden.val('');
-            yii2admin.showPreloader = true;
-        });
+                $hidden.val('');
+                yii2admin.showPreloader = true;
+            });
+        };
+        yii2admin.activeForm.validateAttribute.timeout = setTimeout(run, yii2admin.activeForm.validateAttribute.duration);
     });
 });
