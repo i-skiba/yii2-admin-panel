@@ -14,6 +14,8 @@ use Yii;
  * @property integer $status
  * @property string $created_at
  * @property boolean $is_deleted
+ * @property integer $type
+ * @property integer $domain_id
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
@@ -64,7 +66,9 @@ class AdminHints extends \concepture\yii2logic\models\ActiveRecord
             [
                 [
                     'status',
-                    'locale'
+                    'locale',
+                    'domain_id',
+                    'type',
                 ],
                 'integer'
             ],
