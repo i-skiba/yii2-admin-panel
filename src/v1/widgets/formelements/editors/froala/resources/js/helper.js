@@ -5,6 +5,7 @@ function EditorHelper() {
             events:  {
                 'contentChanged': function () {
                     yii2admin.formChanged=true;
+                    yii2admin.activeForm.validateAttribute.run($(this.$oel));
                 },
             }
         },
@@ -25,6 +26,7 @@ function EditorHelper() {
             events:  {
                 'contentChanged': function () {
                     yii2admin.formChanged=true;
+                    yii2admin.activeForm.validateAttribute.run($(this.$oel));
                 },
             }
         }
