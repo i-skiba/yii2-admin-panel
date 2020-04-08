@@ -31,7 +31,7 @@ class AuditService extends Service
      * @param string $action
      * @return bool
      */
-    public function auditAttributes($oldAttributes, $newAttributes, $modelClass, $modelPK, $action = 'UNKNOWN')
+    public function auditAttributes($oldAttributes, $newAttributes, $modelClass, $modelPK, $action = AuditEnum::ACTION_UPDATE)
     {
         if (
             !$oldAttributes
@@ -164,11 +164,12 @@ class AuditService extends Service
         $primaryKeys = array_keys($newAttributesForBatch);
         $models = $service->getAllByCondition(function (ActiveQuery $query) use ($model, $primaryKeys) {
             $keys = [];
+            $conditions = [];
             foreach ($primaryKeys as $key) {
                 $pk = Json::decode($key);
                 if (is_array($pk)) {
                     foreach ($pk as $k => $v) {
-                        $query->andWhere([$k => $v]);
+                        $conditions[$k][] = $v;
                     }
                     continue;
                 }
@@ -176,6 +177,11 @@ class AuditService extends Service
             }
             if ($keys) {
                 $query->andWhere(['in', $model::getTableSchema()->primaryKey[0], $keys]);
+            }
+            if ($conditions) {
+                foreach ($conditions as $k => $values) {
+                    $query->andWhere(['in', $k, array_unique($values)]);
+                }
             }
         });
 
@@ -217,7 +223,7 @@ class AuditService extends Service
         }
 
         $pk = $model->getPrimaryKey();
-        return is_array($pk) ? Json::encode($pk) : $pk;
+        return is_array($pk) ? Json::encode(array_map('strval', $pk)) : $pk;
     }
 
     /**

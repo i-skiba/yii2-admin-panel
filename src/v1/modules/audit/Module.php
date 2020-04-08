@@ -70,6 +70,7 @@ class Module extends BaseModule implements BootstrapInterface
              * После того как данные сохранились в базу посредством batchInsert пишем в аудит
              */
             Event::on($serviceClass, Service::EVENT_AFTER_BATCH_INSERT, function ($event) use ($model, $service) {
+
                 if (!$this->batchInsertAuditIsAllowed($event, $service)) {
                     return;
                 }
