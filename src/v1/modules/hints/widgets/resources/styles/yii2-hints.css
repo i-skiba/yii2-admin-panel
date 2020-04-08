@@ -1,11 +1,11 @@
-.yii2admin_hints {
+.yii2admin_hints_popover {
     cursor: pointer;
     font-size: 12px;
 }
-.form-check-inline .yii2admin_hints {
+.form-check-inline .yii2admin_hints_popover {
     margin-left: 3px;
     margin-top: 5px;
 }
-legend .yii2admin_hints {
+legend .yii2admin_hints_popover {
     margin-bottom: 3px;
 }

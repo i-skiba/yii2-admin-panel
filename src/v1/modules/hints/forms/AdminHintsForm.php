@@ -3,6 +3,7 @@
 namespace kamaelkz\yii2admin\v1\modules\hints\forms;
 
 use concepture\yii2logic\enum\ScenarioEnum;
+use kamaelkz\yii2admin\v1\modules\hints\enum\AdminHintsTypeEnum;
 
 /**
  * Форма подсказок
@@ -16,6 +17,8 @@ class AdminHintsForm extends \kamaelkz\yii2admin\v1\forms\BaseForm
     public $caption;
     public $value;
     public $status;
+    public $type = AdminHintsTypeEnum::POPOVER;
+    public $domain_id;
 
     /**
      * @return array|void
@@ -23,9 +26,20 @@ class AdminHintsForm extends \kamaelkz\yii2admin\v1\forms\BaseForm
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-
-        $scenarios[ScenarioEnum::INSERT] = ['name', 'locale', 'value', 'status'];
-        $scenarios[ScenarioEnum::UPDATE] = ['name','caption', 'locale', 'value'];
+        $scenarios[ScenarioEnum::INSERT] = [
+            'name',
+            'locale',
+            'value',
+            'status',
+            'type',
+            'domain_id'
+        ];
+        $scenarios[ScenarioEnum::UPDATE] = [
+            'name',
+            'caption',
+            'locale',
+            'value'
+        ];
 
         return $scenarios;
     }
@@ -41,6 +55,7 @@ class AdminHintsForm extends \kamaelkz\yii2admin\v1\forms\BaseForm
                     'name',
                     'caption',
                     'locale',
+                    'type',
                 ],
                 'required'
             ]

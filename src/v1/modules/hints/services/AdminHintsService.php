@@ -2,12 +2,13 @@
 
 namespace kamaelkz\yii2admin\v1\modules\hints\services;
 
-use concepture\yii2logic\enum\StatusEnum;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\base\Event;
 use yii\helpers\Json;
+use concepture\yii2logic\enum\StatusEnum;
+use kamaelkz\yii2admin\v1\modules\hints\enum\AdminHintsTypeEnum;
 use concepture\yii2handbook\services\LocaleService;
 use concepture\yii2user\enum\UserRoleEnum;
 use concepture\yii2logic\forms\Model;
@@ -36,7 +37,7 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
     /**
      * @var array
      */
-    private $stack= [];
+    private $stack = [];
 
     /**
      * @var array
@@ -66,6 +67,26 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
     public function getUserRoleService()
     {
         return Yii::$app->userRoleService;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendQuery(ActiveQuery $query)
+    {
+        $this->applyDomain($query);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function beforeCreate(Model $form)
+    {
+        if($form->type == AdminHintsTypeEnum::INFO) {
+            $this->setCurrentDomain($form);
+        }
+
+        parent::beforeCreate($form);
     }
 
     /**
@@ -154,6 +175,10 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
                 $config['caption'] = $item->caption;
             }
 
+            if($item->type) {
+                $config['type'] = $item->type;
+            }
+
             $form = Yii::createObject($config);
             $result = $this->create($form);
             if(! $result) {
@@ -205,6 +230,7 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
                 'name' => $item['name'],
                 'caption' => $item['caption'],
                 'value' => nl2br($item['value']),
+                'type' => $item['type']
             ];
         }
 
