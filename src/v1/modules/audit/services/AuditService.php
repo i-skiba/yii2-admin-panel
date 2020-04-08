@@ -6,6 +6,7 @@ use yii\helpers\Json;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use concepture\yii2logic\services\Service;
+use concepture\yii2user\enum\UserRoleEnum;
 use concepture\yii2logic\helpers\ClassHelper;
 use kamaelkz\yii2admin\v1\modules\audit\enum\AuditEnum;
 use concepture\yii2handbook\services\traits\ReadSupportTrait;
@@ -246,7 +247,8 @@ class AuditService extends Service
      */
     public static function isAuditAllowed($modelClass)
     {
+        $isSuperadmin = \Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
         $module = \Yii::$app->getModule('audit');
-        return $module ? in_array($modelClass, $module->auditModels) : false;
+        return ($module && $isSuperadmin) ? in_array($modelClass, $module->auditModels) : false;
     }
 }
