@@ -8,6 +8,7 @@ use yii\web\NotFoundHttpException;
 use concepture\yii2logic\actions\Action;
 use concepture\yii2logic\services\Service;
 use kamaelkz\yii2admin\v1\modules\audit\models\Audit;
+use kamaelkz\yii2admin\v1\modules\audit\services\AuditService;
 use concepture\yii2logic\services\events\modify\AfterUpdateEvent;
 
 /**
@@ -22,6 +23,14 @@ class AuditRollbackAction extends Action
     public static function actionName()
     {
         return 'audit-rollback';
+    }
+
+    /**
+     * @return AuditService
+     */
+    private function getAuditService()
+    {
+        return \Yii::$app->auditService;
     }
 
     /**
@@ -42,7 +51,7 @@ class AuditRollbackAction extends Action
         $model->setAttributes($originModel->attributes, false);
 
         if ($model->validate($originModel)) {
-            $audit = Audit::find()->where(['id' => $id])->one();
+            $audit = $this->getAuditService()->findById($id);
             $originModel->{$audit->field} = $audit->old_value;
             $result = $originModel->save();
             if ($result) {
