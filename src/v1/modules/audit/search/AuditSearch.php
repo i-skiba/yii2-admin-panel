@@ -56,5 +56,8 @@ class AuditSearch extends Audit
         $query->andFilterWhere(['like', "model", $this->model]);
         $query->andFilterWhere(['like', "model_pk", $this->model_pk]);
         $query->andFilterWhere(['like', "field", $this->field]);
+        $query->andWhere("domain_id = :domain_id OR domain_id IS NULL", [
+            ':domain_id' => \Yii::$app->domainService->getCurrentDomainId()
+        ]);
     }
 }

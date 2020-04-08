@@ -24,6 +24,14 @@ class AuditService extends Service
     use ModifySupportTrait;
 
     /**
+     * @param ActiveQuery $query
+     */
+    public function extendQuery(ActiveQuery $query)
+    {
+        $this->applyDomain($query);
+    }
+
+    /**
      * @param array $oldAttributes
      * @param array $newAttributes
      * @param string $modelClass
@@ -83,6 +91,7 @@ class AuditService extends Service
                 'field' => $field,
                 'old_value' => $oldValue,
                 'new_value' => $newValue,
+                'domain_id' => isset($newAttributes['domain_id']) ? $newAttributes['domain_id'] : null,
             ];
         }
 

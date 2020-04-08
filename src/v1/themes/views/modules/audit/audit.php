@@ -37,8 +37,8 @@ $this->registerAssetBundle(AuditBundle::class);
 $auditSearch = new AuditSearch();
 if (isset(Yii::$app->request->get()['AuditSearch'])) {
     $auditSearch->load($params);
-    $auditSearch->extendQuery($query);
 }
+$auditSearch->extendQuery($query);
 
 $auditDataProvider = new ActiveDataProvider([
     'query' => $query,
