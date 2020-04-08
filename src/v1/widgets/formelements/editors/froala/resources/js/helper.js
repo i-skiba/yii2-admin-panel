@@ -21,6 +21,7 @@ function EditorHelper() {
             linkEditButtons: ['linkOpen', 'linkEdit', 'linkRemove'],
             linkInsertButtons: ['linkBack'],
             quickInsertTags: [''],
+            htmlAllowedTags: ['a', 'ul', 'ol', 'li', 'br'],
             events:  {
                 'contentChanged': function () {
                     yii2admin.formChanged=true;
