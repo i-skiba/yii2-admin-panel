@@ -2,7 +2,7 @@ $(document).ready(function() {
     yii2admin.activeForm = {
         validateAttribute : {
             timeout: null,
-            duration: 500,
+            duration: 300,
             selector: '.active-form-validate-attribute',
             run: function ($element) {
                 var $form = $element.closest('form');
