@@ -47,8 +47,9 @@ class Module extends BaseModule implements BootstrapInterface
                 continue;
             }
 
-            Event::on($model, ActiveRecord::EVENT_AFTER_FIND, function ($event) {
-                $this->oldAttributes = $event->sender->getAttributes();
+            Event::on($model, ActiveRecord::EVENT_AFTER_FIND, function ($event) use ($model) {
+                $uniqueKey = $model . ':' . $this->getAuditService()->getPrimaryKey($event->sender);
+                $this->oldAttributes[$uniqueKey] = $event->sender->getAttributes();
             });
 
             /*
@@ -70,6 +71,7 @@ class Module extends BaseModule implements BootstrapInterface
              * После того как данные сохранились в базу посредством batchInsert пишем в аудит
              */
             Event::on($serviceClass, Service::EVENT_AFTER_BATCH_INSERT, function ($event) use ($model, $service) {
+
                 if (!$this->batchInsertAuditIsAllowed($event, $service)) {
                     return;
                 }
@@ -86,12 +88,13 @@ class Module extends BaseModule implements BootstrapInterface
              * Обработка любого изменения модели
              */
             foreach ($this->getAuditService()->getEventsActionMap() as $eventName => $action) {
-                Event::on($serviceClass, $eventName, function ($event) use ($action) {
+                Event::on($serviceClass, $eventName, function ($event) use ($model, $action) {
                     if (!$this->modelAuditIsAllowed($event)) {
                         return;
                     }
 
-                    $this->getAuditService()->auditModel($event->model, $action, $this->oldAttributes);
+                    $uniqueKey = $model . ':' . $this->getAuditService()->getPrimaryKey($event->model);
+                    $this->getAuditService()->auditModel($event->model, $action, $this->oldAttributes[$uniqueKey]);
                 });
             }
         }
