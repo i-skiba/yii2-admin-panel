@@ -2,8 +2,11 @@
 
 namespace kamaelkz\yii2admin\v1\modules\audit\actions;
 
+use concepture\yii2logic\helpers\StringHelper;
 use ReflectionException;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use concepture\yii2logic\actions\Action;
 use concepture\yii2logic\services\Service;
@@ -72,6 +75,14 @@ class AuditRollbackAction extends Action
      */
     protected function getModel($id)
     {
+        if (StringHelper::isJson($id)) {
+            $pk = Json::decode($id);
+            return $this->getService()->getOneByCondition(function (ActiveQuery $query) use ($pk) {
+                foreach ($pk as $key => $value) {
+                    $query->andWhere([$key => $value]);
+                }
+            });
+        }
         return $this->getService()->findById($id);
     }
 }
