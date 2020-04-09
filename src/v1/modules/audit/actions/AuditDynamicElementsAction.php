@@ -5,6 +5,7 @@ namespace kamaelkz\yii2admin\v1\modules\audit\actions;
 use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use concepture\yii2logic\actions\Action;
+use concepture\yii2handbook\models\DynamicElements;
 use kamaelkz\yii2admin\v1\modules\audit\models\Audit;
 
 /**
@@ -32,7 +33,8 @@ class AuditDynamicElementsAction extends Action
     public function run($ids)
     {
         $query = Audit::find()
-            ->where(['in', 'model_pk', explode(',', $ids)]);
+            ->where(['in', 'model_pk', explode(',', $ids)])
+            ->andWhere(['model' => DynamicElements::class]);
 
         $models = $this->getService()->getAllByCondition(function (ActiveQuery $query) use ($ids) {
             $query->andWhere(['in', 'id', explode(',', $ids)]);
