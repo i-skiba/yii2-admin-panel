@@ -12,5 +12,10 @@ return [
                 '@yii2admin/migrations'
             ],
         ]
+    ],
+    'components' => [
+        'adminHintsService' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\hints\services\AdminHintsService',
+        ],
     ]
 ];

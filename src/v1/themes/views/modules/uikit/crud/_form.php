@@ -17,6 +17,7 @@ use yii\helpers\Html;
     use kamaelkz\yii2cdnuploader\widgets\CdnUploader;
     use kamaelkz\yii2cdnuploader\widgets\Uploader;
     use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
+    use kamaelkz\yii2admin\v1\modules\hints\enum\AdminHintsTypeEnum;
 
     $saveRedirectButton = Html::saveRedirectButton();
     $saveButton = Html::saveButton();
@@ -34,7 +35,6 @@ use yii\helpers\Html;
                 <legend class="font-weight-semibold text-uppercase font-size-sm">
                     <i class="icon-file-empty  mr-2"></i>
                     <?= Yii::t('yii2admin', 'Однострочные текстовые поля');?>
-                    <?= HintWidget::widget(['name' => 'from_view']);?>
                 </legend>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
@@ -340,6 +340,19 @@ use yii\helpers\Html;
                         }
                     ]
                 ]); ?>
+                <legend class="font-weight-semibold text-uppercase font-size-sm mt-3">
+                    <i class="icon-file-empty  mr-2"></i>
+                    <?= Yii::t('yii2admin', 'Подсказки');?>
+                    <?= HintWidget::widget(['name' => "{$model->underscoreFormName()}_section_hints"]);?>
+                </legend>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <?= $form->field($model, 'hint_input')->textInput(); ?>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <?= HintWidget::widget(['name' => "{$model->underscoreFormName()}_info_hint", 'type' => AdminHintsTypeEnum::INFO]);?>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card">

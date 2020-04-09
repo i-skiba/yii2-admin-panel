@@ -34,6 +34,7 @@ class UikitForm extends BaseModel
     public $checkboxList = [];
     public $multiInput = [];
     public $select2 = [];
+    public $hint_input;
 
     /**
      * @inheritDoc
@@ -67,7 +68,7 @@ class UikitForm extends BaseModel
                             'dropdown',
                             'dropdown_root',
                             'radio',
-                            'select2'
+                            'select2',
                         ],
                         'required',
                     ],
@@ -82,7 +83,8 @@ class UikitForm extends BaseModel
                     [
                         [
                             'text_input',
-                            'text_area'
+                            'text_area',
+                            'hint_input'
                         ],
                         'string',
                         'max' => 50
