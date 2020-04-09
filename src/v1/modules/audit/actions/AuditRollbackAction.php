@@ -56,7 +56,6 @@ class AuditRollbackAction extends Action
         if ($model->validate($originModel)) {
             $audit = $this->getAuditService()->findById($id);
             $originModel->{$audit->field} = $audit->old_value;
-            d();
             $result = $originModel->save();
             if ($result) {
                 $this->getService()->trigger(
