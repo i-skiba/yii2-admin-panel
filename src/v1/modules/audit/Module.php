@@ -25,13 +25,13 @@ class Module extends BaseModule implements BootstrapInterface
     /** @var array */
     private $newBatchAttributes = [];
 
-    /**
-     * @return string|null
-     */
-    public static function getModuleLabel()
-    {
-        return Yii::t('yii2admin', 'Аудит');
-    }
+//    /**
+//     * @return string|null
+//     */
+//    public static function getModuleLabel()
+//    {
+//        return Yii::t('yii2admin', 'Аудит');
+//    }
 
     /**
      * @inheritDoc
