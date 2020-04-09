@@ -19,6 +19,11 @@ $this->setTitle(Yii::t('yii2admin', 'Аудит'));
 $this->pushBreadcrumbs($this->title);
 $this->registerAssetBundle(AuditBundle::class);
 
+$dataProvider->setSort([
+    'defaultOrder' => [
+        'created_at' => SORT_DESC
+    ]
+]);
 ?>
 
 <?php Pjax::begin(['id' => 'list-pjax']); ?>
@@ -30,7 +35,7 @@ $this->registerAssetBundle(AuditBundle::class);
         'searchParams' => [
             'model' => $searchModel
         ],
-        'searchView' => '@yii2admin/themes/views/modules/audit/_search',
+//        'searchView' => '@yii2admin/themes/views/modules/audit/audit/_search',
         'columns' => [
             'id',
             [
@@ -52,14 +57,7 @@ $this->registerAssetBundle(AuditBundle::class);
             'action',
             'model',
             'model_pk',
-            isset($models) ? [
-                'attribute' => 'field',
-                // TODO do something with this
-                'value' => function ($data) use ($models) {
-                    return $models[(int) $data->model_pk]->caption;
-                },
-                'format' => 'raw',
-            ] : 'field',
+            'field',
             [
                 'label' => Yii::t('audit', 'Разница'),
                 'value' => function ($model) {
@@ -72,8 +70,8 @@ $this->registerAssetBundle(AuditBundle::class);
             'created_at',
             [
                 'label' => Yii::t('audit', 'Действия'),
-                'value' => function ($model) {
-                    return Html::a('<i class="icon-rotate-ccw3"></i>', Url::to(['audit-rollback', 'id' => $model->id, 'model_pk' => $model->model_pk]), [
+                'value' => function ($item) {
+                    return Html::a('<i class="icon-rotate-ccw3"></i>', Url::to(['rollback', 'id' => $item->id, 'model_pk' => $item->model_pk, 'modelClass' => $item->model]), [
                         'class' => 'admin-action btn btn-icon bg-success-400',
                         'data-pjax-id' => 'list-pjax',
                         'data-pjax-url' => Url::current([], true),

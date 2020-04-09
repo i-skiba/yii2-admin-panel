@@ -56,6 +56,7 @@ class AuditRollbackAction extends Action
         if ($model->validate($originModel)) {
             $audit = $this->getAuditService()->findById($id);
             $originModel->{$audit->field} = $audit->old_value;
+            d();
             $result = $originModel->save();
             if ($result) {
                 $this->getService()->trigger(
@@ -75,7 +76,7 @@ class AuditRollbackAction extends Action
      */
     protected function getModel($id)
     {
-        if (StringHelper::isJson($id)) {
+        if (StringHelper::isJson($id) && is_array(Json::decode($id))) {
             $pk = Json::decode($id);
             return $this->getService()->getOneByCondition(function (ActiveQuery $query) use ($pk) {
                 foreach ($pk as $key => $value) {

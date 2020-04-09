@@ -1,5 +1,7 @@
 <?php
 
+use concepture\yii2user\enum\UserRoleEnum;
+
 return [
     'yii2admin-navigation' => [
         'index' => [
@@ -72,6 +74,23 @@ return [
                         ]
                     ]
                 ],
+            ]
+        ],
+        'audit' => [
+            'position' => 1001,
+            'label' => Yii::t('yii2admin', 'Аудит'),
+            'url' => ['/audit/audit/index'],
+            'icon' => 'icon-eye',
+            'active' => [
+                'rules' => [
+                    'ca' => ['audit', 'index']
+                ]
+            ],
+            'visible' => [
+                'sidebar' => function() {
+                    return \Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
+                },
+                'dashboard' => false
             ]
         ],
     ]
