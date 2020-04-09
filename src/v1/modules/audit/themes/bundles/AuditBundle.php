@@ -2,7 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\modules\audit\themes\bundles;
 
-use frontend\components\cdn\AssetsBundle;
+use concepture\yii2logic\bundles\Bundle as BaseBundle;
 
 /**
  * Class AuditBundle
@@ -10,7 +10,7 @@ use frontend\components\cdn\AssetsBundle;
  * @package backend\themes\bundles\resources
  * @author Poletaev Eugene <evgstn7@gmail.com>
  */
-class AuditBundle extends AssetsBundle
+class AuditBundle extends BaseBundle
 {
     /**
      * @var array
