@@ -225,12 +225,18 @@ trait ControllerTrait
     protected function registerAuditEvents()
     {
         Event::on(View::class, View::EVENT_BEGIN_BODY, function($event) {
+            $modelClass = null;
             $controller = $event->sender->context;
-            $modelClass = $controller->getService()->getRelatedModelClass();
+            # на случай если сервиса не существует
+            try {
+                $modelClass = $controller->getService()->getRelatedModelClass();
+            } catch (\Exception $e) {}
+
             if(
                 isset($controller->action)
                 && $controller->action instanceof Action
                 && $controller->action->id === 'update'
+                && $modelClass
                 && AuditService::isAuditAllowed($modelClass)
             ) {
 
