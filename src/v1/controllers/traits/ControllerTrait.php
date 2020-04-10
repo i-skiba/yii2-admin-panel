@@ -3,10 +3,19 @@
 namespace kamaelkz\yii2admin\v1\controllers\traits;
 
 use Yii;
+use yii\base\Action;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\base\Event;
+use yii\web\View;
+use concepture\yii2user\enum\UserRoleEnum;
+use kamaelkz\yii2admin\v1\helpers\AppHelper;
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 use kamaelkz\yii2admin\v1\forms\BaseForm;
 use kamaelkz\yii2admin\v1\helpers\RequestHelper;
+use kamaelkz\yii2admin\v1\modules\audit\actions\AuditAction;
+use kamaelkz\yii2admin\v1\modules\audit\actions\AuditRollbackAction;
+use kamaelkz\yii2admin\v1\modules\audit\services\AuditService;
 
 /**
  * Трейт для контроллеров административной части
@@ -26,7 +35,94 @@ trait ControllerTrait
             $this->layout = false;
         }
 
+        $this->registerAuditEvents();
+
         parent::init();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAccessRules()
+    {
+        $rules = parent::getAccessRules();
+
+        return ArrayHelper::merge(
+            $rules,
+            [
+                [
+                    'actions' => [
+                        'index',
+                        'create',
+                        'update',
+                        'view',
+                        'delete'
+                    ],
+                    'allow' => true,
+                    'roles' => [
+                        UserRoleEnum::ADMIN
+                    ],
+                ],
+                [
+                    'actions' => [
+                        AuditAction::actionName(),
+                        AuditRollbackAction::actionName(),
+                    ],
+                    'allow' => true,
+                    'roles' => [
+                        UserRoleEnum::SUPER_ADMIN,
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function actions()
+    {
+        $actions = parent::actions();
+
+        return ArrayHelper::merge(
+            $actions,
+            [
+                AuditAction::actionName() => AuditAction::class,
+                AuditRollbackAction::actionName() => AuditRollbackAction::class,
+            ]
+        );
+    }
+
+    /**
+     * Установка основного макета
+     *
+     * @param null $path
+     */
+    public function setMainLayout($path = null)
+    {
+        if(null === $path) {
+            $this->layout = AppHelper::MAIN_LAYOUT_PATH;
+
+            return;
+        }
+
+        $this->layout = $path;
+    }
+
+    /**
+     * Установка единичного макета
+     *
+     * @param null $path
+     */
+    public function setSingleLayout($path = null)
+    {
+        if(null === $path) {
+            $this->layout = AppHelper::SINGLE_LAYOUT_PATH;
+
+            return;
+        }
+
+        $this->layout = $path;
     }
 
     /**
@@ -121,5 +217,32 @@ trait ControllerTrait
         return empty($message)
             ? Yii::t('yii2admin' , 'Операция завершилась с ошибкой. Попробуйте позже.')
             : $message;
+    }
+
+    /**
+     * Регистрация событий аудита
+     */
+    protected function registerAuditEvents()
+    {
+        Event::on(View::class, View::EVENT_BEGIN_BODY, function($event) {
+            $controller = $event->sender->context;
+            $modelClass = $controller->getService()->getRelatedModelClass();
+            if(
+                isset($controller->action)
+                && $controller->action instanceof Action
+                && $controller->action->id === 'update'
+                && AuditService::isAuditAllowed($modelClass)
+            ) {
+
+                $id = \Yii::$app->request->get('id');
+                $this->getView()->viewHelper()->pushPageHeader(
+                    [AuditAction::actionName(), 'id' => $id],
+                    \Yii::t('yii2admin', 'Аудит'),
+                    'icon-eye'
+                );
+            }
+        });
+
+        return true;
     }
 }
