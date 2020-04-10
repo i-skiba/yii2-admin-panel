@@ -24,7 +24,7 @@ $this->setTitle(Yii::t('yii2admin', 'Аудит'));
 $this->pushBreadcrumbs(['label' => $model::label(), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
 if (isset($originModel)) {
-    $this->viewHelper()->pushPageHeader(['update', 'id' => $originModel->id], Yii::t('yii2admin', 'Редактирование'),'icon-file-eye2');
+    $this->viewHelper()->pushPageHeader(['update', 'id' => $originModel->id], Yii::t('yii2admin', 'Редактирование'),'icon-pencil6');
 }
 $this->viewHelper()->pushPageHeader(['index'], $model::label(),'icon-list');
 
