@@ -22,7 +22,7 @@ use kamaelkz\yii2admin\v1\modules\audit\themes\bundles\AuditBundle;
 ?>
 <?php if (isset($originModel) && method_exists($originModel, 'toString')) :?>
     <?php $this->setTitlePrefix(Yii::t('yii2admin', 'Аудит'));?>
-    <?php $this->setTitle($originModel->toString());?>
+    <?php $this->setTitle((string) $originModel->toString());?>
 <?php else:?>
     <?php $this->setTitle(Yii::t('yii2admin', 'Аудит'));?>
 <?php endif?>
