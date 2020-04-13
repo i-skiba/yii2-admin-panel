@@ -8,6 +8,12 @@ $config = [
         'kamaelkz\yii2admin\v1\Yii2Admin',
     ],
     'modules' => [
+        'audit' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\audit\Module',
+            'auditModels' => [
+                'concepture\yii2user\models\User',
+            ],
+        ],
         'hints' => [
             'class' => 'kamaelkz\yii2admin\v1\modules\hints\Module'
         ],
