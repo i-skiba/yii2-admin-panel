@@ -88,7 +88,7 @@ return [
             ],
             'visible' => [
                 'sidebar' => function() {
-                    return \Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
+                    return \kamaelkz\yii2admin\v1\modules\audit\services\AuditService::isVisibleForUser();
                 },
                 'dashboard' => false
             ]

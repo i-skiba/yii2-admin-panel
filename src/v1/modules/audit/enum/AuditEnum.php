@@ -13,6 +13,8 @@ use concepture\yii2logic\enum\Enum;
 class AuditEnum extends Enum
 {
     /** @var string */
+    const MODULE_NAME = 'audit';
+    /** @var string */
     const ACTION_CREATE = 'CREATE';
     /** @var string */
     const ACTION_UPDATE = 'UPDATE';

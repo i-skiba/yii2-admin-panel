@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\modules\audit\services;
 
+use kamaelkz\yii2admin\v1\modules\audit\Module;
 use yii\helpers\Json;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -257,13 +258,58 @@ class AuditService extends Service
     }
 
     /**
+     * @return Module
+     */
+    public static function getModule()
+    {
+        return \Yii::$app->getModule(AuditEnum::MODULE_NAME);
+    }
+
+    /**
      * @param $modelClass
      * @return bool
      */
     public static function isAuditAllowed($modelClass)
     {
         $isSuperadmin = \Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
-        $module = \Yii::$app->getModule('audit');
-        return ($module && $isSuperadmin) ? in_array($modelClass, $module->auditModels) : false;
+        return (self::isModuleConnected() && $isSuperadmin) ? in_array($modelClass, self::getModule()->auditModels) : false;
+    }
+
+    /**
+     * Проверка на то что модуль подключен
+     * @return bool
+     */
+    public static function isModuleConnected()
+    {
+        return self::getModule() && in_array(AuditEnum::MODULE_NAME, \Yii::$app->bootstrap);
+    }
+
+    /**
+     * Видимость кнопки аудита в админке
+     * @return bool
+     */
+    public static function isVisibleForUser()
+    {
+        return self::isModuleConnected() && self::accessIsAllowed();
+    }
+
+    /**
+     * Доступ к аудиту по роли пользователя
+     * @return bool
+     */
+    public static function accessIsAllowed()
+    {
+        $module = self::getModule();
+        $user =  \Yii::$app->getUser();
+        $roles = $module->allowedRoles ? $module->allowedRoles : [];
+        if (!$roles) {
+            return false;
+        }
+        foreach ($roles as $role) {
+            if ($user->can($role)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
