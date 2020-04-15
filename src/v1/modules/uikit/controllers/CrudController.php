@@ -19,36 +19,36 @@ use concepture\yii2handbook\services\EntityTypePositionSortService;
  */
 class CrudController extends BaseController
 {
-    /**
-     * @inheritDoc
-     */
-    protected function getAccessRules()
-    {
-        return [
-            [
-                'actions' => [
-                    'index',
-                    'create',
-                    'update',
-                    'view',
-//                    'delete',
-                    'notify',
-                    'flash',
-                    'redirect',
-                    'callback',
-                    'sort-crud',
-                    EditableColumnAction::actionName(),
-                    SortAction::actionName(),
-                    PositionSortIndexAction::actionName(),
-                    EditableColumnAction::actionName(),
-                ],
-                'allow' => true,
-                'roles' => [
-                    UserRoleEnum::ADMIN
-                ],
-            ],
-        ];
-    }
+//    /**
+//     * @inheritDoc
+//     */
+//    protected function getAccessRules()
+//    {
+//        return [
+//            [
+//                'actions' => [
+//                    'index',
+//                    'create',
+//                    'update',
+//                    'view',
+////                    'delete',
+//                    'notify',
+//                    'flash',
+//                    'redirect',
+//                    'callback',
+//                    'sort-crud',
+//                    EditableColumnAction::actionName(),
+//                    SortAction::actionName(),
+//                    PositionSortIndexAction::actionName(),
+//                    EditableColumnAction::actionName(),
+//                ],
+//                'allow' => true,
+//                'roles' => [
+//                    UserRoleEnum::ADMIN
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * @inheritDoc

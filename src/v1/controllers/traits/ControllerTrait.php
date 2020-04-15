@@ -2,6 +2,8 @@
 
 namespace kamaelkz\yii2admin\v1\controllers\traits;
 
+use concepture\yii2user\enum\AccessEnum;
+use concepture\yii2user\helpers\AccessHelper;
 use Yii;
 use yii\base\Action;
 use yii\helpers\Html;
@@ -45,24 +47,11 @@ trait ControllerTrait
      */
     protected function getAccessRules()
     {
-        $rules = parent::getAccessRules();
+        $rules = ArrayHelper::merge(AccessHelper::getDefaultAccessRules($this), parent::getAccessRules());
 
         return ArrayHelper::merge(
             $rules,
             [
-                [
-                    'actions' => [
-                        'index',
-                        'create',
-                        'update',
-                        'view',
-                        'delete'
-                    ],
-                    'allow' => true,
-                    'roles' => [
-                        UserRoleEnum::ADMIN
-                    ],
-                ],
                 [
                     'actions' => [
                         AuditAction::actionName(),
@@ -70,7 +59,7 @@ trait ControllerTrait
                     ],
                     'allow' => true,
                     'roles' => [
-                        UserRoleEnum::SUPER_ADMIN,
+                        AccessEnum::SUPERADMIN,
                     ],
                 ],
             ]

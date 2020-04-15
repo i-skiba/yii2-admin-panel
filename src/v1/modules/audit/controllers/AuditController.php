@@ -8,40 +8,41 @@ use concepture\yii2logic\services\Service;
 use kamaelkz\yii2admin\v1\modules\audit\actions\AuditRollbackAction;
 use Yii;
 use kamaelkz\yii2admin\v1\controllers\traits\ControllerTrait;
-use concepture\yii2logic\controllers\web\Controller;
+use kamaelkz\yii2admin\v1\controllers\BaseController;
 use concepture\yii2user\enum\UserRoleEnum;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
+use concepture\yii2user\enum\AccessEnum;
 
 /**
  * Class AuditController
  * @package kamaelkz\yii2admin\v1\modules\hints\controllers
  * @author Poletaev Eugene <evgstn7@gmail.com>
  */
-class AuditController extends Controller
+class AuditController extends BaseController
 {
-    use ControllerTrait;
-
     /**
      * @inheritDoc
      */
     protected function getAccessRules()
     {
-        return [
+        return ArrayHelper::merge(
+            parent::getAccessRules(),
             [
-                'actions' => [
-                    'index',
-                    'rollback',
-                ],
-                'allow' => true,
-                'roles' => [
-                    UserRoleEnum::SUPER_ADMIN,
-                ],
-            ],
-        ];
+                [
+                    'actions' => [
+                        'rollback',
+                    ],
+                    'allow' => true,
+                    'roles' => [
+                        AccessEnum::SUPERADMIN,
+                    ],
+                ]
+            ]
+        );
     }
 
     /**
