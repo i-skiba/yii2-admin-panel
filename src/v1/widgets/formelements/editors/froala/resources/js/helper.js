@@ -29,7 +29,8 @@ function EditorHelper() {
                     yii2admin.activeForm.validateAttribute.run($(this.$oel));
                 },
             }
-        }
+        },
+
     }
 }
 

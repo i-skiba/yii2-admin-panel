@@ -278,9 +278,9 @@ class DynamicForm extends \yii\base\Widget
             foreach ($this->attributes as $attribute => $settings) {
                 $column = null;
                 $value = $this->models[$key][$attribute] ?? null;
-                if($this->dragAndDrop) {
-                    $key = null;
-                }
+//                if($this->dragAndDrop) {
+//                    $key = null;
+//                }
 
                 if(is_callable($settings)) {
                     $column = call_user_func($settings, $model, $this->form, $key, $value);
