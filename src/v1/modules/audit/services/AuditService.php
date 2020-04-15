@@ -2,13 +2,13 @@
 
 namespace kamaelkz\yii2admin\v1\modules\audit\services;
 
-use kamaelkz\yii2admin\v1\modules\audit\Module;
 use yii\helpers\Json;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use concepture\yii2user\enum\AccessEnum;
 use concepture\yii2logic\services\Service;
-use concepture\yii2user\enum\UserRoleEnum;
 use concepture\yii2logic\helpers\ClassHelper;
+use kamaelkz\yii2admin\v1\modules\audit\Module;
 use kamaelkz\yii2admin\v1\modules\audit\enum\AuditEnum;
 use concepture\yii2handbook\services\traits\ReadSupportTrait;
 use concepture\yii2handbook\services\traits\ModifySupportTrait;
@@ -271,7 +271,7 @@ class AuditService extends Service
      */
     public static function isAuditAllowed($modelClass)
     {
-        $isSuperadmin = \Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
+        $isSuperadmin = \Yii::$app->getUser()->can(AccessEnum::SUPERADMIN);
         return (self::isModuleConnected() && $isSuperadmin) ? in_array($modelClass, self::getModule()->auditModels) : false;
     }
 
