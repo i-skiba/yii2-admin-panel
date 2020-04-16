@@ -54,3 +54,12 @@ form div.required label.control-label::after{
     width: auto;
     max-width: 100%;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+    cursor: pointer;
+    float: right;
+    font-weight: bold;
+    margin-right: .125rem;
+    margin-top: .125rem;
+    padding: .3125rem .875rem;
+}

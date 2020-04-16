@@ -86,6 +86,9 @@ class Select2 extends InputWidget
         if (isset($this->options['prompt'])) {
             $this->options['data-placeholder'] = $this->options['prompt'];
         }
+        if (!isset($this->options['data-placeholder'])) {
+            $this->options['data-placeholder'] = '';
+        }
 
         $encOptions = $this->options ? Json::encode($this->options) : '';
         $this->_hashVar = static::HASH_VAR_BASE_NAME . hash('crc32', $encOptions);
