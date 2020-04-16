@@ -573,19 +573,15 @@ $(document).ready(function() {
 
     $magicModalPjax.on('pjax:success', function(data, status, xhr, options) {
         try {
-            console.log(1);
             var response = $.parseJSON(status);
-            console.log(response);
             magicModal.isJsonResponse = true;
             yii2admin.notify(response);
             if(magicModal.callback !== null) {
                 yii2admin.runCallback(magicModal.callback, response.data);
             }
 
-
             magicModal.hide();
         } catch (e) {
-            console.log(2);
             var content = $(status);
             var title = content.filter('title');
             if(title.length > 0) {
