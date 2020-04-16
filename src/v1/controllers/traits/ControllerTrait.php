@@ -2,6 +2,8 @@
 
 namespace kamaelkz\yii2admin\v1\controllers\traits;
 
+use concepture\yii2user\enum\AccessEnum;
+use concepture\yii2user\helpers\AccessHelper;
 use Yii;
 use yii\base\Action;
 use yii\helpers\Html;
@@ -45,24 +47,11 @@ trait ControllerTrait
      */
     protected function getAccessRules()
     {
-        $rules = parent::getAccessRules();
+        $rules = ArrayHelper::merge(AccessHelper::getDefaultAccessRules($this), parent::getAccessRules());
 
         return ArrayHelper::merge(
             $rules,
             [
-                [
-                    'actions' => [
-                        'index',
-                        'create',
-                        'update',
-                        'view',
-                        'delete'
-                    ],
-                    'allow' => true,
-                    'roles' => [
-                        UserRoleEnum::ADMIN
-                    ],
-                ],
                 [
                     'actions' => [
                         AuditAction::actionName(),
@@ -70,7 +59,7 @@ trait ControllerTrait
                     ],
                     'allow' => true,
                     'roles' => [
-                        UserRoleEnum::SUPER_ADMIN,
+                        AccessEnum::SUPERADMIN,
                     ],
                 ],
             ]
@@ -227,16 +216,12 @@ trait ControllerTrait
         Event::on(View::class, View::EVENT_BEGIN_BODY, function($event) {
             $modelClass = null;
             $controller = $event->sender->context;
-            # на случай если сервиса не существует
-            try {
-                $modelClass = $controller->getService()->getRelatedModelClass();
-            } catch (\Exception $e) {}
-
             if(
                 isset($controller->action)
                 && $controller->action instanceof Action
                 && $controller->action->id === 'update'
-                && $modelClass
+                && method_exists($controller, 'getService')
+                && ($modelClass = $controller->getService()->getRelatedModelClass())
                 && AuditService::isAuditAllowed($modelClass)
             ) {
 

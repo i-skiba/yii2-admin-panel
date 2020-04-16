@@ -13,23 +13,23 @@ use concepture\yii2user\enum\UserRoleEnum;
  */
 class WidgetsController extends BaseController
 {
-    /**
-     * @inheritDoc
-     */
-    protected function getAccessRules()
-    {
-        return [
-            [
-                'actions' => [
-                    'index'
-                ],
-                'allow' => true,
-                'roles' => [
-                    UserRoleEnum::ADMIN
-                ],
-            ],
-        ];
-    }
+//    /**
+//     * @inheritDoc
+//     */
+//    protected function getAccessRules()
+//    {
+//        return [
+//            [
+//                'actions' => [
+//                    'index'
+//                ],
+//                'allow' => true,
+//                'roles' => [
+//                    UserRoleEnum::ADMIN
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * @inheritDoc

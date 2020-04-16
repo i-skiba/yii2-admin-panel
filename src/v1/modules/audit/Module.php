@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Event;
 use yii\db\ActiveRecord;
 use yii\base\BootstrapInterface;
-use concepture\yii2user\enum\UserRoleEnum;
+use concepture\yii2user\enum\AccessEnum;
 use concepture\yii2logic\services\Service;
 use kamaelkz\yii2admin\v1\modules\audit\models\Audit;
 use kamaelkz\yii2admin\v1\modules\Module as BaseModule;
@@ -19,7 +19,7 @@ class Module extends BaseModule implements BootstrapInterface
 {
     /** @var array */
     public $allowedRoles = [
-        UserRoleEnum::SUPER_ADMIN
+        AccessEnum::SUPERADMIN
     ];
     /** @var array Модели разрешенные для аудита */
     public $auditModels = [];

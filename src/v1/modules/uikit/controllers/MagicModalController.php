@@ -16,24 +16,24 @@ use concepture\yii2logic\filters\PjaxFilter;
  */
 class MagicModalController extends BaseController
 {
-    /**
-     * @inheritDoc
-     */
-    protected function getAccessRules()
-    {
-        return [
-            [
-                'actions' => [
-                    'create',
-                    'index',
-                ],
-                'allow' => true,
-                'roles' => [
-                    UserRoleEnum::ADMIN
-                ],
-            ],
-        ];
-    }
+//    /**
+//     * @inheritDoc
+//     */
+//    protected function getAccessRules()
+//    {
+//        return [
+//            [
+//                'actions' => [
+//                    'create',
+//                    'index',
+//                ],
+//                'allow' => true,
+//                'roles' => [
+//                    UserRoleEnum::ADMIN
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * @inheritDoc

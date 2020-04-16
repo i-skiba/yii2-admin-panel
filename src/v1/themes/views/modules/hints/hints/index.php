@@ -7,8 +7,9 @@ use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
 use concepture\yii2logic\enum\StatusEnum;
 use concepture\yii2logic\enum\IsDeletedEnum;
 use \concepture\yii2user\enum\UserRoleEnum;
+use concepture\yii2user\enum\AccessEnum;
 
-$is_superadmin = Yii::$app->getUser()->can(UserRoleEnum::SUPER_ADMIN);
+$is_superadmin = Yii::$app->getUser()->can(AccessEnum::SUPERADMIN);
 
 $this->setTitle(Yii::t('yii2admin', 'Список'));
 $this->pushBreadcrumbs($this->title);

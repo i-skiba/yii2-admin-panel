@@ -2,51 +2,38 @@
 
 namespace kamaelkz\yii2admin\v1\modules\hints\controllers;
 
+use kamaelkz\yii2admin\v1\controllers\BaseController;
 use Yii;
-use kamaelkz\yii2admin\v1\controllers\traits\ControllerTrait;
-use concepture\yii2logic\controllers\web\localized\Controller;
 use concepture\yii2user\enum\UserRoleEnum;
+use concepture\yii2user\enum\AccessEnum;
+use yii\helpers\ArrayHelper;
 
 /**
  * Контроллер по умолчанияю
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
-class HintsController extends Controller
+class HintsController extends BaseController
 {
-    use ControllerTrait;
-
     /**
      * @inheritDoc
      */
     protected function getAccessRules()
     {
-        return [
+        return ArrayHelper::merge(
+            parent::getAccessRules(),
             [
-                'actions' => [
-                    'create',
-                ],
-                'allow' => true,
-                'roles' => [
-                    UserRoleEnum::SUPER_ADMIN,
-                ],
-            ],
-            [
-                'actions' => [
-                    'index',
-                    'view',
-                    'update',
-                    'delete',
-                    'undelete',
-                    'status-change',
-                ],
-                'allow' => true,
-                'roles' => [
-                    UserRoleEnum::SUPER_ADMIN,
-                    UserRoleEnum::ADMIN,
-                ],
-            ],
-        ];
+                [
+                    'actions' => [
+                        'create',
+                    ],
+                    'allow' => true,
+                    'roles' => [
+                        AccessEnum::SUPERADMIN,
+                    ],
+                ]
+            ]
+        );
     }
 
     /**
