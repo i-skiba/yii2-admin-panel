@@ -40,17 +40,23 @@ $dataProvider->setSort([
             'id',
             [
                 'attribute' => 'user_id',
+                'label' => Yii::t('yii2admin', 'Пользователь'),
                 'value' => function ($data) {
-                    return $data->user_id;
-                },
-                'format' => 'raw',
-            ],
-            [
-                'attribute' => 'username',
-                'label' => Yii::t('yii2admin', 'Имя пользователя'),
-                'value' => function ($data) {
-                    $user = User::findIdentity($data->user_id);
-                    return $user->toString();
+                    $user_id = $data->user_id;
+                    $user = User::findIdentity($user_id);
+                    if(! $user) {
+                        return null;
+                    }
+
+                    return Html::tag(
+                        'a',
+                        $user->toString(),
+                        [
+                            'class' => 'badge bg-primary',
+                            'target' => '_blank',
+                            'href' => Url::to(['user/user/view', 'id' => $user_id])
+                        ]
+                    );
                 },
                 'format' => 'raw',
             ],
@@ -59,25 +65,52 @@ $dataProvider->setSort([
             'model_pk',
             'field',
             [
-                'label' => Yii::t('audit', 'Разница'),
+                'label' => Yii::t('yii2admin', 'Разница'),
                 'value' => function ($model) {
                     $diff = $model->getDiffHtml();
                     // TODO to view
-                    return "<div class='text-center'><span class=\"font-weight-semibold cursor-pointer\" data-toggle=\"collapse\" data-target=\"#collapse-text-{$model->id}\" aria-expanded=\"true\">" . Yii::t('yii2admin', 'Показать') . "</span></div><div class=\"collapse\" id=\"collapse-text-{$model->id}\" style=\"\">{$diff}</div>";
+                    $header = Yii::t('yii2admin', 'Показать');
+                    return <<<HTML
+                            <div class='text-center'>
+                            <span class="font-weight-semibold cursor-pointer" data-toggle="collapse" data-target="#collapse-text-{$model->id}" aria-expanded="true">
+                                {$header}
+                            </span>
+                            </div>
+                            <div class="collapse" id="collapse-text-{$model->id}" style="">
+                                {$diff}
+                            </div>
+HTML;
+
                 },
+                'headerOptions' => [
+                    'style' => 'width:35%',
+                    'class' => 'text-center'
+                ],
+                'contentOptions' => [
+                    'class' => 'text-center'
+                ],
                 'format' => 'raw',
             ],
             'created_at',
             [
-                'label' => Yii::t('audit', 'Действия'),
+                'label' => Yii::t('yii2admin', 'Действия'),
                 'value' => function ($item) {
-                    return Html::a('<i class="icon-rotate-ccw3"></i>', Url::to(['rollback', 'id' => $item->id, 'model_pk' => $item->model_pk, 'modelClass' => $item->model]), [
-                        'class' => 'admin-action btn btn-icon bg-success-400',
+                    return Html::a(
+                            '<i class="icon-arrow-left13"></i> ' . Yii::t('yii2admin', 'Востановить'),
+                            Url::to(['rollback', 'id' => $item->id, 'model_pk' => $item->model_pk, 'modelClass' => $item->model]
+                        ), [
+                        'class' => 'admin-action list-icons-item btn bg-success',
                         'data-pjax-id' => 'list-pjax',
                         'data-pjax-url' => Url::current([], true),
                         'data-swal' => Yii::t('yii2admin' , 'Вернуть старое значение')
                     ]);
                 },
+                'headerOptions' => [
+                    'class' => 'text-center'
+                ],
+                'contentOptions' => [
+                    'class' => 'text-center'
+                ],
                 'format' => 'raw',
             ],
         ]
