@@ -5,7 +5,10 @@ function EditorHelper() {
             events:  {
                 'contentChanged': function () {
                     yii2admin.formChanged=true;
-                    yii2admin.activeForm.validateAttribute.run($(this.$oel));
+                    var $form = $(this.$oel).closest('form');
+                    if(typeof $form.attr('data-validate-attribute-form') !== 'undefined') {
+                        yii2admin.activeForm.validateAttribute.run($(this.$oel));
+                    }
                 },
             }
         },
@@ -26,7 +29,10 @@ function EditorHelper() {
             events:  {
                 'contentChanged': function () {
                     yii2admin.formChanged=true;
-                    yii2admin.activeForm.validateAttribute.run($(this.$oel));
+                    var $form = $(this.$oel).closest('form');
+                    if(typeof $form.attr('data-validate-attribute-form') !== 'undefined') {
+                        yii2admin.activeForm.validateAttribute.run($(this.$oel));
+                    }
                 },
             }
         }
