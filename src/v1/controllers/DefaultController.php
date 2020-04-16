@@ -104,7 +104,6 @@ class DefaultController extends BaseController
         }
 
         $model = new SignInForm();
-        $model->setRestrictions([UserRoleEnum::ADMIN]);
         if (
             $model->load(Yii::$app->request->post())
             && $model->validate()
