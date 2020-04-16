@@ -498,6 +498,11 @@ $(document).ready(function() {
     });
 
     $listPjax.on('pjax:error', function(xhr, response) {
+        // случаи с abort
+        if(response.status == 0) {
+            return true;
+        }
+
         var message = response.status + ' : ' + response.statusText;
         componentNotify.pNotify(componentNotify.statuses.error, message);
 
