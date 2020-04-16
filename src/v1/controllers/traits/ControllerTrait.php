@@ -216,16 +216,12 @@ trait ControllerTrait
         Event::on(View::class, View::EVENT_BEGIN_BODY, function($event) {
             $modelClass = null;
             $controller = $event->sender->context;
-            # на случай если сервиса не существует
-            try {
-                $modelClass = $controller->getService()->getRelatedModelClass();
-            } catch (\Exception $e) {}
-
             if(
                 isset($controller->action)
                 && $controller->action instanceof Action
                 && $controller->action->id === 'update'
-                && $modelClass
+                && method_exists($controller, 'getService')
+                && ($modelClass = $controller->getService()->getRelatedModelClass())
                 && AuditService::isAuditAllowed($modelClass)
             ) {
 
