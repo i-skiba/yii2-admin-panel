@@ -189,7 +189,7 @@ class DynamicForm extends \yii\base\Widget
         $view->registerJs($js, $view::POS_END);
 
         // add a click handler for the clone button
-        $js = 'jQuery("#' . ($this->blockId ?? $this->formId) . '").on("click", "' . $this->insertButton . '", function(e) {'. "\n";
+        $js = 'jQuery("#' . ($this->blockId ?? $this->formId) . '").on("click", "[data-dynamicform=\"' . $this->_hashVar . '\"] ' . $this->insertButton . '", function(e) {'. "\n";
         $js .= "    e.preventDefault();\n";
         $js .= '    jQuery(".' .  $this->widgetContainer . '").triggerHandler("beforeInsert", [jQuery(this)]);' . "\n";
         $js .= '    jQuery(".' .  $this->widgetContainer . '").yiiDynamicForm("addItem", '. $this->_hashVar . ", e, jQuery(this));\n";
@@ -197,7 +197,7 @@ class DynamicForm extends \yii\base\Widget
         $view->registerJs($js, $view::POS_END);
 
         // add a click handler for the remove button
-        $js = 'jQuery("#' . $this->formId . '").on("click", "' . $this->deleteButton . '", function(e) {'. "\n";
+        $js = 'jQuery("#' . $this->formId . '").on("click", "[data-dynamicform=\"' . $this->_hashVar . '\"] ' . $this->deleteButton . '", function(e) {'. "\n";
         $js .= "    e.preventDefault();\n";
         $js .= '    jQuery(".' .  $this->widgetContainer . '").yiiDynamicForm("deleteItem", '. $this->_hashVar . ", e, jQuery(this));\n";
         $js .= "});\n";
@@ -278,9 +278,9 @@ class DynamicForm extends \yii\base\Widget
             foreach ($this->attributes as $attribute => $settings) {
                 $column = null;
                 $value = $this->models[$key][$attribute] ?? null;
-                if($this->dragAndDrop) {
-                    $key = null;
-                }
+//                if($this->dragAndDrop) {
+//                    $key = null;
+//                }
 
                 if(is_callable($settings)) {
                     $column = call_user_func($settings, $model, $this->form, $key, $value);

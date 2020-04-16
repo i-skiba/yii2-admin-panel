@@ -7,6 +7,11 @@ $(document).ready(function() {
             run: function ($element) {
                 var $form = $element.closest('form');
                 var $container = $element.closest('.form-group');
+
+                if ($container.length === 0) {
+                    return;
+                }
+
                 var clasees = $container.attr('class');
 
                 if($(this).closest('.dynamicform_wrapper').length > 0) {
