@@ -104,7 +104,20 @@ class Select2 extends InputWidget
         $view = $this->getView();
         $this->registerBundle();
         $this->registerOptions($view);
-        $view->registerJs("$('#{$this->_hashVar}').select2({$this->_hashVar});\n", View::POS_END);
+
+        $script = <<<JS
+    $('#{$this->_hashVar}').select2({$this->_hashVar});
+    $('#{$this->_hashVar}').on('select2:unselecting', function (e) {
+        e.preventDefault();
+        var el = $(this);
+        componentNotify.sweetAlert(yii2admin.t('Confirm'), function () {
+            el.val(null).trigger("change");
+            el.select2("open");
+        });
+    });
+JS;
+
+        $view->registerJs($script, View::POS_END);
     }
 
     /**
