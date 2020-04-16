@@ -328,44 +328,40 @@ var MagicModal = function() {
     this.pjax.setSelector('#magic-modal-pjax');
 };
 
-MagicModal.prototype.setTitle = function(title)
-{
+MagicModal.prototype.setTitle = function(title) {
 	this.$modal.find('.modal-title').html(title);
-}
+};
 
-MagicModal.prototype.setBody = function(body)
-{
+MagicModal.prototype.setBody = function(body) {
 	this.$modal.find('.modal-body').html(body);
-}
+};
 
-MagicModal.prototype.getBody = function()
-{
+MagicModal.prototype.getBody = function() {
 	return this.$modal.find('.modal-body').html();
-}
+};
 
-MagicModal.prototype.show = function()
-{
+MagicModal.prototype.show = function() {
 	this.$modal.modal('show');
-}
+};
 
-MagicModal.prototype.hide = function()
-{
-	if(this.$modal.modal.onCloseCallback !== null){
-		yii2admin.runCallback(this.$modal.modal.onCloseCallback);
-		this.$modal.modal.onCloseCallback = null;
+MagicModal.prototype.hide = function() {
+	if(typeof this.onCloseCallback == 'function') {
+		yii2admin.runCallback(this.onCloseCallback);
+		this.onCloseCallback = null;
 		this.$modal.off('hidden.bs.modal');
 	}
-	this.$modal.modal('hide');
-	magicModal.stop();
-}
 
-MagicModal.prototype.onClose = function(callback)
-{
-	this.$modal.modal.onCloseCallback = callback;
+	this.$modal.modal('hide');
+	this.stop();
+};
+
+MagicModal.prototype.onClose = function(callback) {
+    var self = this;
+	this.onCloseCallback = callback;
 	this.$modal.on('hidden.bs.modal', function(e){
-		magicModal.hide();
-	})
-}
+        self.hide();
+	});
+};
 
 MagicModal.prototype.run = function($el) {
     if(typeof this.pjax.settings.data !== 'undefined') {
@@ -583,7 +579,6 @@ $(document).ready(function() {
             if(magicModal.callback !== null) {
                 yii2admin.runCallback(magicModal.callback, response.data);
             }
-
 
             magicModal.hide();
         } catch (e) {
