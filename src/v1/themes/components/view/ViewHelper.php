@@ -43,7 +43,7 @@ class ViewHelper
         /**
          * Проверка на права
          */
-        if (! AccessHelper::checkAcces($route))
+        if (! AccessHelper::checkAccess($route))
         {
             return;
         }
