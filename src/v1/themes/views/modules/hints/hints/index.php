@@ -112,7 +112,7 @@ if($is_superadmin) {
             ],
             [
                 'class'=>'yii\grid\ActionColumn',
-                'template'=>'{view} {update} <div class="dropdown-divider"></div> {activate} {deactivate}',
+                'template'=>'{update} <div class="dropdown-divider"></div> {activate} {deactivate}',
                 'buttons'=>[
                     'view'=> function ($url, $model) {
                         return Html::a(
