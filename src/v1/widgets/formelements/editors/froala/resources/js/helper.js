@@ -44,6 +44,11 @@ EditorHelper.prototype.get = function() {
 };
 
 EditorHelper.prototype.add = function(selector, type) {
+    var $element = $(selector);
+    if($element.length === 0) {
+        return;
+    }
+
     var editor = new FroalaEditor(selector, this.config[type]);
     editor.$box.addClass('isolated-styles');
     editor.$el.addClass('content-body');

@@ -66,6 +66,7 @@ $(document).ready(function() {
     $("form[data-validate-attribute-form]").on('keyup change paste', 'input, select, textarea', function() {
         yii2admin.activeForm.validateAttribute.run($(this));
     });
+    // alert('Разобраться')
     // console.log(editorHelper.editors);
     // _.each(editorHelper.editors, function(el, index) {
     //     var id = $(el.$oel).attr('id');
