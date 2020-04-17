@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\navigation;
 
+use concepture\yii2user\helpers\AccessHelper;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
@@ -52,8 +53,31 @@ abstract class NavigationWidget extends CoreWidget
 
             $this->items = Yii::$app->params['yii2admin-navigation'];
         }
+        $this->filterItemsByAccess();
 
         return $this->getContent();
+    }
+
+    /**
+     * Фильтрует элементы по доступу
+     */
+    protected function filterItemsByAccess()
+    {
+        foreach ($this->items as $key => $item){
+            if (isset($item['children'])){
+                foreach ($item['children'] as $childKey => $child){
+                    if (isset($child['url']) && $child['url'] != '#'){
+                        if (! AccessHelper::checkAccess($child['url'])){
+                            unset($this->items[$key]['children'][$childKey]);
+                        }
+                    }
+                }
+
+                if (count($this->items[$key]['children']) == 0 ){
+                    unset($this->items[$key]);
+                }
+            }
+        }
     }
     /**
      * Возвращает контент виджета
