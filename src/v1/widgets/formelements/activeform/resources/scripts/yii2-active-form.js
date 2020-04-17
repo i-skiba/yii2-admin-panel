@@ -1,10 +1,13 @@
 $(document).ready(function() {
     yii2admin.activeForm = {
         validateAttribute : {
+            actionCreate: 'create-validate-attribute',
+            actionUpdate: 'update-validate-attribute',
             timeout: null,
             duration: 300,
             selector: '.active-form-validate-attribute',
             run: function ($element) {
+                var self = this;
                 var $form = $element.closest('form');
                 var $container = $element.closest('.form-group');
 
@@ -13,7 +16,6 @@ $(document).ready(function() {
                 }
 
                 var clasees = $container.attr('class');
-
                 if($(this).closest('.dynamicform_wrapper').length > 0) {
                     var matches = clasees.match(/field\-([a-z_]+)\-[0-9]+\-[a-z_0-9]+/);
                 } else {
@@ -27,14 +29,25 @@ $(document).ready(function() {
                 var elSelector = matches[0];
                 var attribute = matches[1];
                 var $hidden = $form.find(yii2admin.activeForm.validateAttribute.selector);
+
                 $hidden.val(attribute);
                 clearInterval(yii2admin.activeForm.validateAttribute.timeout);
-                var run = function() {
+
+                var event = function() {
+                    var url;
+                    var action = $form.attr('action');
+                    if(action.indexOf('/update?')) {
+                        url = action.replace('update', self.actionUpdate);
+                    } else {
+                        url = action.replace('create', self.actionCreate);
+                    }
+
                     yii2admin.showPreloader = false;
-                    yii2admin.sendRequest($form.attr('action'), $form.serialize(), {'type' : 'POST'}, function (html) {
+                    yii2admin.sendRequest(url, $form.serialize(), {'type' : 'POST'}, function (html) {
                         var $html = $(html);
                         var $replaceableEl = $container.find('.text-danger');
                         var $replacementEl = $html.find('.' + elSelector + ' .text-danger');
+
                         if( $replacementEl.length === 1 && $replaceableEl.length === 1) {
                             $replaceableEl.replaceWith($replacementEl);
                         }
@@ -43,14 +56,16 @@ $(document).ready(function() {
                         yii2admin.showPreloader = true;
                     });
                 };
-                yii2admin.activeForm.validateAttribute.timeout = setTimeout(run, yii2admin.activeForm.validateAttribute.duration);
+
+                yii2admin.activeForm.validateAttribute.timeout = setTimeout(event, yii2admin.activeForm.validateAttribute.duration);
             }
         },
-        refresh: function (object) {
-            var form = object.closest('form');
-            form.find('.active-form-refresh-value').val('vazgen');
-            object.closest('.active-form-dependent-container').nextAll().remove();
-            form.submit();
+        refresh: function ($object) {
+            var $form = object.closest('form');
+
+            $form.find('.active-form-refresh-value').val('vazgen');
+            $object.closest('.active-form-dependent-container').nextAll().remove();
+            $form.submit();
         }
     };
 

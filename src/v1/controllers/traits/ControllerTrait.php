@@ -72,6 +72,8 @@ trait ControllerTrait
     public function actions()
     {
         $actions = parent::actions();
+        $actions['create-validate-attribute'] = $actions['create'];
+        $actions['update-validate-attribute'] = $actions['update'];
 
         return ArrayHelper::merge(
             $actions,
