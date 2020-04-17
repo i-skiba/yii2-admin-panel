@@ -114,18 +114,6 @@ if($is_superadmin) {
                 'class'=>'yii\grid\ActionColumn',
                 'template'=>'{update} <div class="dropdown-divider"></div> {activate} {deactivate}',
                 'buttons'=>[
-                    'view'=> function ($url, $model) {
-                        return Html::a(
-                            '<i class="icon-file-eye2"></i>' . Yii::t('yii2admin', 'Просмотр'),
-                            ['view', 'id' => $model['id'], 'locale' => $model['locale']],
-                            [
-                                'class' => 'dropdown-item',
-                                'aria-label' => Yii::t('yii2admin', 'Просмотр'),
-                                'title' => Yii::t('yii2admin', 'Просмотр'),
-                                'data-pjax' => '0'
-                            ]
-                        );
-                    },
                     'update'=> function ($url, $model) {
                         if ($model['is_deleted'] == IsDeletedEnum::DELETED){
                             return '';
