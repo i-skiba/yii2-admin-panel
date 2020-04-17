@@ -155,8 +155,8 @@ trait ControllerTrait
             return parent::render($view, $params);
         }
 
-        $title = Html::tag('title', $this->getView()->getTitle());
         $content = $this->renderAjax($view, $params);
+        $title = Html::tag('title', $this->getView()->getTitle());
 
         return "{$title}{$content}";
     }
