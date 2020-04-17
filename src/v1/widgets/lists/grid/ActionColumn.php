@@ -104,7 +104,7 @@ class ActionColumn extends BaseColumn
              * Все сделано ради этой проверки
              * если нет доступа то кнопки нет
              */
-            if (! AccessHelper::checkAccesRules($name)){
+            if (! AccessHelper::checkAcces($name)){
                 return '';
             }
 

@@ -43,27 +43,9 @@ class ViewHelper
         /**
          * Проверка на права
          */
-        $action = null;
-        $controller = null;
-        $tmp = trim($route[0], '/');
-        $tmpArray = explode('/', $tmp);
-        if (count($tmpArray) == 1){
-            $action = $tmpArray[0];
-            $controller = Yii::$app->controller;
-        }
-
-        if (count($tmpArray) > 1){
-            $tmp1 = $tmpArray;
-            $action = array_pop($tmp1);
-            $controller = array_pop($tmp1);
-        }
-
-        if ($controller && $action){
-
-            if (! AccessHelper::checkAccesRules($action, $controller))
-            {
-                return;
-            }
+        if (! AccessHelper::checkAcces($route))
+        {
+            return;
         }
         /**
          * END
