@@ -64,18 +64,20 @@ abstract class NavigationWidget extends CoreWidget
     protected function filterItemsByAccess()
     {
         foreach ($this->items as $key => $item){
-            if (isset($item['children'])){
-                foreach ($item['children'] as $childKey => $child){
-                    if (isset($child['url']) && $child['url'] != '#'){
-                        if (! AccessHelper::checkAccess($child['url'])){
-                            unset($this->items[$key]['children'][$childKey]);
-                        }
+            if (! isset($item['children'])) {
+                continue;
+            }
+
+            foreach ($item['children'] as $childKey => $child){
+                if (isset($child['url']) && $child['url'] != '#'){
+                    if (! AccessHelper::checkAccess($child['url'])){
+                        unset($this->items[$key]['children'][$childKey]);
                     }
                 }
+            }
 
-                if (count($this->items[$key]['children']) == 0 ){
-                    unset($this->items[$key]);
-                }
+            if (count($this->items[$key]['children']) == 0 ){
+                unset($this->items[$key]);
             }
         }
     }
