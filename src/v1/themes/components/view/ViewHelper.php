@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\themes\components\view;
 
+use concepture\yii2user\helpers\AccessHelper;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -14,18 +15,18 @@ use yii\helpers\Html;
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
 class ViewHelper
-{  
+{
     /**
      * Дополнительные элементы в заголовке страницы
-     * 
-     * @var string 
+     *
+     * @var string
      */
     private $_page_header_elements;
-    
+
     /**
      * Дополнительные элементы в хлебных крошках страницы
-     * 
-     * @var string 
+     *
+     * @var string
      */
     private $_breadcrumbs_elements;
 
@@ -39,6 +40,35 @@ class ViewHelper
      */
     public function pushPageHeader($route = ['create'], $label = null, $icon = null, $options = [])
     {
+        /**
+         * Проверка на права
+         */
+        $action = null;
+        $controller = null;
+        $tmp = trim($route[0], '/');
+        $tmpArray = explode('/', $tmp);
+        if (count($tmpArray) == 1){
+            $action = $tmpArray[0];
+            $controller = Yii::$app->controller;
+        }
+
+        if (count($tmpArray) > 1){
+            $tmp1 = $tmpArray;
+            $action = array_pop($tmp1);
+            $controller = array_pop($tmp1);
+        }
+
+        if ($controller && $action){
+
+            if (! AccessHelper::checkAccesRules($action, $controller))
+            {
+                return;
+            }
+        }
+        /**
+         * END
+         */
+
         if(! $icon) {
             $icon = 'icon-plus-circle2';
         }
@@ -98,12 +128,12 @@ class ViewHelper
         $html = Html::submitButton($content, $options);
         $this->pushPageHeaderElement($html);
     }
-    
+
     public function outputPageHeaderElements()
     {
         return $this->_page_header_elements;
     }
-    
+
     public function pushPageHeaderElement($value)
     {
         $arguments = func_get_args();
@@ -111,12 +141,12 @@ class ViewHelper
             $this->_page_header_elements .= $arg;
         }
     }
-    
+
     public function outputBreadcrumbsElements()
     {
         return $this->_breadcrumbs_elements;
     }
-    
+
     public function pushBreadcrumbsElement($value)
     {
         $arguments = func_get_args();
