@@ -23,14 +23,19 @@ var componentDragAndDrop = function() {
         });
 
         // shows or hide elements with class .hide-on-drag
-        var toggleHideOnDragElements = function (el) {
+        var toggleHideOnDragElements = function (el, eventName = 'default') {
             var hideOnDragElems = $(el).parents('.dnd-grid-view').find('.hide-on-drag').parents('td').children();
             if (hideOnDragElems.length !== 0) {
                 hideOnDragElems.each(function () {
-                    if ($(this).hasClass('d-none')) {
-                        $(this).removeClass('d-none');
-                    } else {
-                        $(this).addClass('d-none');
+                    console.log($(this), $(this).hasClass('d-none'), eventName !== 'drag');
+                    switch (eventName) {
+                        case 'drag':
+                            $(this).addClass('d-none');
+                            break;
+                        case 'cancel':
+                        case 'drop':
+                            $(this).removeClass('d-none');
+                            break;
                     }
                 });
             }
@@ -61,7 +66,7 @@ var componentDragAndDrop = function() {
         }
 
         drake.on('drag', function(el) {
-            toggleHideOnDragElements(el);
+            toggleHideOnDragElements(el, 'drag');
         });
 
         drake.on('cloned', function(clone, original, type, event) {
@@ -70,11 +75,11 @@ var componentDragAndDrop = function() {
         });
 
         drake.on('cancel', function (el, container, source) {
-            toggleHideOnDragElements(el);
+            toggleHideOnDragElements(el, 'cancel');
         });
 
         drake.on('drop', function (el, target, source, sibling) {
-            toggleHideOnDragElements(el);
+            toggleHideOnDragElements(el, 'drop');
             updateIndexes(target);
 
             var $container = $(target);
