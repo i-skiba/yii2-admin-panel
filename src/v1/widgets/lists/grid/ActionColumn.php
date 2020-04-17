@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 
+use concepture\yii2user\helpers\AccessHelper;
 use Yii;
 use yii\helpers\Html;
 use yii\grid\ActionColumn as BaseColumn;
@@ -94,7 +95,35 @@ class ActionColumn extends BaseColumn
      */
     protected function renderDataCellContent($model, $key, $index)
     {
-        $content = parent::renderDataCellContent($model, $key, $index);
+        /**
+         * Копия оригинального метода для проверки прав доступа
+         */
+        $content = preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
+            $name = $matches[1];
+            /**
+             * Все сделано ради этой проверки
+             * если нет доступа то кнопки нет
+             */
+            if (! AccessHelper::checkAccesRules($name)){
+                return '';
+            }
+
+            if (isset($this->visibleButtons[$name])) {
+                $isVisible = $this->visibleButtons[$name] instanceof \Closure
+                    ? call_user_func($this->visibleButtons[$name], $model, $key, $index)
+                    : $this->visibleButtons[$name];
+            } else {
+                $isVisible = true;
+            }
+
+            if ($isVisible && isset($this->buttons[$name])) {
+                $url = $this->createUrl($name, $model, $key, $index);
+                return call_user_func($this->buttons[$name], $url, $model, $key);
+            }
+
+            return '';
+        }, $this->template);
+
         if(! $this->dropdown) {
             return <<<HTML
             <div class="list-icons">
