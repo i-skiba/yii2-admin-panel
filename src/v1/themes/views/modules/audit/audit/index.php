@@ -97,7 +97,7 @@ HTML;
                 'value' => function ($item) {
                     return Html::a(
                             '<i class="icon-arrow-left13"></i> ' . Yii::t('yii2admin', 'Востановить'),
-                            Url::to(['rollback', 'id' => $item->id, 'model_pk' => $item->model_pk, 'modelClass' => $item->model]
+                            Url::to(['audit-rollback', 'id' => $item->id, 'model_pk' => $item->model_pk, 'modelClass' => $item->model]
                         ), [
                         'class' => 'admin-action list-icons-item btn bg-success',
                         'data-pjax-id' => 'list-pjax',
