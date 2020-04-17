@@ -72,6 +72,8 @@ trait ControllerTrait
     public function actions()
     {
         $actions = parent::actions();
+        $actions['create-validate-attribute'] = $actions['create'];
+        $actions['update-validate-attribute'] = $actions['update'];
 
         return ArrayHelper::merge(
             $actions,
@@ -153,8 +155,8 @@ trait ControllerTrait
             return parent::render($view, $params);
         }
 
-        $title = Html::tag('title', $this->getView()->getTitle());
         $content = $this->renderAjax($view, $params);
+        $title = Html::tag('title', $this->getView()->getTitle());
 
         return "{$title}{$content}";
     }
