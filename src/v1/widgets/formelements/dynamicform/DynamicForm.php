@@ -259,7 +259,16 @@ class DynamicForm extends \yii\base\Widget
         }
 
         foreach ($this->attributes as $attribute => $settings) {
-            $result .= Html::tag('td', $this->model->getAttributeLabel($attribute), ['class' => 'text-center']);
+            $options = ['class' => 'text-center'];
+            if(
+                is_array($settings)
+                && isset($settings['headerOptions'])
+                && is_array($settings['headerOptions'])
+            ) {
+                $options = ArrayHelper::merge($settings['headerOptions'], $options);
+            }
+
+            $result .= Html::tag('td', $this->model->getAttributeLabel($attribute), $options);
         }
 
         return Html::tag('tr', $result);
@@ -291,13 +300,22 @@ class DynamicForm extends \yii\base\Widget
                         $params = [];
                     } else {
                         $type = $settings['type'];
-                        $params = $settings['params'];
+                        $params = $settings['params'] ?? [];
                     }
 
                     $column = call_user_func_array([$instance, $type], $params);
                 }
 
-                $item .= Html::tag('td', $column, ['class' => 'text-center']);
+                $options = ['class' => 'text-center'];
+                if(
+                    is_array($settings)
+                    && isset($settings['itemOptions'])
+                    && is_array($settings['itemOptions'])
+                ) {
+                    $options = ArrayHelper::merge($settings['itemOptions'], $options);
+                }
+
+                $item .= Html::tag('td', $column, $options);
             }
 
             $result .= Html::tag('tr', $item, ['class' => trim($this->widgetItem, '.')]);
