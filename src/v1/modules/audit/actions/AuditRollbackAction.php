@@ -43,24 +43,25 @@ class AuditRollbackAction extends Action
      * @throws NotFoundHttpException
      * @throws ReflectionException
      */
-    public function run($id, $model_pk)
+    public function run($id, $model_pk, $modelClass)
     {
-        $originModel = $this->getModel($model_pk);
+        $service = $this->getService();
+        if ($service instanceof AuditService) {
+            $service = $service->getModelService($modelClass);
+        }
+        $originModel = $this->getModel($model_pk, $service);
         if (!$originModel) {
             throw new NotFoundHttpException();
         }
 
-        $model = $this->getForm();
-        $model->setAttributes($originModel->attributes, false);
-
-        if ($model->validate($originModel)) {
+        if ($originModel->validate()) {
             $audit = $this->getAuditService()->findById($id);
             $originModel->{$audit->field} = $audit->old_value;
             $result = $originModel->save();
             if ($result) {
-                $this->getService()->trigger(
+                $service->trigger(
                     Service::EVENT_AFTER_UPDATE,
-                    new AfterUpdateEvent(['form' => $model, 'model' => $originModel])
+                    new AfterUpdateEvent(['form' => null, 'model' => $originModel])
                 );
             }
         }
@@ -73,16 +74,16 @@ class AuditRollbackAction extends Action
      * @return ActiveRecord
      * @throws ReflectionException
      */
-    protected function getModel($id)
+    protected function getModel($id, $service)
     {
         if (StringHelper::isJson($id) && is_array(Json::decode($id))) {
             $pk = Json::decode($id);
-            return $this->getService()->getOneByCondition(function (ActiveQuery $query) use ($pk) {
+            return $service->getOneByCondition(function (ActiveQuery $query) use ($pk) {
                 foreach ($pk as $key => $value) {
                     $query->andWhere([$key => $value]);
                 }
             });
         }
-        return $this->getService()->findById($id);
+        return $service->findById($id);
     }
 }

@@ -131,7 +131,7 @@ HTML;
                 [
                     'label' => Yii::t('yii2admin', 'Действия'),
                     'value' => function ($model) {
-                        return Html::a('<i class="icon-arrow-left13"></i> ' . Yii::t('yii2admin', 'Востановить'), Url::to(['audit-rollback', 'id' => $model->id, 'model_pk' => $model->model_pk]), [
+                        return Html::a('<i class="icon-arrow-left13"></i> ' . Yii::t('yii2admin', 'Востановить'), Url::to(['audit-rollback', 'id' => $model->id, 'model_pk' => $model->model_pk, 'modelClass' => $model->model]), [
                             'class' => 'admin-action list-icons-item btn bg-success',
                             'data-pjax-id' => 'list-pjax',
                             'data-pjax-url' => Url::current([], true),
