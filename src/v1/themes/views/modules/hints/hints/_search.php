@@ -1,7 +1,7 @@
 <?php
     use concepture\yii2logic\enum\StatusEnum;
     use concepture\yii2user\enum\UserRoleEnum;
-    use concepture\yii2user\enum\AccessEnum;
+    use concepture\yii2logic\enum\AccessEnum;
 
     $is_superadmin = Yii::$app->getUser()->can(AccessEnum::SUPERADMIN);
 

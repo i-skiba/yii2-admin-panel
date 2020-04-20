@@ -5,7 +5,7 @@ namespace kamaelkz\yii2admin\v1\modules\hints\controllers;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
 use Yii;
 use concepture\yii2user\enum\UserRoleEnum;
-use concepture\yii2user\enum\AccessEnum;
+use concepture\yii2logic\enum\AccessEnum;
 use yii\helpers\ArrayHelper;
 
 /**

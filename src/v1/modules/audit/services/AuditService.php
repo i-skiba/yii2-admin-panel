@@ -5,7 +5,7 @@ namespace kamaelkz\yii2admin\v1\modules\audit\services;
 use yii\helpers\Json;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use concepture\yii2user\enum\AccessEnum;
+use concepture\yii2logic\enum\AccessEnum;
 use concepture\yii2logic\services\Service;
 use concepture\yii2logic\helpers\ClassHelper;
 use kamaelkz\yii2admin\v1\modules\audit\Module;

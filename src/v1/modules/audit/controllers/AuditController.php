@@ -4,7 +4,7 @@ namespace kamaelkz\yii2admin\v1\modules\audit\controllers;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use concepture\yii2user\enum\AccessEnum;
+use concepture\yii2logic\enum\AccessEnum;
 use kamaelkz\yii2admin\v1\controllers\BaseController;
 
 /**
