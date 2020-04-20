@@ -2,7 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 
-use concepture\yii2user\helpers\AccessHelper;
+use concepture\yii2logic\helpers\AccessHelper;
 use Yii;
 use yii\helpers\Html;
 use yii\grid\ActionColumn as BaseColumn;

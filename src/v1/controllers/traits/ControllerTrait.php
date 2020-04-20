@@ -3,7 +3,7 @@
 namespace kamaelkz\yii2admin\v1\controllers\traits;
 
 use concepture\yii2user\enum\AccessEnum;
-use concepture\yii2user\helpers\AccessHelper;
+use concepture\yii2logic\helpers\AccessHelper;
 use Yii;
 use yii\base\Action;
 use yii\helpers\Html;

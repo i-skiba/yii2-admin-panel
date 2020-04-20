@@ -2,7 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\themes\components\view;
 
-use concepture\yii2user\helpers\AccessHelper;
+use concepture\yii2logic\helpers\AccessHelper;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
