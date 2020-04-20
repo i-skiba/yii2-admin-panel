@@ -2,6 +2,8 @@
 
 namespace kamaelkz\yii2admin\v1\modules\hints\services;
 
+use concepture\yii2logic\enum\AccessEnum;
+use concepture\yii2logic\helpers\AccessHelper;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
@@ -112,9 +114,7 @@ class AdminHintsService extends \concepture\yii2logic\services\Service
         # показываем в списке только записи с заполненым caption
         if(! $condition) {
             $condition = function(ActiveQuery $query) {
-                $user_id = Yii::$app->getUser()->getId();
-                $roles = $this->getUserRoleService()->getRolesByUserId($user_id);
-                if(! isset($roles[UserRoleEnum::SUPER_ADMIN])) {
+                if(! \Yii::$app->user->can(AccessEnum::SUPERADMIN)) {
                     $class  = $this->getRelatedModelClass();
                     $alias = $class::localizationAlias();
                     $query->andWhere("{$alias}.caption IS NOT NULL");
