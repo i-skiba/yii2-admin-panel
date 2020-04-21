@@ -46,6 +46,10 @@ class Module extends BaseModule implements BootstrapInterface
         if (!$this->auditModels) { return; }
 
         foreach ($this->auditModels as $model) {
+            if (!class_exists($model)) {
+                continue;
+            }
+
             $service = $this->getAuditService()->getModelService($model);
             $serviceClass = get_class($service);
             if (!$service) {
