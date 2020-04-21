@@ -24,7 +24,7 @@ class m200331_064054_yii2_admin_edit_lock_module extends Migration
     {
         $this->addTable([
             'id' => $this->bigPrimaryKey(),
-            'url' => $this->string(1024)->notNull(),
+            'url' => $this->string(100)->notNull(),
             'session_id' => $this->string(1024)->notNull(),
             'user_id' => $this->bigInteger()->notNull(),
             'last_acess_date_time' => $this->dateTime(),
