@@ -7,6 +7,7 @@ $(document).ready(function() {
             timeout: null,
             duration: 300,
             selector: '.active-form-validate-attribute',
+            hiddenInput: null,
             run: function ($element) {
                 var self = this;
                 var $form = $element.closest('form');
@@ -29,9 +30,9 @@ $(document).ready(function() {
 
                 var elSelector = matches[0];
                 var attribute = matches[1];
-                var $hidden = $form.find(self.selector);
+                self.hiddenInput = $form.find(self.selector);
 
-                $hidden.val(attribute);
+                self.hiddenInput.val(attribute);
                 self.clearTimeout();
 
                 var event = function() {
@@ -53,7 +54,7 @@ $(document).ready(function() {
                             $replaceableEl.replaceWith($replacementEl);
                         }
 
-                        $hidden.val('');
+                        self.hiddenInput.val('');
                         yii2admin.showPreloader = true;
                     });
                 };
@@ -77,6 +78,7 @@ $(document).ready(function() {
     $(document).on('change', '.active-form-refresh-control', function(event) {
         yii2admin.activeForm.refresh($(this));
     });
+
     $(document).off('switchChange.bootstrapSwitch', '.active-form-refresh-control');
     $(document).on('switchChange.bootstrapSwitch', '.active-form-refresh-control', function (e, state) {
         yii2admin.activeForm.refresh($(this));
@@ -92,6 +94,13 @@ $(document).ready(function() {
         }
 
         yii2admin.activeForm.validateAttribute.run($(this));
+    });
+
+    $(document).on('submit', 'form', function() {
+        yii2admin.activeForm.validateAttribute.clearTimeout();
+        if(yii2admin.activeForm.validateAttribute.hiddenInput !== null) {
+            yii2admin.activeForm.validateAttribute.hiddenInput.val('');
+        }
     });
     // alert('Разобраться')
     // console.log(editorHelper.editors);
