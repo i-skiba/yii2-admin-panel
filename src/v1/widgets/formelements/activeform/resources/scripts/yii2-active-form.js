@@ -1,6 +1,7 @@
 $(document).ready(function() {
     yii2admin.activeForm = {
         validateAttribute : {
+            formAtttribure: 'data-validate-attribute-form',
             actionCreate: 'create-validate-attribute',
             actionUpdate: 'update-validate-attribute',
             timeout: null,
@@ -28,10 +29,10 @@ $(document).ready(function() {
 
                 var elSelector = matches[0];
                 var attribute = matches[1];
-                var $hidden = $form.find(yii2admin.activeForm.validateAttribute.selector);
+                var $hidden = $form.find(self.selector);
 
                 $hidden.val(attribute);
-                clearInterval(yii2admin.activeForm.validateAttribute.timeout);
+                self.clearTimeout();
 
                 var event = function() {
                     var url;
@@ -57,7 +58,10 @@ $(document).ready(function() {
                     });
                 };
 
-                yii2admin.activeForm.validateAttribute.timeout = setTimeout(event, yii2admin.activeForm.validateAttribute.duration);
+                self.timeout = setTimeout(event, self.duration);
+            },
+            clearTimeout: function() {
+                clearTimeout(this.timeout);
             }
         },
         refresh: function ($object) {
@@ -78,7 +82,15 @@ $(document).ready(function() {
         yii2admin.activeForm.refresh($(this));
     });
 
-    $("form[data-validate-attribute-form]").on('keyup change paste', 'input, select, textarea', function() {
+    $(document).on('keyup change paste', 'input, select, textarea', function() {
+        var $form = $(this).closest('form');
+        if(
+            $form.length === 0
+            || $form.attr(yii2admin.activeForm.validateAttribute.formAtttribure) === undefined
+        ) {
+            return;
+        }
+
         yii2admin.activeForm.validateAttribute.run($(this));
     });
     // alert('Разобраться')
