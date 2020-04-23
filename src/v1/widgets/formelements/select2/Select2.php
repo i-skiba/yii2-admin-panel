@@ -107,7 +107,7 @@ class Select2 extends InputWidget
 
         $script = <<<JS
     $('#{$this->_hashVar}').select2({$this->_hashVar});
-    $('#{$this->_hashVar}').on('select2:unselecting', function (e) {
+    $('#{$this->_hashVar}').on('select2:clearing', function (e) {
         e.preventDefault();
         var el = $(this);
         componentNotify.sweetAlert(yii2admin.t('Confirm'), function () {
