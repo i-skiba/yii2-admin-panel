@@ -18,7 +18,7 @@ var componentDragAndDrop = function() {
             return;
         }
 
-        var drake = dragula([document.querySelector('.dnd-grid-view')], {
+        var drake = dragula(Array.apply(null, document.querySelectorAll('.dnd-grid-view')), {
             // mirrorContainer: document.querySelector('.dnd-grid-view tr'),
         });
 

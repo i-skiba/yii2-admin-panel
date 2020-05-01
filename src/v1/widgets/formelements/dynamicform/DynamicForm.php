@@ -81,6 +81,10 @@ class DynamicForm extends \yii\base\Widget
     /**
      * @var bool
      */
+    public $editable = true;
+    /**
+     * @var bool
+     */
     public $dragAndDrop = false;
     /**
      * @var string
@@ -211,7 +215,8 @@ class DynamicForm extends \yii\base\Widget
             'model' => $this->model,
             'header' => $this->getHeader(),
             'body' => $this->getBody(),
-            'dragAndDrop' => $this->dragAndDrop
+            'dragAndDrop' => $this->dragAndDrop,
+            'editable' => $this->editable
         ], $this->viewParams));
 
         $crawler = new Crawler();
@@ -253,7 +258,7 @@ class DynamicForm extends \yii\base\Widget
 
     private function getHeader()
     {
-        $result = Html::tag('td', '', []);
+        $result = $this->editable ? Html::tag('td', '', []) : '';
         if($this->dragAndDrop) {
             $result .= Html::tag('td', '', []);
         }
@@ -331,6 +336,10 @@ class DynamicForm extends \yii\base\Widget
      */
     private function removeControl()
     {
+        if (!$this->editable) {
+            return '';
+        }
+
         $class = trim($this->deleteButton, '.');
 
         return <<<HTML
@@ -352,5 +361,13 @@ HTML;
                 </div>
             </td>
 HTML;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isEditable()
+    {
+        return $this->editable;
     }
 }
