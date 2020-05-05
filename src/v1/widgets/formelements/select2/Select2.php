@@ -110,6 +110,12 @@ class Select2 extends InputWidget
 
         $script = <<<JS
     $('#{$this->_hashVar}').select2({$this->_hashVar});
+    $(document).on('afterInsert', '.dynamicform_wrapper', function (e, clone) {
+        let selectInput = $(clone).find('.select');
+        if (selectInput.length !== 0) {
+            $(clone).find('.select').select2();
+        }
+    });
     $('#{$this->_hashVar}').on('select2:clearing', function (e) {
         e.preventDefault();
         var el = $(this);
