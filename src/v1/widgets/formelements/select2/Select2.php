@@ -114,7 +114,7 @@ class Select2 extends InputWidget
     $(document).on('afterInsert', '.dynamicform_wrapper', function (e, clone) {
         let selectInput = $(clone).find('.select');
         if (selectInput.length !== 0) {
-            $(clone).find('.select').val(null).trigger('change');
+            // $(clone).find('.select').val(null).trigger('change');
             $(clone).find('.select').select2({width: '100%'});
         }
     });
