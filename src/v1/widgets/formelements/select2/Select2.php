@@ -108,6 +108,7 @@ class Select2 extends InputWidget
         $this->registerBundle();
         $this->registerOptions($view);
 
+        // TODO фигня полная
         $script = <<<JS
     $('#{$this->_hashVar}').select2({$this->_hashVar});
     $(document).on('afterInsert', '.dynamicform_wrapper', function (e, clone) {
