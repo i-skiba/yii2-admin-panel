@@ -380,12 +380,4 @@ HTML;
             </td>
 HTML;
     }
-
-    /**
-     * @return bool
-     */
-    private function isEditable()
-    {
-        return $this->editable;
-    }
 }
