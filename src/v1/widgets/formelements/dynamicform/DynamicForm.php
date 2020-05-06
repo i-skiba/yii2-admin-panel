@@ -98,6 +98,10 @@ class DynamicForm extends \yii\base\Widget
      * @var string the hashed global variable name storing the pluginOptions
      */
     private $_hashVar;
+    /**
+     * @var
+     */
+    private $itemTemplate;
 
     /**
      * Initializes the widget
@@ -219,12 +223,16 @@ class DynamicForm extends \yii\base\Widget
             'editable' => $this->editable
         ], $this->viewParams));
 
-        $crawler = new Crawler();
-        $crawler->addHTMLContent($content, \Yii::$app->charset);
-        $results = $crawler->filter($this->widgetItem);
-        $document = new \DOMDocument('1.0', \Yii::$app->charset);
-        $document->appendChild($document->importNode($results->first()->getNode(0), true));
-        $this->_options['template'] = trim($document->saveHTML());
+//        $crawler = new Crawler();
+//        $crawler->addHTMLContent($content, \Yii::$app->charset);
+//        $results = $crawler->filter($this->widgetItem);
+//        $document = new \DOMDocument('1.0', \Yii::$app->charset);
+//        $document->appendChild($document->importNode($results->first()->getNode(0), true));
+//        $this->_options['template'] = trim($document->saveHTML());
+
+        // TODO темплейт генерится теперь на основе нового экземпляра, а не первой попавшейся записи
+        // Пока оставил старый код закомментированным
+        $this->_options['template'] = trim($this->itemTemplate);
 
         if (isset($this->_options['min']) && $this->_options['min'] === 0 && $this->model->isNewRecord) {
             $content = $this->removeItems($content);
@@ -289,6 +297,7 @@ class DynamicForm extends \yii\base\Widget
             }
 
             $item = ($dragAndDrop . $this->removeControl());
+            $itemTemplate = $item;
             foreach ($this->attributes as $attribute => $settings) {
                 $column = null;
                 $value = $this->models[$key][$attribute] ?? null;
@@ -296,10 +305,13 @@ class DynamicForm extends \yii\base\Widget
 //                    $key = null;
 //                }
 
+                $modelClass = get_class($model);
                 if(is_callable($settings)) {
                     $column = call_user_func($settings, $model, $this->form, $key, $value);
+                    $columnTemplate = call_user_func($settings, new $modelClass(), $this->form, $key, $value);
                 } else {
                     $instance = $this->form->field($model, "[$key]{$attribute}")->label(false);
+                    $instanceTemplate = $this->form->field(new $modelClass(), "[$key]{$attribute}")->label(false);
                     if(! is_array($settings)) {
                         $type = $settings;
                         $params = [];
@@ -309,6 +321,7 @@ class DynamicForm extends \yii\base\Widget
                     }
 
                     $column = call_user_func_array([$instance, $type], $params);
+                    $columnTemplate = call_user_func_array([$instance, $type], $params);
                 }
 
                 $options = ['class' => 'text-center'];
@@ -321,9 +334,14 @@ class DynamicForm extends \yii\base\Widget
                 }
 
                 $item .= Html::tag('td', $column, $options);
+                $itemTemplate .= Html::tag('td', $columnTemplate, $options);
             }
 
             $result .= Html::tag('tr', $item, ['class' => trim($this->widgetItem, '.')]);
+
+            if (!$this->itemTemplate) {
+                $this->itemTemplate = Html::tag('tr', $itemTemplate, ['class' => trim($this->widgetItem, '.')]);
+            }
         }
 
         return $result;
