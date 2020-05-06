@@ -99,7 +99,7 @@ class DynamicForm extends \yii\base\Widget
      */
     private $_hashVar;
     /**
-     * @var
+     * @var string template for new row
      */
     private $itemTemplate;
 
