@@ -24,7 +24,7 @@ var componentDragAndDrop = function() {
             return;
         }
 
-        var drake = dragula(Array.apply(null, ), {
+        var drake = dragula(Array.apply(null, elements), {
             // mirrorContainer: document.querySelector('.dnd-grid-view tr'),
         });
 
