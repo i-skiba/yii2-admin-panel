@@ -14,8 +14,18 @@ use concepture\yii2logic\bundles\Bundle as BaseBundle;
  */
 class Bundle extends BaseBundle
 {
-    /** @var array  */
+    /**
+     * @var array
+     */
     public $js = [
         'js/select2.min.js',
+        'js/yii2-admin-select2.js',
+    ];
+
+    /**
+     * @var array
+     */
+    public $css = [
+        'css/yii2-admin-select2.css',
     ];
 }

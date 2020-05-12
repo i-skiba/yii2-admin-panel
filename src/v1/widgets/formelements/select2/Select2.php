@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements\select2;
 
+use Yii;
 use yii\web\View;
 use yii\helpers\Json;
 use yii\helpers\Html;
@@ -49,19 +50,32 @@ class Select2 extends InputWidget
 {
     use WidgetTrait;
 
-    const HASH_VAR_BASE_NAME = 'select2_';
-
-    /** @var ActiveForm */
+    /**
+     * @var ActiveForm
+     */
     public $form;
-    /** @var array */
+    /**
+     * @var array
+     */
     public $data = [];
-    /** @var string the hashed global variable name storing the pluginOptions */
-    private $_hashVar;
 
     /**
-     * Initializes the widget
-     *
-     * @throws \yii\base\InvalidConfigException
+     * @var bool
+     */
+    public $smart = true;
+
+    /**
+     * @inheritDoc
+     */
+    public function beforeRun()
+    {
+        $this->registerBundle();
+
+        return parent::beforeRun();
+    }
+
+    /**
+     * @inheritDoc
      */
     public function init()
     {
@@ -71,17 +85,14 @@ class Select2 extends InputWidget
                 'Свойство {form} не может быть пустым или не является экземпляром класса yii\widgets\ActiveForm'
             );
         }
-        $this->registerClientScript();
-        echo $this->renderSelectHtml();
+        $this->setOptions();
+        echo $this->renderHtml();
     }
 
-    /**
-     * @param View $view
-     */
-    protected function registerOptions($view)
+    protected function setOptions()
     {
-        $this->options['class'] = join(' ', [
-            'select', isset($this->options['class']) ? $this->options['class'] : ''
+        $this->options['class'] = implode(' ', [
+            'select2', isset($this->options['class']) ? $this->options['class'] : ''
         ]);
         if (isset($this->options['prompt'])) {
             $this->options['data-placeholder'] = $this->options['prompt'];
@@ -93,52 +104,60 @@ class Select2 extends InputWidget
             $this->options['width'] = '100%';
         }
 
-        $encOptions = $this->options ? Json::encode($this->options) : '';
-        $this->_hashVar = static::HASH_VAR_BASE_NAME . hash('crc32', $encOptions);
-        $this->options['id'] = $this->_hashVar;
-        $view->registerJs("var {$this->_hashVar} = {$encOptions};\n", $view::POS_END);
-    }
-
-    /**
-     * This registers the necessary JavaScript code.
-     */
-    private function registerClientScript()
-    {
-        $view = $this->getView();
-        $this->registerBundle();
-        $this->registerOptions($view);
-
-        // TODO фигня полная
-        $script = <<<JS
-    $('#{$this->_hashVar}').select2({$this->_hashVar});
-    $(document).on('afterInsert', '.dynamicform_wrapper', function (e, clone) {
-        let selectInput = $(clone).find('.select');
-        if (selectInput.length !== 0) {
-            // $(clone).find('.select').val(null).trigger('change');
-            $(clone).find('.select').select2({width: '100%'});
+        $options = $this->options ? $this->options : '';
+        unset($options['class']);
+        $this->options['data-plugin-options'] = $options;
+        if(isset($this->options['multiple'])) {
+            $this->smart = false;
         }
-    });
-    $('#{$this->_hashVar}').on('select2:clearing', function (e) {
-        e.preventDefault();
-        var el = $(this);
-        componentNotify.sweetAlert(yii2admin.t('Confirm'), function () {
-            el.val(null).trigger("change");
-            el.select2("open");
-        });
-    });
-JS;
 
-        $view->registerJs($script, View::POS_END);
+        if($this->smart === true) {
+            $this->options['data-smart-select'] = 'true';
+        }
     }
 
     /**
      * @return string
      */
-    protected function renderSelectHtml()
+    protected function renderHtml()
     {
+        $smartInput = $this->getSmartInput();
+
         if ($this->hasModel()) {
-            return Html::activeDropDownList($this->model, $this->attribute, $this->data, $this->options);
+            $dropDown =  Html::activeDropDownList($this->model, $this->attribute, $this->data, $this->options);
+        } else {
+            $dropDown =  Html::dropDownList($this->name, $this->value, $this->data, $this->options);
         }
-        return Html::dropDownList($this->name, $this->value, $this->data, $this->options);
+
+        return $dropDown . $smartInput;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSmartInput()
+    {
+        if(! $this->smart) {
+            return null;
+        }
+
+        if($this->hasModel()) {
+            $value = Html::getAttributeValue($this->model, $this->attribute);
+            $inputValue = $this->data[$value] ?? null;
+        } else {
+            $inputValue = $this->data[$this->value] ?? null;
+        }
+
+        if($inputValue === null) {
+            $inputValue = Html::tag('span', $this->options['data-placeholder'], ['class' => 'select2-smart-input-placeholder']);
+        }
+        # скрывает выпадающий список
+        $this->options['class'] .= ' d-none';
+        $inputOptions = [
+            'class' => 'form-control select2-smart-input',
+            'disabled' => 'disabled'
+        ];
+
+        return Html::tag('div', $inputValue, $inputOptions);
     }
 }

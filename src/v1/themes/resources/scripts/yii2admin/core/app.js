@@ -194,18 +194,16 @@ Yii2Admin.prototype.runCallback = function(callback, data) {
 };
 
 Yii2Admin.prototype.reinitPlugins = function() {
-    componentChekboxes.uniform();
-    componentChekboxes.switchery();
-    componentChekboxes.bootstrap();
-    componentSelects.uniform();
+    componentChekboxes.initAll();
+    componentSelects.initAll();
     componentDragAndDrop.init();
     if(typeof componentCdnUploader !== 'undefined') {
         componentCdnUploader.initialization();
     }
-    
+
     this.reinitLimitlessPlugins();
 };
-
+//todo: умный реинит
 Yii2Admin.prototype.reinitLimitlessPlugins = function() {
     $('.card [data-action=collapse]').off('click');
     App.initCardActions();
@@ -433,17 +431,57 @@ CallbackHelper.prototype.reloadPjax = function(selector) {
     this.pjax.reload();
 };
 
+
+var InitHelper = function() {
+    this.attribute  = 'data-state';
+    this.value = 'init';
+};
+
+InitHelper.prototype.findElelements = function(selector) {
+    var $el = $(selector + '[' + this.attribute + '!="' + this.value + '"]');
+    if($el.length === 0) {
+        return null;
+    }
+
+    return $el;
+};
+
+InitHelper.prototype.initElements = function(elements) {
+    var self = this;
+
+    if(typeof elements === 'string') {
+        var $elements = $(elements);
+    } else {
+        var $elements = elements;
+    }
+
+    $elements.each(function(){
+        $(this).attr(self.attribute, self.value);
+    });
+};
+
+InitHelper.prototype.isInit = function (element) {
+    var self = this;
+
+    if(typeof element === 'string') {
+        var $element = $(element);
+    } else {
+        var $element = element;
+    }
+
+    return $element.attr(self.attribute) === self.value;
+};
+
 var yii2admin = new Yii2Admin();
 var magicModal = new MagicModal();
 var callbackHelper = new CallbackHelper();
 var urlHelper = new UrlHelper();
 var flashAlert = new FlashAlertHelper();
+var initHelper = new InitHelper();
 
 $(document).ready(function() {
-    componentChekboxes.uniform();
-    componentChekboxes.switchery();
-    componentChekboxes.bootstrap();
-    componentSelects.uniform();
+    componentChekboxes.initAll();
+    componentSelects.initAll();
     componentDragAndDrop.init();
     $('.history-back').click(function() {
         window.history.back();

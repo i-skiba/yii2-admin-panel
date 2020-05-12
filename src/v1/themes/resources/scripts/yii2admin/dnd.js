@@ -14,11 +14,17 @@ var componentDragAndDrop = function() {
 
     var _componentDragula = function() {
         if (typeof dragula == 'undefined') {
+
             console.warn('Warning - dragula.min.js is not loaded.');
             return;
         }
 
-        var drake = dragula(Array.apply(null, document.querySelectorAll('.dnd-grid-view')), {
+        var elements = document.querySelectorAll('.dnd-grid-view');
+        if(null === elements) {
+            return;
+        }
+
+        var drake = dragula(Array.apply(null, ), {
             // mirrorContainer: document.querySelector('.dnd-grid-view tr'),
         });
 
@@ -63,7 +69,7 @@ var componentDragAndDrop = function() {
                     });
                 }
             });
-        }
+        };
 
         drake.on('drag', function(el) {
             toggleHideOnDragElements(el, 'drag');
@@ -86,6 +92,7 @@ var componentDragAndDrop = function() {
             if($container.attr('data-without-request') !== undefined ) {
                 return;
             }
+
             var $elements = $container.find("tr").not( ".gu-mirror" );
             var sort = [];
             $.each($elements, function(index, target) {

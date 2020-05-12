@@ -1,0 +1,28 @@
+.select2-smart-input {
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    padding-right: 2.375rem;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.select2-smart-input::after{
+    content: "";
+    font-family: icomoon;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: .875rem;
+    margin-top: -.5rem;
+    font-size: 1rem;
+    line-height: 1;
+    color: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.select2-smart-input-placeholder {
+    color: #999;
+}
