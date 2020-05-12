@@ -116,7 +116,6 @@ class Select2 extends InputWidget
         $variable = "select2_option_{$hash}";
         if(! isset($this->hashMap[$hash])) {
             $this->hashMap[$hash] = $hash;
-
             $view = Yii::$app->getView();
             $view->registerJs("var {$variable} = {$encodeOptions};\n", $view::POS_END);
         }
