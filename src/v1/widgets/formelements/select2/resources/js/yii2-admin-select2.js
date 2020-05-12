@@ -13,7 +13,9 @@
         }
 
         $elements.each(function() {
-            var options = $(this).data('plugin-options');
+            var variable = $(this).data('plugin-options-variable'),
+                options = window[variable] || {};
+
             $(this).select2(options);
         });
 
@@ -56,4 +58,5 @@
 
         instance.registerEvents();
     });
+
 })();

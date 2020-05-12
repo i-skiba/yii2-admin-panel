@@ -3,6 +3,7 @@
 namespace kamaelkz\yii2admin\v1\widgets\formelements\select2;
 
 use Yii;
+use yii\web\JsExpression;
 use yii\web\View;
 use yii\helpers\Json;
 use yii\helpers\Html;
@@ -42,7 +43,7 @@ use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
  *                 // enabled the user can select from pre-existing tags or create a new tag by picking the first choice
  * 'maximumSelectionSize' => 3, // Максимальное количество выбираемых элементов
  * ================================================================
- * 
+ *
  * @package kamaelkz\yii2admin\v1\widgets\formelements\select2
  * @author Poletaev Eugene <evgstn7@gmail.com>
  */
@@ -63,6 +64,10 @@ class Select2 extends InputWidget
      * @var bool
      */
     public $smart = true;
+    /**
+     * @var array
+     */
+    private $hashMap = [];
 
     /**
      * @inheritDoc
@@ -105,8 +110,18 @@ class Select2 extends InputWidget
         }
 
         $options = $this->options ? $this->options : '';
-        unset($options['class']);
-        $this->options['data-plugin-options'] = $options;
+        unset($options['class'], $options['id']);
+        $encodeOptions = $options ? Json::encode($options) : '';
+        $hash = hash('crc32', $encodeOptions);
+        $variable = "select2_option_{$hash}";
+        if(! isset($this->hashMap[$hash])) {
+            $this->hashMap[$hash] = $hash;
+
+            $view = Yii::$app->getView();
+            $view->registerJs("var {$variable} = {$encodeOptions};\n", $view::POS_END);
+        }
+
+        $this->options['data-plugin-options-variable'] = $variable;
         if(isset($this->options['multiple'])) {
             $this->smart = false;
         }
