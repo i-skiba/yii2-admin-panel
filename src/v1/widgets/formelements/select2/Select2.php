@@ -163,7 +163,13 @@ class Select2 extends InputWidget
         }
 
         if($inputValue === null) {
-            $inputValue = Html::tag('span', $this->options['data-placeholder'], ['class' => 'select2-smart-input-placeholder']);
+            $content = $this->options['data-placeholder'];
+            $class = 'select2-smart-input-placeholder';
+            if ($this->value && isset($this->data[$this->value])) {
+                $content = $this->data[$this->value];
+                $class = '';
+            }
+            $inputValue = Html::tag('span', $content, ['class' => $class]);
         }
         # скрывает выпадающий список
         $this->options['class'] .= ' d-none';
