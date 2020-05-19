@@ -66,7 +66,7 @@ $(document).ready(function() {
             }
         },
         refresh: function ($object) {
-            var $form = object.closest('form');
+            var $form = $object.closest('form');
 
             $form.find('.active-form-refresh-value').val('vazgen');
             $object.closest('.active-form-dependent-container').nextAll().remove();
