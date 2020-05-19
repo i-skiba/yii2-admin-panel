@@ -2,12 +2,15 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 
+use concepture\yii2logic\enum\StatusEnum;
 use concepture\yii2logic\helpers\AccessHelper;
 use Yii;
+use yii\base\Model;
 use yii\helpers\Html;
 use yii\grid\ActionColumn as BaseColumn;
 use yii\helpers\Url;
 use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
+use concepture\yii2logic\enum\IsDeletedEnum;
 
 /**
  * Колонка действий для грида
@@ -43,41 +46,122 @@ class ActionColumn extends BaseColumn
         $this->setDefaultSettings();
         $this->initDefaultButton('view', 'file-eye2');
         $this->initDefaultButton('update', 'pencil6');
-        $this->initDefaultButton('delete', 'bin2', [
-            'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
-            'data-pjax-id' => Pjax::DEFAULT_ID,
-            'data-pjax-url' => Url::current([], true),
-            'data-swal' => Yii::t('yii2admin' , 'Удалить'),
-        ]);
+        $this->initDefaultButton('activate', 'checkmark4');
+        $this->initDefaultButton('deactivate', 'cross2');
+        $this->initDefaultButton('delete', 'trash');
+        $this->initDefaultButton('undelete', 'redo');
+    }
+
+    private function deleted($model) {
+        if(! isset($model['is_deleted'])) {
+            return true;
+        }
+
+        return ($model['is_deleted'] !== IsDeletedEnum::DELETED);
+    }
+
+    private function active($model) {
+        if(! isset($model['status'])) {
+            return true;
+        }
+
+        return ($model['status'] !== StatusEnum::INACTIVE);
+    }
+
+    /**
+     * @param Model $model
+     * @param array $url
+     * @return bool
+     */
+    private function setUrlLocale($model, &$url)
+    {
+        if(! isset($model['locale'])) {
+            return true;
+        }
+
+        if(is_array($url)) {
+            $url['locale'] = $model['locale'];
+        } else {
+            @list($path, $query) = array_values(parse_url($url));
+            $query .= "&locale={$model['locale']}";
+
+            $url = "{$path}?{$query}";
+        }
+
+        return true;
     }
 
     /**
      * {@inheritdoc}
+     * @todo : рефактор
      */
     protected function initDefaultButton($name, $iconName, $additionalOptions = [])
     {
-        if (!isset($this->buttons[$name]) && strpos($this->template, '{' . $name . '}') !== false) {
+        if (! isset($this->buttons[$name]) && strpos($this->template, '{' . $name . '}') !== false) {
             $this->buttons[$name] = function ($url, $model, $key) use ($name, $iconName, $additionalOptions) {
+                $visible = true;
                 switch ($name) {
+                    case 'update':
+                        $title = Yii::t('yii2admin', 'Редактировать');
+                        $visible = ! $this->deleted($model);
+                        break;
                     case 'view':
                         $title = Yii::t('yii2admin', 'Просмотр');
                         break;
-                    case 'update':
-                        $title = Yii::t('yii2admin', 'Редактировать');
+                    case 'activate':
+                        $title = Yii::t('yii2admin', 'Активировать');
+                        $url = ['status-change', 'id' => $model['id'], 'status' => StatusEnum::ACTIVE];
+                        $visible = (! $this->deleted($model) || $this->active($model));
+                        $additionalOptions = [
+                            'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
+                            'data-pjax-id' => Pjax::DEFAULT_ID,
+                            'data-pjax-url' => Url::current([], true),
+                            'data-swal' => $title,
+                        ];
+                        break;
+                    case 'deactivate':
+                        $title = Yii::t('yii2admin', 'Деактивировать');
+                        $url = ['status-change', 'id' => $model['id'], 'status' => StatusEnum::INACTIVE];
+                        $visible = (! $this->deleted($model) || ! $this->active($model));
+                        $additionalOptions = [
+                            'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
+                            'data-pjax-id' => Pjax::DEFAULT_ID,
+                            'data-pjax-url' => Url::current([], true),
+                            'data-swal' => $title,
+                        ];
                         break;
                     case 'delete':
                         $title = Yii::t('yii2admin', 'Удалить');
+                        $visible = ! $this->deleted($model);
+                        $additionalOptions = [
+                            'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
+                            'data-pjax-id' => Pjax::DEFAULT_ID,
+                            'data-pjax-url' => Url::current([], true),
+                            'data-swal' => $title,
+                        ];
+                        break;
+                    case 'undelete':
+                        $visible = $this->deleted($model);
+                        $title = Yii::t('yii2admin', 'Восстановить');
+                        $additionalOptions = [
+                            'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
+                            'data-pjax-id' => Pjax::DEFAULT_ID,
+                            'data-pjax-url' => Url::current([], true),
+                            'data-swal' => $title,
+                        ];
                         break;
                     default:
                         $title = ucfirst($name);
                 }
 
+                $this->setUrlLocale($model, $url);
                 $options = array_merge(
                     [
                         'title' => $title,
                         'aria-label' => $title,
                         'data-pjax' => '0',
-                        'class' => $this->dropdown ? 'dropdown-item' : 'list-icons-item'
+                        'class' => $this->dropdown ? 'dropdown-item' : 'list-icons-item',
+                        'visible' => false
                     ],
                     $additionalOptions,
                     $this->buttonOptions
@@ -85,7 +169,9 @@ class ActionColumn extends BaseColumn
                 $icon = Html::tag('i', '', ['class' => "icon-$iconName"]);
                 $label = $this->dropdown ? ($icon . $title) : $icon;
 
-                return Html::a($label, $url, $options);
+                if(! $visible !== false) {
+                    return Html::a($label, $url, $options);
+                }
             };
         }
     }
@@ -156,9 +242,12 @@ HTML;
         $this->header = Yii::t('yii2admin', 'Операции');
         if($this->dropdown) {
             $this->headerOptions['style'] = 'width : 15%';
-            if($this->template === '{view} {update} {delete}') {
-                $this->template = '{view} {update}<div class="dropdown-divider"></div>{delete}';
+            if(! $this->template) {
+                $this->template = '{update} {activate} {deactivate} {delete} {undelete}';
             }
+//            if($this->template === '{view} {update} {delete}') {
+//                $this->template = '{view} {update}<div class="dropdown-divider"></div>{delete}';
+//            }
         }
     }
 }
