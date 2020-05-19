@@ -69,6 +69,7 @@ class FroalaEditor extends InputWidget
         # установка опций по умолчанию
         $this->clientOptions += $this->getDefaultClientOptions();
         # выставляем минимальную высоту блока обертки над виджетом
+
         $minHeight = ($this->clientOptions['height'] ?? $this->clientOptions['heightMin'] ?? 70 ) + 95;
 
         echo  $this->render($this->template, [
