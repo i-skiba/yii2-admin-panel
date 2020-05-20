@@ -89,7 +89,7 @@ var componentDragAndDrop = function() {
             var $container = $(target),
                 data = $container.data();
 
-            if(data.withoutRecalIndex === undefined ) {
+            if(data.withoutRecalculateIndex === undefined ) {
                 updateIndexes(target)
             }
 
