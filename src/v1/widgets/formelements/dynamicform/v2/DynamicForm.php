@@ -313,16 +313,20 @@ class DynamicForm extends \yii\base\Widget
                 $value = $this->models[$key][$attribute] ?? null;
                 $options = ['class' => 'text-center'];
                 $modelClass = get_class($model);
-                if(is_callable($settings['type'])) {
-                    $column = call_user_func($settings['type'], $model, $this->form, $key, $value);
-                    $columnTemplate = call_user_func($settings['type'], new $modelClass(), $this->form, $key, $value);
+                if(is_callable($settings)) {
+                    $type = $settings;
+                } elseif(isset($settings['type'])) {
+                    $type = $settings['type'];
+                }
+                if(is_callable($type)) {
+                    $column = call_user_func($type, $model, $this->form, $key, $value);
+                    $columnTemplate = call_user_func($type, new $modelClass(), $this->form, $key, $value);
                 } else {
                     $instance = $this->form->field($model, "[$key]{$attribute}")->label(false);
                     if(! is_array($settings)) {
                         $type = $settings;
                         $params = [];
                     } else {
-                        $type = $settings['type'];
                         $params = $settings['params'] ?? [];
                     }
 
