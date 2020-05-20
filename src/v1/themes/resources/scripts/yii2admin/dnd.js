@@ -88,7 +88,7 @@ var componentDragAndDrop = function() {
             toggleHideOnDragElements(el, 'drop');
             var $container = $(target),
                 data = $container.data();
-            
+
             if(data.withoutRecalIndex === undefined ) {
                 updateIndexes(target)
             }
