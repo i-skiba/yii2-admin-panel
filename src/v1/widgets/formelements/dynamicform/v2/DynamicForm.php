@@ -89,6 +89,10 @@ class DynamicForm extends \yii\base\Widget
      */
     public $dragAndDrop = false;
     /**
+     * @var array
+     */
+    public $dragAndDropOptions = [];
+    /**
      * @var bool
      */
     public $headerVisible = true;
@@ -153,6 +157,11 @@ class DynamicForm extends \yii\base\Widget
 
         if (empty($this->attributes) || !is_array($this->attributes)) {
             throw new InvalidConfigException("The 'attributes' property must be set.");
+        }
+
+        if($this->dragAndDrop) {
+            $this->dragAndDropOptions['class'] = 'dnd-grid-view';
+            $this->dragAndDropOptions['data-without-request'] = '';
         }
 
         $this->initOptions();
@@ -220,14 +229,19 @@ class DynamicForm extends \yii\base\Widget
 
     public function run()
     {
-        $content = $this->render($this->view, ArrayHelper::merge([
-            'form' => $this->form,
-            'model' => $this->model,
-            'header' => $this->getHeader(),
-            'body' => $this->getBody(),
-            'dragAndDrop' => $this->dragAndDrop,
-            'editable' => $this->editable
-        ], $this->viewParams));
+        $content = $this->render(
+            $this->view, ArrayHelper::merge(
+                [
+                    'form' => $this->form,
+                    'model' => $this->model,
+                    'header' => $this->getHeader(),
+                    'body' => $this->getBody(),
+                    'dragAndDropOptions' => $this->dragAndDropOptions,
+                    'editable' => $this->editable,
+                ],
+                $this->viewParams
+            )
+        );
 
 //        $crawler = new Crawler();
 //        $crawler->addHTMLContent($content, \Yii::$app->charset);

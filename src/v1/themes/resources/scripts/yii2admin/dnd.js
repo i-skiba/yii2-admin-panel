@@ -86,28 +86,29 @@ var componentDragAndDrop = function() {
 
         drake.on('drop', function (el, target, source, sibling) {
             toggleHideOnDragElements(el, 'drop');
-            updateIndexes(target);
-
-            var $container = $(target);
-            if($container.attr('data-without-request') !== undefined ) {
-                return;
+            var $container = $(target),
+                data = $container.data();
+            console.log(data);
+            if(data.withoutRecalIndex === undefined ) {
+                updateIndexes(target)
             }
 
-            var $elements = $container.find("tr").not( ".gu-mirror" );
-            var sort = [];
-            $.each($elements, function(index, target) {
-                sort[index] = $(this).attr('data-key');
-            });
-            yii2admin.sendRequest(
-                $container.attr('data-url'),
-                {
-                    'sort' : sort
-                },
-                {
-                    'pjax_id' : 'list-pjax'
-                }
-            );
-
+            if(data.withoutRequest === undefined ) {
+                var $elements = $container.find("tr").not( ".gu-mirror" );
+                var sort = [];
+                $.each($elements, function(index, target) {
+                    sort[index] = $(this).attr('data-key');
+                });
+                yii2admin.sendRequest(
+                    $container.attr('data-url'),
+                    {
+                        'sort' : sort
+                    },
+                    {
+                        'pjax_id' : 'list-pjax'
+                    }
+                );
+            }
         });
     };
 
