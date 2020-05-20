@@ -1,0 +1,12 @@
+form .dynamic-form-items .form-group {
+    margin: 0 !important;
+}
+form .dynamic-form-items tbody td {
+    padding: 0.75rem 0.75rem;
+}
+form .dynamic-form-items tbody td .uniform-checker{
+    margin: 0 auto;
+}
+form .dynamic-form-items .form-text {
+    margin: 0 !important;
+}
