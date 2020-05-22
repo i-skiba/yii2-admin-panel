@@ -33,7 +33,7 @@ class DragAndDropColumn extends \yii\grid\DataColumn
         $content = $this->renderDataCellContent($model, $key, $index);
         if($this->attribute) {
             $content = <<<HTML
-                <div class="mr-3 mt-2">
+                <div class="">
                     <i class="icon-dots dragula-handle"></i>
                     <span class="ml-2">{$content}</span>
                 </div>

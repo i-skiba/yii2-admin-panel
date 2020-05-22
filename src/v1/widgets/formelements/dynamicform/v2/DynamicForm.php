@@ -384,7 +384,7 @@ class DynamicForm extends \yii\base\Widget
         $class = trim($this->deleteButton, '.');
 
         return <<<HTML
-            <td class="text-center" style="min-width: 5%;">
+            <td class="text-center" style="width: 10%;">
                 <button type="button" class="btn btn-primary btn-icon {$class}">
                     <i class="icon-minus-circle2 "></i>
                 </button>
@@ -395,10 +395,9 @@ HTML;
     private function dragAndDropControl()
     {
         return $content = <<<HTML
-            <td class="text-center" style="min-width: 5%;">
-                <div class="mr-3 mt-2">
+            <td class="text-center" style="width: 5%;">
+                <div class="">
                     <i class="icon-dots dragula-handle"></i>
-                    <span class="ml-2"></span>
                 </div>
             </td>
 HTML;
