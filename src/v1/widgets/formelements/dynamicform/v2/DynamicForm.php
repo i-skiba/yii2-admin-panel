@@ -96,6 +96,15 @@ class DynamicForm extends \yii\base\Widget
      * @var bool
      */
     public $headerVisible = true;
+
+    /**
+     * Указать аттрибут для валидаци в случае когда он не совпадает
+     * Например если форма PaymentSystem, а атрибут модели называется payment_systems
+     *
+     * @var string
+     */
+    public $validateAttribute = null;
+
     /**
      * @var string
      */
@@ -260,7 +269,11 @@ class DynamicForm extends \yii\base\Widget
 
         $this->registerClientScript();
 
-        return  Html::tag('div', $content, ['class' => $this->widgetContainer, 'data-dynamicform' => $this->_hashVar]);
+        return  Html::tag('div', $content, [
+            'class' => $this->widgetContainer,
+            'data-dynamicform' => $this->_hashVar,
+            'data-validate-attribute' => $this->validateAttribute,
+        ]);
     }
 
     private function removeItems($content)

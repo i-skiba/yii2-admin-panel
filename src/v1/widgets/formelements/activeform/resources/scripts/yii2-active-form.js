@@ -18,7 +18,7 @@ $(document).ready(function() {
                 }
 
                 var clasees = $container.attr('class');
-                if($(this).closest('.dynamicform_wrapper').length > 0) {
+                if($element.closest('.dynamicform_wrapper').length > 0) {
                     var matches = clasees.match(/field\-([a-z_]+)\-[0-9]+\-[a-z_0-9]+/);
                 } else {
                     var matches = clasees.match(/field\-[a-z]+\-([a-z_0-9]+)/);
@@ -30,6 +30,11 @@ $(document).ready(function() {
 
                 var elSelector = matches[0];
                 var attribute = matches[1];
+
+                var dynamicFormValidateAttribute = $element.closest('.dynamicform_wrapper').attr('data-validate-attribute');
+                if (dynamicFormValidateAttribute !== typeof undefined && dynamicFormValidateAttribute !== false) {
+                    attribute = dynamicFormValidateAttribute;
+                }
                 self.hiddenInput = $form.find(self.selector);
 
                 self.hiddenInput.val(attribute);
