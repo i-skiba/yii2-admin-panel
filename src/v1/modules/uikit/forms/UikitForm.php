@@ -33,7 +33,7 @@ class UikitForm extends BaseModel
     public $radio;
     public $checkboxList = [];
     public $multiInput = [];
-    public $select2 = [];
+    public $select2;
     public $hint_input;
 
     /**
