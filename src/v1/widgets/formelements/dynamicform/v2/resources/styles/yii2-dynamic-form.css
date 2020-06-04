@@ -10,3 +10,7 @@ form .dynamic-form-items tbody td .uniform-checker{
 form .dynamic-form-items .form-text {
     margin: 0 !important;
 }
+
+form .dynamicform_wrapper .cdn-upload-wrapper .card-img {
+    height: 100px;
+}
