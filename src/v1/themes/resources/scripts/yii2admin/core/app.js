@@ -126,7 +126,7 @@ Yii2Admin.prototype.t = function (key) {
     return  this.i18n.dictionary[key];
 };
 
-Yii2Admin.prototype.sendRequest = function (action , params, options, callback) {
+Yii2Admin.prototype.sendRequest = function (action , params = {}, options = {}, callback) {
     var self = this;
     $.ajax({
         type : 'POST',
