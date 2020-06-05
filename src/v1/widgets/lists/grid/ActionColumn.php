@@ -107,6 +107,8 @@ class ActionColumn extends BaseColumn
                         break;
                     case 'view':
                         $title = Yii::t('yii2admin', 'Просмотр');
+                        # todo: костылина, для последнего условия, привести в порядок
+                        $visible = false;
                         break;
                     case 'activate':
                         $title = Yii::t('yii2admin', 'Активировать');
