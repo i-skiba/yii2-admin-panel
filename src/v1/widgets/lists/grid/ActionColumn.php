@@ -48,7 +48,7 @@ class ActionColumn extends BaseColumn
         $this->initDefaultButton('update', 'pencil6');
         $this->initDefaultButton('activate', 'checkmark4');
         $this->initDefaultButton('deactivate', 'cross2');
-        $this->initDefaultButton('delete', 'trash');
+        $this->initDefaultButton('delete', 'bin');
         $this->initDefaultButton('undelete', 'redo');
     }
 
