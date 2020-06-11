@@ -33,7 +33,7 @@ var componentNotify = {
 
         return new PNotify(opts);
     },
-    sweetAlert : function (message, callback) {
+    sweetAlert : function (message, callback, settings = {}) {
         if (typeof swal == 'undefined') {
             console.warn('Warning - sweet_alert.min.js is not loaded.');
             return;
@@ -45,13 +45,15 @@ var componentNotify = {
             cancelButtonClass: 'btn btn-light'
         });
 
-        Swal({
+        let defaultSettings = {
             title: message + " ?",
             type: "info",
             showCancelButton: true,
             confirmButtonText: yii2admin.t('Confirm'),
             cancelButtonText: yii2admin.t('Cancel'),
-        }).then(function (result) {
+        }
+
+        Swal(Object.assign(defaultSettings, settings)).then(function (result) {
             if(! result.value) {
                 return false;
             }
