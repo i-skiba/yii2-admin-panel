@@ -28,25 +28,26 @@ $(document).ready(function() {
                     return;
                 }
 
-                var elSelector = matches[0];
-                var attribute = matches[1];
+                var elSelector = matches[0],
+                    attribute = matches[1],
+                    dynamicFormValidateAttribute = $element.closest('.dynamicform_wrapper').attr('data-validate-attribute');
 
-                var dynamicFormValidateAttribute = $element.closest('.dynamicform_wrapper').attr('data-validate-attribute');
-                if (dynamicFormValidateAttribute !== typeof undefined && dynamicFormValidateAttribute !== false) {
+                if (typeof dynamicFormValidateAttribute !== 'undefined' && dynamicFormValidateAttribute !== false) {
                     attribute = dynamicFormValidateAttribute;
                 }
-                self.hiddenInput = $form.find(self.selector);
 
+                self.hiddenInput = $form.find(self.selector);
                 self.hiddenInput.val(attribute);
                 self.clearTimeout();
 
                 var event = function() {
-                    var url;
-                    var action = $form.attr('action');
-                    if(action.indexOf('/update?')) {
-                        url = action.replace('update', self.actionUpdate);
+                    var url,
+                        action = $form.attr('action');
+
+                    if(action.indexOf('/update?') !== -1) {
+                        url = action.replace(/update/g, self.actionUpdate);
                     } else {
-                        url = action.replace('create', self.actionCreate);
+                        url = action.replace(/create/g, self.actionCreate);
                     }
 
                     yii2admin.showPreloader = false;

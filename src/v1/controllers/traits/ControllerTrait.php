@@ -3,6 +3,7 @@
 namespace kamaelkz\yii2admin\v1\controllers\traits;
 
 use concepture\yii2logic\enum\AccessEnum;
+use concepture\yii2logic\enum\ScenarioEnum;
 use concepture\yii2logic\helpers\AccessHelper;
 use Yii;
 use yii\base\Action;
@@ -10,6 +11,8 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\base\Event;
 use yii\web\View;
+use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use concepture\yii2user\enum\UserRoleEnum;
 use kamaelkz\yii2admin\v1\helpers\AppHelper;
 use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
@@ -72,8 +75,6 @@ trait ControllerTrait
     public function actions()
     {
         $actions = parent::actions();
-        $actions['create-validate-attribute'] = $actions['create'];
-        $actions['update-validate-attribute'] = $actions['update'];
 
         return ArrayHelper::merge(
             $actions,
@@ -82,6 +83,62 @@ trait ControllerTrait
                 AuditRollbackAction::actionName() => AuditRollbackAction::class,
             ]
         );
+    }
+
+    /**
+     * Валидация атрибутов при создании
+     *
+     * @return string Html
+     */
+    public function actionCreateValidateAttribute()
+    {
+        $form = $this->getService()->getRelatedForm();
+        $form->scenario = ScenarioEnum::INSERT;
+        if (method_exists($form, 'customizeForm')) {
+            $form->customizeForm();
+        }
+
+        if ($form->load(Yii::$app->request->post())) {
+            $form->validate();
+        }
+
+        return $this->render('create', [
+            'model' => $form,
+        ]);
+    }
+
+    /**
+     * Валидация атрибутов при редактировании
+     *
+     * @return string Html
+     */
+    public function actionUpdateValidateAttribute($id)
+    {
+        $model = $this->getService()->findById($id);
+        if (! $model) {
+            throw new NotFoundHttpException();
+        }
+
+        if (! AccessHelper::checkAccess($this->id, ['model' => $model])) {
+            throw new ForbiddenHttpException(Yii::t("core", "You are not the owner"));
+        }
+
+        $form = $this->getService()->getRelatedForm();
+        $form->scenario = ScenarioEnum::UPDATE;
+        $form->setAttributes($model->attributes);
+
+        if (method_exists($form, 'customizeForm')) {
+            $form->customizeForm($model);
+        }
+
+        if ($form->load(Yii::$app->request->post())) {
+            $form->validate();
+        }
+
+        return $this->render('update', [
+            'model' => $form,
+            'originModel' => $model,
+        ]);
     }
 
     /**
