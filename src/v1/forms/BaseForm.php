@@ -55,7 +55,7 @@ abstract class BaseForm extends Form
                 ( $attribute = Yii::$app->request->post(static::$validateAttributeParam) )
                 || ( $attribute = Yii::$app->request->get(static::$validateAttributeParam) )
             )
-            && $this->hasAttribute($attribute)
+            && in_array($attribute, $this->attributes())
         ) {
             parent::validate($attribute, true);
 
