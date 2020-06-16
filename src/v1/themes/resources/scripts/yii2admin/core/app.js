@@ -643,13 +643,13 @@ $(document).ready(function() {
         }
 
         if(! magicModal.isStop) {
-            $magicModalPjax.find('.card').each(function(el) {
-                $(this).removeClass('card');
-            });
-
-            $magicModalPjax.find('.card-body').each(function(el) {
-                $(this).removeClass('card-body');
-            });
+            // $magicModalPjax.find('.card').each(function(el) {
+            //     $(this).removeClass('card');
+            // });
+            //
+            // $magicModalPjax.find('.card-body').each(function(el) {
+            //     $(this).removeClass('card-body');
+            // });
 
             magicModal.$modal.modal('show');
         }
