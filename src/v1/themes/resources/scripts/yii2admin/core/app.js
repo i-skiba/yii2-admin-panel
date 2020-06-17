@@ -343,20 +343,24 @@ MagicModal.prototype.show = function() {
 };
 
 MagicModal.prototype.hide = function() {
-	if(typeof this.onCloseCallback == 'function') {
+    this.$modal.modal('hide');
+};
+
+MagicModal.prototype.close = function(runCallback = true) {
+	if(runCallback && typeof this.onCloseCallback == 'function') {
 		yii2admin.runCallback(this.onCloseCallback);
 		this.onCloseCallback = null;
 		this.$modal.off('hidden.bs.modal');
 	}
 
-	this.$modal.modal('hide');
+	this.hide();
 	this.stop();
 };
 
 MagicModal.prototype.onClose = function(callback) {
     var self = this;
 	this.onCloseCallback = callback;
-	this.$modal.on('hidden.bs.modal', function(e){
+	this.$modal.on('hidden.bs.modal', function(e) {
         self.hide();
 	});
 };
@@ -623,7 +627,7 @@ $(document).ready(function() {
                 yii2admin.runCallback(magicModal.callback, response.data);
             }
 
-            magicModal.hide();
+            magicModal.close();
         } catch (e) {
             var content = $(status);
             var title = content.filter('title');
