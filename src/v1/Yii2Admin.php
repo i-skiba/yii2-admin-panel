@@ -14,6 +14,7 @@ use kamaelkz\yii2admin\v1\ {
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use kamaelkz\yii2cdnuploader\Yii2CdnUploader;
+use concepture\yii2logic\validators\StringValidator;
 
 /**
  * Первичная настройка компонента
@@ -49,6 +50,7 @@ class Yii2Admin implements BootstrapInterface
             'yii\widgets\DetailView' => DetailView::class,
             'yii\grid\GridView' => GridView::class,
             'yii\grid\ActionColumn' => ActionColumn::class,
+            'yii\validators\StringValidator' => StringValidator::class
         ];
     }
 
