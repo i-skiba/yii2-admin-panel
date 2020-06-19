@@ -36,9 +36,8 @@ class CrudSearch extends Crud
      */
     public function extendDataProvider(ActiveDataProvider $dataProvider)
     {
+        parent::extendDataProvider($dataProvider);
         $dataProvider->getPagination()->pageSize = 20;
         $dataProvider->getSort()->defaultOrder = ['sort' => SORT_ASC];
-
-        parent::extendDataProvider($dataProvider);
     }
 }
