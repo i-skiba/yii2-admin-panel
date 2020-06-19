@@ -50,7 +50,7 @@ class Yii2Admin implements BootstrapInterface
             'yii\widgets\DetailView' => DetailView::class,
             'yii\grid\GridView' => GridView::class,
             'yii\grid\ActionColumn' => ActionColumn::class,
-            'yii\validators\StringValidator' => StringValidator::class
+            'yii\validators\StringValidator' => StringValidator::class,
         ];
     }
 

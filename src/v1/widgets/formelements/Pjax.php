@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax as Base;
 use kamaelkz\yii2admin\v1\helpers\RequestHelper;
@@ -26,7 +27,7 @@ class Pjax extends Base
         $custom = [
             'id' => (! RequestHelper::isMagicModal() ? self::DEFAULT_ID : null ),
             'scrollTo' => false,
-            'enablePushState' => false
+            'enablePushState' => Yii::$app->getRequest()->getIsGet() ? true : false
         ];
         $config = ArrayHelper::merge($custom, $config);
 
