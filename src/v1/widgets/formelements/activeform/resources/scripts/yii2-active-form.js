@@ -108,6 +108,15 @@ $(document).ready(function() {
             yii2admin.activeForm.validateAttribute.hiddenInput.val('');
         }
     });
+
+    $('.form-vertical').on('afterValidate', function (event, messages) {
+        if(typeof $('.has-error').first().offset() !== 'undefined') {
+            $('html, body').animate({
+                scrollTop: $('.has-error').first().offset().top
+            }, 1000);
+            alert(123);
+        }
+    });
     // alert('Разобраться')
     // console.log(editorHelper.editors);
     // _.each(editorHelper.editors, function(el, index) {

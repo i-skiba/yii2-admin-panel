@@ -209,6 +209,15 @@ Yii2Admin.prototype.reinitLimitlessPlugins = function() {
     App.initCardActions();
 };
 
+Yii2Admin.prototype.inViewport = function(el) {
+    var rect = el.getBoundingClientRect();
+
+    return rect.bottom > 0 &&
+        rect.right > 0 &&
+        rect.left < (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */ &&
+        rect.top < (window.innerHeight || document.documentElement.clientHeight) /* or $(window).height() */;
+};
+
 var FlashAlertHelper = function() {
     // todo: криво пашет, скрывает сразу
     // this.interval = this.hide();
@@ -532,6 +541,16 @@ $(document).ready(function() {
     });
     // по завершению обновления листа реинициализируем плагины
     $listPjax.on('pjax:end', function(object, xhr) {
+        var $error = $(document).find('.has-error').first();
+
+        if($error.length > 0) {
+            var el = $error.get(0);
+
+            if(! yii2admin.inViewport(el)) {
+                window.scrollTo(0, $error.offset().top);
+            }
+        }
+
         if(xhr.status != 200) {
             return;
         }
