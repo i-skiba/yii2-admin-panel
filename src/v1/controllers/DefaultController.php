@@ -104,6 +104,7 @@ class DefaultController extends BaseController
         }
 
         $model = Yii::createObject(SignInForm::class);
+        $model->onlyWithAuthAssignment = true;
         if (
             $model->load(Yii::$app->request->post())
             && $model->validate()
