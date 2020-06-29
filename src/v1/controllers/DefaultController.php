@@ -103,7 +103,7 @@ class DefaultController extends BaseController
             return $this->redirect(['/site/index']);
         }
 
-        $model = new SignInForm();
+        $model = Yii::createObject(SignInForm::class);
         if (
             $model->load(Yii::$app->request->post())
             && $model->validate()
