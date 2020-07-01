@@ -28,26 +28,26 @@ class DefaultController extends BaseController
     protected function getAccessRules()
     {
         return [
-                    [
-                        'actions' => [
-                            'login',
-                            'logout',
-                            'error',
-                            'request-password-reset',
-                            'reset-password',
-                            'registration'
-                        ],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => [
-                            'index'
-                        ],
-                        'allow' => true,
-                        'roles' => [
-                            '@'
-                        ],
-                    ],
+            [
+                'actions' => [
+                    'login',
+                    'logout',
+                    'error',
+                    'request-password-reset',
+                    'reset-password',
+                    'registration'
+                ],
+                'allow' => true,
+            ],
+            [
+                'actions' => [
+                    'index'
+                ],
+                'allow' => true,
+                'roles' => [
+                    '@'
+                ],
+            ],
         ];
     }
 
@@ -84,6 +84,14 @@ class DefaultController extends BaseController
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
+
+            return $this->redirect(['/site/login']);
+        }
+
+        $roles = Yii::$app->rbacService->getRolesByUser(Yii::$app->user->identity->id);
+        $permissions = Yii::$app->rbacService->getPermissionsByUser(Yii::$app->user->identity->id);
+        if (! $roles && ! $permissions) {
+            $this->authService()->signOut();
 
             return $this->redirect(['/site/login']);
         }
