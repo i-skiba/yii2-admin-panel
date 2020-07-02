@@ -28,26 +28,26 @@ class DefaultController extends BaseController
     protected function getAccessRules()
     {
         return [
-                    [
-                        'actions' => [
-                            'login',
-                            'logout',
-                            'error',
-                            'request-password-reset',
-                            'reset-password',
-                            'registration'
-                        ],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => [
-                            'index'
-                        ],
-                        'allow' => true,
-                        'roles' => [
-                            '@'
-                        ],
-                    ],
+            [
+                'actions' => [
+                    'login',
+                    'logout',
+                    'error',
+                    'request-password-reset',
+                    'reset-password',
+                    'registration'
+                ],
+                'allow' => true,
+            ],
+            [
+                'actions' => [
+                    'index'
+                ],
+                'allow' => true,
+                'roles' => [
+                    '@'
+                ],
+            ],
         ];
     }
 
@@ -88,6 +88,14 @@ class DefaultController extends BaseController
             return $this->redirect(['/site/login']);
         }
 
+        $roles = Yii::$app->rbacService->getRolesByUser(Yii::$app->user->identity->id);
+        $permissions = Yii::$app->rbacService->getPermissionsByUser(Yii::$app->user->identity->id);
+        if (! $roles && ! $permissions) {
+            $this->authService()->signOut();
+
+            return $this->redirect(['/site/login']);
+        }
+
         return $this->render('index');
     }
 
@@ -103,7 +111,8 @@ class DefaultController extends BaseController
             return $this->redirect(['/site/index']);
         }
 
-        $model = new SignInForm();
+        $model = Yii::createObject(SignInForm::class);
+        $model->onlyWithAuthAssignment = true;
         if (
             $model->load(Yii::$app->request->post())
             && $model->validate()
