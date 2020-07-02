@@ -114,7 +114,6 @@ $(document).ready(function() {
             $('html, body').animate({
                 scrollTop: $('.has-error').first().offset().top
             }, 1000);
-            alert(123);
         }
     });
     // alert('Разобраться')
