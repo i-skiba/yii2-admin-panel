@@ -31,6 +31,11 @@ class ViewHelper
     private $_breadcrumbs_elements;
 
     /**
+     * @var bool состояние дополнительной боковой панели
+     */
+    private $second_sidebar_state = false;
+
+    /**
      * Формирует элемент для добавления в верхнее меню элементов
      *
      * @param array $route
@@ -135,5 +140,21 @@ class ViewHelper
         foreach ($arguments as $arg) {
             $this->_breadcrumbs_elements .= $arg;
         }
+    }
+
+    /**
+     * @param bool $value
+     */
+    public function setSecondSidebarState($value = true)
+    {
+        $this->second_sidebar_state = $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSecondSidebarState()
+    {
+        return $this->second_sidebar_state;
     }
 }
