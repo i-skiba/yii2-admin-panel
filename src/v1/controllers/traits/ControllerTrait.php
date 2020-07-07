@@ -21,6 +21,7 @@ use kamaelkz\yii2admin\v1\helpers\RequestHelper;
 use kamaelkz\yii2admin\v1\modules\audit\actions\AuditAction;
 use kamaelkz\yii2admin\v1\modules\audit\actions\AuditRollbackAction;
 use kamaelkz\yii2admin\v1\modules\audit\services\AuditService;
+use concepture\yii2handbook\traits\ServicesTrait as HandbookServiceTrait;
 
 /**
  * Трейт для контроллеров административной части
@@ -29,7 +30,8 @@ use kamaelkz\yii2admin\v1\modules\audit\services\AuditService;
  */
 trait ControllerTrait
 {
-    use ResponseTrait;
+    use ResponseTrait,
+        HandbookServiceTrait;
 
     /**
      * @inheritDoc
@@ -41,6 +43,8 @@ trait ControllerTrait
         }
 
         $this->registerAuditEvents();
+        # вывод элементов управления динамическими элементами и переводами со страницы
+        $this->dynamicElementsService()->extendActiveForm();
 
         parent::init();
     }
