@@ -34,11 +34,11 @@ class DynamicForm extends \yii\base\Widget
     /**
      * @var string
      */
-    protected $widgetBody = '.dynamic-form-items';
+    public $widgetBody = '.dynamic-form-items';
     /**
      * @var string
      */
-    protected $widgetItem = '.dynamic-form-item';
+    public $widgetItem = '.dynamic-form-item';
     /**
      * @var string
      */
@@ -247,6 +247,7 @@ class DynamicForm extends \yii\base\Widget
                     'body' => $this->getBody(),
                     'dragAndDropOptions' => $this->dragAndDropOptions,
                     'editable' => $this->editable,
+                    'widgetBody' => trim($this->widgetBody, '.#'),
                 ],
                 $this->viewParams
             )
