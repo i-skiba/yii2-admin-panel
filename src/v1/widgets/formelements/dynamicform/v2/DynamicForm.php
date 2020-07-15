@@ -182,8 +182,8 @@ class DynamicForm extends \yii\base\Widget
     protected function initOptions()
     {
         $this->_options['widgetContainer'] = $this->widgetContainer;
-        $this->_options['widgetBody']      = $this->widgetBody;
-        $this->_options['widgetItem']      = $this->widgetItem;
+        $this->_options['widgetBody']      = $this->widgetBody = $this->widgetBody . '_' . $this->getId();
+        $this->_options['widgetItem']      = $this->widgetItem = $this->widgetItem . '_' . $this->getId();
         $this->_options['limit']           = $this->limit;
         $this->_options['insertButton']    = $this->insertButton;
         $this->_options['deleteButton']    = $this->deleteButton;
