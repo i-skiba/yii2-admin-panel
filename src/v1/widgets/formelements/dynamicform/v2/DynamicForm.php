@@ -182,6 +182,7 @@ class DynamicForm extends \yii\base\Widget
     protected function initOptions()
     {
         $this->_options['widgetContainer'] = $this->widgetContainer;
+        // Чтобы работало только с текущим контейнером, а не со всеми на форме устанавливается уникальный id
         $this->_options['widgetBody']      = $this->widgetBody = $this->widgetBody . '_' . $this->getId();
         $this->_options['widgetItem']      = $this->widgetItem = $this->widgetItem . '_' . $this->getId();
         $this->_options['limit']           = $this->limit;

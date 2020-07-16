@@ -8,8 +8,12 @@
 (function ($) {
     var pluginName = 'yiiDynamicForm';
 
-    var regexID = /^([^\]]+\]|.+?)([-\d-]{1,})(.+)$/i;
+    // var regexID = /^(.+?)([-\d-]{1,})(.+)$/i;
+    //
+    // var regexName = /(^.+?)([\[\d{1,}\]]{1,})(\[.+\]$)/i;
 
+    // Для того чтобы парсило структуру такого типа: Model[attribute][0][sub_attribute]
+    var regexID = /^([^\]]+\]|.+?)([-\d-]{1,})(.+)$/i;
     var regexName = /([^\]]+\]|.+?)([\[\d{1,}\]]{1,})(\[.+\]$)/i;
 
     $.fn.yiiDynamicForm = function (method) {
