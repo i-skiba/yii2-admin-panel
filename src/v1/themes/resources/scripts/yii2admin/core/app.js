@@ -313,9 +313,9 @@ Pjax.prototype.submit = function(event) {
     $.pjax.submit(event, this.selector, this.settings);
 };
 
-var MagicModal = function() {
+var MagicModal = function(selector, pjaxSelector) {
     this.selectors = {
-        modal : '#magic-modal'
+        modal : selector
     };
     this.$modal = $(this.selectors.modal);
     this.$container = null;
@@ -337,7 +337,7 @@ var MagicModal = function() {
     this.controlCallStack = {};
 
     this.pjax = new Pjax();
-    this.pjax.setSelector('#magic-modal-pjax');
+    this.pjax.setSelector(pjaxSelector);
 };
 
 MagicModal.prototype.setTitle = function(title) {
@@ -509,7 +509,7 @@ InitHelper.prototype.isInit = function (element) {
 };
 
 var yii2admin = new Yii2Admin();
-var magicModal = new MagicModal();
+var magicModal = new MagicModal('#magic-modal', '#magic-modal-pjax');
 var callbackHelper = new CallbackHelper();
 var urlHelper = new UrlHelper();
 var flashAlert = new FlashAlertHelper();
