@@ -313,7 +313,7 @@ Pjax.prototype.submit = function(event) {
     $.pjax.submit(event, this.selector, this.settings);
 };
 
-var MagicModal = function(selector, pjaxSelector) {
+var MagicModal = function(selector, pjaxSelector, controlSelector) {
     this.selectors = {
         modal : selector
     };
@@ -326,6 +326,7 @@ var MagicModal = function(selector, pjaxSelector) {
         'modal-xs'
     ];
     this.response = null;
+    this.controlSelector = controlSelector;
     this.isJsonResponse = false;
     this.isStop = false;
     this.callback = null;
@@ -341,19 +342,19 @@ var MagicModal = function(selector, pjaxSelector) {
 };
 
 MagicModal.prototype.setTitle = function(title) {
-	this.$modal.find('.modal-title').html(title);
+    this.$modal.find('.modal-title').html(title);
 };
 
 MagicModal.prototype.setBody = function(body) {
-	this.$modal.find('.modal-body').html(body);
+    this.$modal.find('.modal-body').html(body);
 };
 
 MagicModal.prototype.getBody = function() {
-	return this.$modal.find('.modal-body').html();
+    return this.$modal.find('.modal-body').html();
 };
 
 MagicModal.prototype.show = function() {
-	this.$modal.modal('show');
+    this.$modal.modal('show');
 };
 
 MagicModal.prototype.hide = function() {
@@ -370,23 +371,23 @@ MagicModal.prototype.close = function(runCallback = true) {
     //         $value = values[values.length-1];
     //         self.run($value);
     // } else {
-        if(runCallback && typeof this.onCloseCallback == 'function') {
-            yii2admin.runCallback(this.onCloseCallback);
-            this.onCloseCallback = null;
-            this.$modal.off('hidden.bs.modal');
-        }
+    if(runCallback && typeof this.onCloseCallback == 'function') {
+        yii2admin.runCallback(this.onCloseCallback);
+        this.onCloseCallback = null;
+        this.$modal.off('hidden.bs.modal');
+    }
 
-        this.hide();
-        this.stop();
+    this.hide();
+    this.stop();
     // }
 };
 
 MagicModal.prototype.onClose = function(callback) {
     var self = this;
-	this.onCloseCallback = callback;
-	this.$modal.on('hidden.bs.modal', function(e) {
+    this.onCloseCallback = callback;
+    this.$modal.on('hidden.bs.modal', function(e) {
         self.hide();
-	});
+    });
 };
 
 MagicModal.prototype.run = function($el) {
@@ -458,6 +459,88 @@ MagicModal.prototype.pushControlCallStack = function($el) {
     }
 };
 
+// инициализация событий pjax для модалки
+MagicModal.prototype.initPjaxEvents = function() {
+    var mmInstance = this;
+    var $magicModalPjax = $(mmInstance.pjax.selector);
+    $(document).on('click', mmInstance.controlSelector, function(e) {
+        e.preventDefault();
+        var self = $(this);
+        // TODO : допилить
+        // magicModal.pushControlCallStack(self);
+        mmInstance.run(self);
+    });
+
+    $(document).on('submit', mmInstance.pjax.selector + ' form', function(event) {
+        var $form = $(this);
+        mmInstance.pjax.extendSettings({ url: $form.attr('action')});
+        delete mmInstance.pjax.settings.data;
+        mmInstance.pjax.submit(event);
+
+        return true;
+    });
+
+    $magicModalPjax.on('pjax:timeout', function (event, data) {
+        event.preventDefault();
+    });
+
+    $magicModalPjax.on('pjax:success', function(data, status, xhr, options) {
+        try {
+            var response = $.parseJSON(status);
+            mmInstance.isJsonResponse = true;
+            yii2admin.notify(response);
+            if(mmInstance.callback !== null) {
+                yii2admin.runCallback(mmInstance.callback, response.data);
+            }
+
+            mmInstance.close();
+        } catch (e) {
+            var content = $(status);
+            var title = content.filter('title');
+            if(title.length > 0) {
+                mmInstance.$modal.find('.modal-title').html(title.html());
+            }
+
+            yii2admin.reinitPlugins();
+        }
+
+        return true;
+    });
+    //подгрузка контента с удаленного роута
+    $magicModalPjax.on('pjax:end', function(object, xhr) {
+        if(xhr.status != 200 || mmInstance.isJsonResponse) {
+            return true;
+        }
+
+        if(! mmInstance.isStop) {
+            // $magicModalPjax.find('.card').each(function(el) {
+            //     $(this).removeClass('card');
+            // });
+            //
+            // $magicModalPjax.find('.card-body').each(function(el) {
+            //     $(this).removeClass('card-body');
+            // });
+
+            mmInstance.$modal.modal('show');
+        }
+
+        return true;
+    });
+
+    $magicModalPjax.on('pjax:error', function (xhr, response) {
+        // случаи с abort
+        if(response.status == 0) {
+            return true;
+        }
+
+        var message = response.status + ' : ' + response.statusText;
+        componentNotify.pNotify(componentNotify.statuses.error, message);
+        mmInstance.stop();
+
+        return false;
+    });
+};
+
 var CallbackHelper = function() {
     this.pjax = new Pjax();
 };
@@ -509,7 +592,8 @@ InitHelper.prototype.isInit = function (element) {
 };
 
 var yii2admin = new Yii2Admin();
-var magicModal = new MagicModal('#magic-modal', '#magic-modal-pjax');
+var magicModal = new MagicModal('#magic-modal', '#magic-modal-pjax', '.magic-modal-control');
+magicModal.initPjaxEvents();
 var callbackHelper = new CallbackHelper();
 var urlHelper = new UrlHelper();
 var flashAlert = new FlashAlertHelper();
@@ -639,84 +723,6 @@ $(document).ready(function() {
         componentNotify.sweetAlert(data.swal, function () {
             yii2admin.sendRequest(action, data.params, options, data.callback)
         });
-    });
-
-    var $magicModalPjax = $(magicModal.pjax.selector);
-    $(document).on('click', '.magic-modal-control', function(e) {
-        e.preventDefault();
-        var self = $(this);
-        // TODO : допилить
-        // magicModal.pushControlCallStack(self);
-        magicModal.run(self);
-    });
-
-    $(document).on('submit', magicModal.pjax.selector + ' form', function(event) {
-        var $form = $(this);
-        magicModal.pjax.extendSettings({ url: $form.attr('action')});
-        delete magicModal.pjax.settings.data;
-        magicModal.pjax.submit(event);
-
-        return true;
-    });
-
-    $magicModalPjax.on('pjax:timeout', function (event, data) {
-        event.preventDefault();
-    });
-
-    $magicModalPjax.on('pjax:success', function(data, status, xhr, options) {
-        try {
-            var response = $.parseJSON(status);
-            magicModal.isJsonResponse = true;
-            yii2admin.notify(response);
-            if(magicModal.callback !== null) {
-                yii2admin.runCallback(magicModal.callback, response.data);
-            }
-
-            magicModal.close();
-        } catch (e) {
-            var content = $(status);
-            var title = content.filter('title');
-            if(title.length > 0) {
-                magicModal.$modal.find('.modal-title').html(title.html());
-            }
-
-            yii2admin.reinitPlugins();
-        }
-
-        return true;
-    });
-    //подгрузка контента с удаленного роута
-    $magicModalPjax.on('pjax:end', function(object, xhr) {
-        if(xhr.status != 200 || magicModal.isJsonResponse) {
-            return true;
-        }
-
-        if(! magicModal.isStop) {
-            // $magicModalPjax.find('.card').each(function(el) {
-            //     $(this).removeClass('card');
-            // });
-            //
-            // $magicModalPjax.find('.card-body').each(function(el) {
-            //     $(this).removeClass('card-body');
-            // });
-
-            magicModal.$modal.modal('show');
-        }
-
-        return true;
-    });
-
-    $magicModalPjax.on('pjax:error', function (xhr, response) {
-        // случаи с abort
-        if(response.status == 0) {
-            return true;
-        }
-
-        var message = response.status + ' : ' + response.statusText;
-        componentNotify.pNotify(componentNotify.statuses.error, message);
-        magicModal.stop();
-
-        return false;
     });
 
     $(document).on("afterInsert", ".dynamicform_wrapper", function () {
