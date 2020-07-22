@@ -230,7 +230,8 @@ class DynamicForm extends \yii\base\Widget
             'header' => $this->getHeader(),
             'body' => $this->getBody(),
             'dragAndDrop' => $this->dragAndDrop,
-            'editable' => $this->editable
+            'editable' => $this->editable,
+            'widgetBody' => trim($this->widgetBody, '.#'),
         ], $this->viewParams));
 
 //        $crawler = new Crawler();
