@@ -1,7 +1,7 @@
 <?php
     use yii\helpers\Html;
 ?>
-        <table class="table table-bordered table-striped dynamic-form-items">
+        <table class="table table-bordered table-striped <?= $widgetBody; ?>">
             <thead>
                 <?= $header;?>
             </thead>
