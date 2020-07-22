@@ -221,12 +221,12 @@ class AuditService extends Service
         if (is_string($model) && $attributes) {
             $keys = $model::getTableSchema()->primaryKey;
             if (count($keys) === 1) {
-                return isset($attributes[$keys[0]]) ? $attributes[$keys[0]] : null;
+                return isset($attributes[$keys[0]]) ? strval($attributes[$keys[0]]) : null;
             }
 
             $values = [];
             foreach ($keys as $name) {
-                $values[$name] = isset($attributes[$name]) ? $attributes[$name] : null;
+                $values[$name] = isset($attributes[$name]) ? strval($attributes[$name]) : null;
             }
 
             return Json::encode($values);
