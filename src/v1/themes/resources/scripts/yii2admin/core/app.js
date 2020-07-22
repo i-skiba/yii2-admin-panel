@@ -314,7 +314,10 @@ Pjax.prototype.submit = function(event) {
 };
 
 var MagicModal = function() {
-    this.$modal = $('#magic-modal');
+    this.selectors = {
+        modal : '#magic-modal'
+    };
+    this.$modal = $(this.selectors.modal);
     this.$container = null;
     this.modalSizes = [
         'modal-full',
@@ -330,6 +333,8 @@ var MagicModal = function() {
     if(this.$modal.length > 0) {
         this.$container = this.$modal.find('.modal-dialog');
     }
+
+    this.controlCallStack = {};
 
     this.pjax = new Pjax();
     this.pjax.setSelector('#magic-modal-pjax');
@@ -356,14 +361,24 @@ MagicModal.prototype.hide = function() {
 };
 
 MagicModal.prototype.close = function(runCallback = true) {
-	if(runCallback && typeof this.onCloseCallback == 'function') {
-		yii2admin.runCallback(this.onCloseCallback);
-		this.onCloseCallback = null;
-		this.$modal.off('hidden.bs.modal');
-	}
+    // TODO : допилить
+    // var keys = Object.keys(this.controlCallStack);
+    // if(keys.length > 0) {
+    //     var self = this,
+    //         values = Object.values(this.controlCallStack),
+    //         key = keys[keys.length-1],
+    //         $value = values[values.length-1];
+    //         self.run($value);
+    // } else {
+        if(runCallback && typeof this.onCloseCallback == 'function') {
+            yii2admin.runCallback(this.onCloseCallback);
+            this.onCloseCallback = null;
+            this.$modal.off('hidden.bs.modal');
+        }
 
-	this.hide();
-	this.stop();
+        this.hide();
+        this.stop();
+    // }
 };
 
 MagicModal.prototype.onClose = function(callback) {
@@ -433,6 +448,14 @@ MagicModal.prototype.stop = function() {
     this.isJsonResponse = false;
     this.response = null;
     this.isStop = true;
+};
+
+MagicModal.prototype.pushControlCallStack = function($el) {
+    var url = $el.data('url');
+
+    if($el.closest(this.selectors.modal).length === 0 && url !== undefined) {
+        this.controlCallStack[url] = $el;
+    }
 };
 
 var CallbackHelper = function() {
@@ -621,7 +644,10 @@ $(document).ready(function() {
     var $magicModalPjax = $(magicModal.pjax.selector);
     $(document).on('click', '.magic-modal-control', function(e) {
         e.preventDefault();
-        magicModal.run($(this))
+        var self = $(this);
+        // TODO : допилить
+        // magicModal.pushControlCallStack(self);
+        magicModal.run(self);
     });
 
     $(document).on('submit', magicModal.pjax.selector + ' form', function(event) {

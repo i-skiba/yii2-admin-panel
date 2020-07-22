@@ -12,7 +12,8 @@
                 <?php Pjax::begin([
                         'id' => 'magic-modal-pjax',
                         'scrollTo' => 'false',
-                        'enablePushState' => false
+                        'enablePushState' => false,
+                        'timeout' => 0
                 ]); ?>
                 <?php Pjax::end(); ?>
             </div>
