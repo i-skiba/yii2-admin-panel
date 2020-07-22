@@ -34,11 +34,11 @@ class DynamicForm extends \yii\base\Widget
     /**
      * @var string
      */
-    public $widgetBody = '.dynamic-form-items';
+    protected $widgetBody = '.dynamic-form-items';
     /**
      * @var string
      */
-    public $widgetItem = '.dynamic-form-item';
+    protected $widgetItem = '.dynamic-form-item';
     /**
      * @var string
      */
