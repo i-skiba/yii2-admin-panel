@@ -1,10 +1,12 @@
 <?php
 namespace kamaelkz\yii2admin\v1\widgets\formelements\plural;
 
+use yii\base\Model;
 use yii\base\Widget;
 use yii\base\Exception;
 use yii\widgets\ActiveForm;
 use yii\base\InvalidConfigException;
+use concepture\yii2handbook\enum\DeclinationFormatEnum;
 
 /**
  * Class Plural
@@ -14,19 +16,38 @@ use yii\base\InvalidConfigException;
  */
 class Plural extends Widget
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     public $view = 'view';
+    /**
+     * @var Model
+     */
     public $model;
+    /**
+     * @var ActiveForm
+     */
     public $form;
-
-    /** @var string Оригнал перевода */
+    /**
+     * @var string Оригнал перевода
+     */
     public $originText;
-    /** @var string Атрибут содержащий склонения */
+    /**
+     * @var string Атрибут содержащий склонения
+     */
     public $pluralAttr;
-    /** @var string Атрибут куда будет сохраняться перевод */
+    /**
+     * @var string Атрибут куда будет сохраняться перевод
+     */
     public $targetAttr;
-    /** @var string токен для подстановки */
+    /**
+     * @var string токен для подстановки
+     */
     public $token = '{plural}';
+    /**
+     * @var integer формат склонения
+     */
+    public $declination_format = DeclinationFormatEnum::FULL;
 
     /**
      * @throws Exception
@@ -73,6 +94,7 @@ class Plural extends Widget
             'pluralAttr' => $this->pluralAttr,
             'origin' => $this->originText,
             'token' => $this->token,
+            'declination_format' => $this->declination_format
         ]);
     }
 }

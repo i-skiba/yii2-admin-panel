@@ -16,10 +16,11 @@ $values = isset($matches[2]) ? $matches[2] : [];
 <?php if (isset($types) && !empty($types)): ?>
     <?php foreach ($types as $key => $type): ?>
         <?php // TODO доставать исключения
-            if ($type == 'other') continue; ?>
+            if ($type == 'other') continue;
+        ?>
         <?php
             $type = trim($type);
-            $value = isset($values[$key]) && !empty($values[$key]) ? $values[$key] : $originMatches[2][$key];
+            $value = isset($values[$key]) && ! empty($values[$key]) ? $values[$key] : $originMatches[2][$key];
         ?>
         <?= $form->field($model, "{$pluralAttr}[{$targetAttr}][{$type}]")
             ->textInput(['value' => $value, 'placeholder' => $type])->label("<b>{$type}</b>"); ?>
