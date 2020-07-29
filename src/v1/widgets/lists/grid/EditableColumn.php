@@ -40,7 +40,7 @@ class EditableColumn extends \yii\grid\DataColumn
     /**
      * @var string
      */
-    public $modal_size = 'sm';
+    public $modalSize = 'sm';
 
     /**
      * @inheritDoc
@@ -109,7 +109,7 @@ class EditableColumn extends \yii\grid\DataColumn
         $defaultOptions = [
             'class' => 'magic-modal-control editable-column',
             'data-url' => $url,
-            'data-modal-size' => "modal-{$this->modal_size}",
+            'data-modal-size' => "modal-{$this->modalSize}",
             'data-callback' => 'function(){ callbackHelper.reloadPjax("#list-pjax"); }'
         ];
 
