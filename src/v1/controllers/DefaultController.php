@@ -88,9 +88,7 @@ class DefaultController extends BaseController
             return $this->redirect(['/site/login']);
         }
 
-        $roles = Yii::$app->rbacService->getRolesByUser(Yii::$app->user->identity->id);
-        $permissions = Yii::$app->rbacService->getPermissionsByUser(Yii::$app->user->identity->id);
-        if (! $roles && ! $permissions) {
+        if (! Yii::$app->rbacService->hasRoleAssignment(Yii::$app->user->identity->id)) {
             $this->authService()->signOut();
 
             return $this->redirect(['/site/login']);
