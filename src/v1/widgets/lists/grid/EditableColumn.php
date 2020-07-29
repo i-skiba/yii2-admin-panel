@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\lists\grid;
 
+use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -20,29 +21,52 @@ class EditableColumn extends \yii\grid\DataColumn
      * @var int
      */
     public $type = SettingsTypeEnum::TEXT;
-
     /**
      * @var bool
      */
     public $required = true;
-
     /**
      * @var array
      */
     public $options = [];
+    /**
+     * @var \Closure
+     */
+    public $url;
+    /**
+     * @var \Closure
+     */
+    public $content;
+    /**
+     * @var string
+     */
+    public $modal_size = 'sm';
 
     /**
      * @inheritDoc
      */
     public function renderDataCell($model, $key, $index)
     {
+        if($this->url && ! $this->url instanceof \Closure) {
+            throw new InvalidConfigException('Property `url` must be instance of \Closure');
+        }
+
+        if($this->content && ! $this->content instanceof \Closure) {
+            throw new InvalidConfigException('Property `content` must be instance of \Closure');
+        }
+
         if ($this->contentOptions instanceof \Closure) {
             $options = call_user_func($this->contentOptions, $model, $key, $index, $this);
         } else {
             $options = $this->contentOptions;
         }
 
-        $content = $this->renderDataCellContent($model, $key, $index);
+        if(! $this->content) {
+            $content = $this->renderDataCellContent($model, $key, $index);
+        } else if($this->content instanceof \Closure) {
+            $content = call_user_func($this->content, $model, $key, $index, $this);
+        }
+
         if($this->attribute) {
             $content = Html::tag('span', $content, $this->getOptions($model));
         }
@@ -69,17 +93,23 @@ class EditableColumn extends \yii\grid\DataColumn
             $pk = $model->getPrimaryKey();
         }
 
-        $url = Url::to([
-            EditableColumnAction::actionName(),
-            'column' => $this->attribute,
-            'pk' => $pk,
-            'type' => $this->type,
-            'required' => $this->required
-        ]);
+        if(! $this->url) {
+            $route = [
+                EditableColumnAction::actionName(),
+                'column' => $this->attribute,
+                'pk' => $pk,
+                'type' => $this->type,
+                'required' => $this->required
+            ];
+        } else {
+            $route = call_user_func($this->url, $model);
+        }
+
+        $url = is_array($route) ? Url::to($route) : $route;
         $defaultOptions = [
             'class' => 'magic-modal-control editable-column',
             'data-url' => $url,
-            'data-modal-size' => 'modal-sm',
+            'data-modal-size' => "modal-{$this->modal_size}",
             'data-callback' => 'function(){ callbackHelper.reloadPjax("#list-pjax"); }'
         ];
 
