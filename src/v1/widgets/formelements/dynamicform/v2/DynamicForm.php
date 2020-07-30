@@ -347,6 +347,11 @@ class DynamicForm extends \yii\base\Widget
                 } elseif(isset($settings['type'])) {
                     $type = $settings['type'];
                 }
+
+                if(! isset($type)) {
+                    throw new InvalidConfigException('Invalid attributes config `type` must be set');
+                }
+
                 if(is_callable($type)) {
                     $column = call_user_func($type, $model, $this->form, $key, $value);
                     $columnTemplate = call_user_func($type, new $modelClass(), $this->form, $key, $value);
