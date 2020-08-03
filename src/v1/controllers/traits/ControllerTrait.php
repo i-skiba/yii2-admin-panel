@@ -222,6 +222,23 @@ trait ControllerTrait
         return "{$title}{$content}";
     }
 
+
+    /**
+     * Переопределен для формах в модалке
+     *
+     * @param string $view
+     * @param array $params
+     *
+     * @return string
+     */
+    public function renderAjax($view, $params = [])
+    {
+        $content = parent::renderAjax($view, $params);
+        $title = Html::tag('title', $this->getView()->getTitle());
+
+        return "{$title}{$content}";
+    }
+
     /**
      * Устанавливает флеш удачной операции в сессию
      *
