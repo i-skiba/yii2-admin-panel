@@ -14,7 +14,8 @@ class RequestHelper
     const REDIRECT_BTN_PARAM = '_redirect_btn';
     const COPY_FORM_URL_PARAM = '_copy_from_url';
     const COPY_IDS_PARAM = '_copy_ids';
-    
+    const LIST_IDS_PARAMS = '_list_ids';
+
     /**
      * Проверка на запрос из магической модалки
      * 

@@ -679,7 +679,16 @@ $(document).ready(function() {
 
     // Поиск по grid-view / list-view
     $(document).on('submit', '.search-box form', function(event) {
-        $.pjax.submit(event, '#list-pjax');
+        var magicModalSelector = '#magic-modal-pjax',
+            updateSelector = '#list-pjax',
+            isMagicModal = ($(this).closest(magicModalSelector).length === 1),
+            options = {};
+
+        if(isMagicModal) {
+            updateSelector = magicModalSelector;
+            options = {"push": false};
+        }
+        $.pjax.submit(event, updateSelector, options);
     });
     // Очистка полей поиска
     $(document).on('click','.search-clear' ,function(e){

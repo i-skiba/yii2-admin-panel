@@ -175,16 +175,16 @@ class GridView extends Base
             'header' => Yii::t('yii2admin', "Выбор"),
             'class' => CopyColumn::class,
             'headerOptions' => [
-                'style' => 'text-align:center;'
+                'class' => 'text-center'
             ],
             'contentOptions' => [
-                'style' => 'text-align:center;'
+                'class' => 'text-center'
             ]
         ];
 
-        $this->searchVisible = false;
-        array_unshift($this->columns, $copyColumn);
-        array_pop($this->columns);
+//        $this->searchVisible = false;
+        array_unshift($this->columns);
+        array_push($this->columns, $copyColumn);
     }
 
     /**

@@ -16,6 +16,8 @@ trait ListsTrait
     /**
      * Виджет оборачивается в форму
      *
+     * @todo : временно убираем
+     *
      * @return string HTML
      */
     public function renderItems()
@@ -30,10 +32,20 @@ trait ListsTrait
                         'class' => 'copy-column-form',
                     ]
             );
+            $result.= <<<HTML
+<div class="datatable-header p-0 pb-3 pt-3 text-right">
+    {$this->getSubmitControll()}
+</div>
+HTML;
         }
 
         $result .= $table;
-        $result .= $this->getSubmitControll();
+
+        $result .= <<<HTML
+<div class="datatable-footer p-0 pt-3 text-right">
+    {$this->getSubmitControll()}
+</div>
+HTML;
         if(RequestHelper::isMagicModal()) {
             $result .= Html::endForm();
         }
@@ -53,9 +65,9 @@ trait ListsTrait
         }
         
         $result = Html::submitButton(
-            '<i class="icon-checkmark"></i> ' . Yii::t('yii2admin', 'Выбрать'),
+            '<b><i class="icon-checkmark"></i></b>' . Yii::t('yii2admin', 'Выбрать'),
             [
-                'class' => 'btn btn-success copy-column-controll hidden mt-20 mb-20 mr-20 pull-right',
+                'class' => 'btn bg-success btn-labeled btn-labeled-left ml-1 copy-column-controll',
             ]
         );
          

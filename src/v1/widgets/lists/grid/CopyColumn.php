@@ -28,15 +28,17 @@ class CopyColumn extends Column
      */
     protected function renderDataCellContent($model, $key, $index)
     {
-        return  Html::checkBox(RequestHelper::COPY_IDS_PARAM ."[]", false, [
+        # todo: разрулить признаком
+//        return Html::checkbox(
+//            RequestHelper::LIST_IDS_PARAMS ."[{$model->getPrimaryKey()}]",
+        return Html::radio(
+            RequestHelper::LIST_IDS_PARAMS ."[]",
+            false,
+            [
                 'value' => $model->id,
-                'label' => null,
-                'class' => 'switch select-single',
-                'data-on-text' => "<i class=' icon-checkmark2'></i>",
-                'data-off-text' => "<i class=' icon-cross3'></i>",
-                'data-size' => 'mini',
-                'data-on-color' => "success",
-        ]);
+                'class' => 'form-check-input-styled-primary',
+            ]
+        );
     }
     
     /**
