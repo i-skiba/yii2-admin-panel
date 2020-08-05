@@ -32,20 +32,20 @@ trait ListsTrait
                         'class' => 'copy-column-form',
                     ]
             );
-            $result.= <<<HTML
-<div class="datatable-header p-0 pb-3 pt-3 text-right">
-    {$this->getSubmitControll()}
-</div>
-HTML;
+//            $result.= <<<HTML
+//<div class="datatable-header p-0 pb-3 pt-3 text-right">
+//    {$this->getSubmitControll()}
+//</div>
+//HTML;
         }
 
         $result .= $table;
-
-        $result .= <<<HTML
-<div class="datatable-footer p-0 pt-3 text-right">
-    {$this->getSubmitControll()}
-</div>
-HTML;
+//
+//        $result .= <<<HTML
+//<div class="datatable-footer p-0 pt-3 text-right">
+//    {$this->getSubmitControll()}
+//</div>
+//HTML;
         if(RequestHelper::isMagicModal()) {
             $result .= Html::endForm();
         }

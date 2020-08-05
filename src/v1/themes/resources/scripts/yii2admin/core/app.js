@@ -341,6 +341,14 @@ var MagicModal = function(selector, pjaxSelector, controlSelector) {
     this.pjax.setSelector(pjaxSelector);
 };
 
+MagicModal.createInstance = function(selector, pjaxSelector, controlSelector) {
+    var instance = new MagicModal(selector, pjaxSelector, controlSelector);
+
+    instance.init();
+
+    return instance;
+};
+
 MagicModal.prototype.setTitle = function(title) {
     this.$modal.find('.modal-title').html(title);
 };
@@ -460,7 +468,7 @@ MagicModal.prototype.pushControlCallStack = function($el) {
 };
 
 // инициализация событий pjax для модалки
-MagicModal.prototype.initPjaxEvents = function() {
+MagicModal.prototype.init = function() {
     var mmInstance = this;
     var $magicModalPjax = $(mmInstance.pjax.selector);
     $(document).on('click', mmInstance.controlSelector, function(e) {
@@ -592,8 +600,7 @@ InitHelper.prototype.isInit = function (element) {
 };
 
 var yii2admin = new Yii2Admin();
-var magicModal = new MagicModal('#magic-modal', '#magic-modal-pjax', '.magic-modal-control');
-magicModal.initPjaxEvents();
+var magicModal = MagicModal.createInstance('#magic-modal', '#magic-modal-pjax', '.magic-modal-control');
 var callbackHelper = new CallbackHelper();
 var urlHelper = new UrlHelper();
 var flashAlert = new FlashAlertHelper();

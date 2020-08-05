@@ -184,7 +184,7 @@ class GridView extends Base
 
 //        $this->searchVisible = false;
         array_unshift($this->columns);
-        array_push($this->columns, $copyColumn);
+//        array_push($this->columns, $copyColumn);
     }
 
     /**
