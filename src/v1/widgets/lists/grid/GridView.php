@@ -172,7 +172,7 @@ class GridView extends Base
         }
 
         $copyColumn = [
-            'header' => Yii::t('yii2admin', "Выбор"),
+//            'header' => Yii::t('yii2admin', "Выбор"),
             'class' => CopyColumn::class,
             'headerOptions' => [
                 'class' => 'text-center'

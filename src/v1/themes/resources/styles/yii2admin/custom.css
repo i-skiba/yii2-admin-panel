@@ -120,3 +120,7 @@ form div.required label.control-label::after{
 #magic-modal .modal-content {
     background-color: #f5f5f5;
 }
+
+td.text-center .uniform-choice {
+    margin: 0 auto;
+}
