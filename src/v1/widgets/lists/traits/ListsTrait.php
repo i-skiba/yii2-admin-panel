@@ -12,7 +12,12 @@ use kamaelkz\yii2admin\v1\helpers\RequestHelper;
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
 trait ListsTrait
-{ 
+{
+    /**
+     * @var bool
+     */
+    public $wrapForm = false;
+
     /**
      * Виджет оборачивается в форму
      *
@@ -24,31 +29,31 @@ trait ListsTrait
     {
         $result = null;
         $table = parent::renderItems();
-//        if(RequestHelper::isMagicModal()) {
-//            $result .= Html::beginForm(
-//                    RequestHelper::getCopyFormUrl(),
-//                    'post',
-//                    [
-//                        'class' => 'copy-column-form',
-//                    ]
-//            );
-//            $result.= <<<HTML
-//<div class="datatable-header p-0 pb-3 pt-3 text-right">
-//    {$this->getSubmitControll()}
-//</div>
-//HTML;
-//        }
+        if(RequestHelper::isMagicModal()) {
+            $result .= Html::beginForm(
+                    RequestHelper::getCopyFormUrl(),
+                    'post',
+                    [
+                        'class' => 'copy-column-form',
+                    ]
+            );
+            $result.= <<<HTML
+<div class="datatable-header p-0 pb-3 pt-3 text-right">
+    {$this->getSubmitControll()}
+</div>
+HTML;
+        }
 
         $result .= $table;
-//
-//        $result .= <<<HTML
-//<div class="datatable-footer p-0 pt-3 text-right">
-//    {$this->getSubmitControll()}
-//</div>
-//HTML;
-//        if(RequestHelper::isMagicModal()) {
-//            $result .= Html::endForm();
-//        }
+
+        $result .= <<<HTML
+<div class="datatable-footer p-0 pt-3 text-right">
+    {$this->getSubmitControll()}
+</div>
+HTML;
+        if(RequestHelper::isMagicModal()) {
+            $result .= Html::endForm();
+        }
 
         return $result;
     }

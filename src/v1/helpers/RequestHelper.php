@@ -23,7 +23,7 @@ class RequestHelper
      */
     public static function isMagicModal() : bool
     {
-        return (($param = Yii::$app->request->get('_pjax')) && $param == '#magic-modal-pjax');
+        return (($param = Yii::$app->request->get('_pjax')) && (strpos($param, '#magic-modal') !== false));
     }
     
     /**
