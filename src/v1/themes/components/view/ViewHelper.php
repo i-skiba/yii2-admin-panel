@@ -42,8 +42,9 @@ class ViewHelper
      * @param string $label
      * @param string $icon
      * @param array $options
+     * @param string $color
      */
-    public function pushPageHeader($route = ['create'], $label = null, $icon = null, $options = [])
+    public function pushPageHeader($route = ['create'], $label = null, $icon = null, $options = [], $color = 'primary')
     {
         /**
          * Проверка на права
@@ -65,7 +66,7 @@ class ViewHelper
         }
 
         $url = Url::to($route);
-        $content = "<i class='{$icon} text-primary'></i><span>{$label}</span>";
+        $content = "<i class='{$icon} text-{$color}'></i><span>{$label}</span>";
         $defaultClass = 'btn btn-link btn-float text-default';
         if(! isset($options['class'])) {
             $options['class'] = $defaultClass;
