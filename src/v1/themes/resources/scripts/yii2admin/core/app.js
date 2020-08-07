@@ -8,8 +8,8 @@ var Yii2Admin = function() {
     this.showPreloader = true;
     this.formChanged = false;
     this.enableFormChangedAlert = true;
-    this.updateLockUrl = '/admin/changelock/change-lock/update-lock';
-    this.checkLockUrl = '/admin/changelock/change-lock/check';
+    this.updateLockUrl = null;
+    this.checkLockUrl = null;
     this.changeLockAfkLimit = 20;
     this.enableChangeLock = true;
 };
@@ -46,7 +46,11 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
         });
     };
 
-    this.update = function(){
+    this.update = function() {
+        if(self.updateLockUrl === null) {
+            self.updateLockUrl = $('body').data('change-lock-update-url');
+        }
+
         let currentDate = new Date();
         let timeDiff = Math.abs(currentDate.getTime() - lastActionDate.getTime());
         var diffMins = Math.ceil(timeDiff / (1000 * 60));
@@ -67,8 +71,12 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
     };
 
     this.check = function(){
-        self.showPreloader = false;
+        if(self.checkLockUrl === null) {
+            self.checkLockUrl = $('body').data('change-lock-check-url');
+        }
+
         let url = window.location.href;
+        self.showPreloader = false;
         url = window.location.href.replace(window.location.origin + '/', '');
         self.sendRequest(self.checkLockUrl, {'url': url}, {}, function (data) {
             if (data['can'] == true){

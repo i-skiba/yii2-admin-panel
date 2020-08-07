@@ -1,7 +1,7 @@
 <?php
+    use yii\helpers\Url;
     use yii\helpers\Html;
     use yii\widgets\Breadcrumbs;
-    use yii\widgets\Pjax;
     use kamaelkz\yii2admin\v1\widgets\notifications\alert\FlashAlert;
     use kamaelkz\yii2admin\v1\enum\FlashAlertEnum;
 ?>
@@ -18,7 +18,7 @@
         </title>
         <?php $this->head() ?>
     </head>
-    <body class="">
+    <body class="" data-change-lock-check-url="<?= Url::to(['/changelock/change-lock/check']);?>" data-change-lock-update-url="<?= Url::to(['/changelock/change-lock/update-lock']);?>">
     <?php $this->beginBody() ?>
     <?= $this->render('include/navbar/main');?>
     <div class="page-content">
