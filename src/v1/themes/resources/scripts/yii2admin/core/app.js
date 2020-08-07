@@ -46,7 +46,29 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
         });
     };
 
-    this.update = function() {
+    this.getMetaValue = function (metaName) {
+        const metas = document.getElementsByTagName('meta');
+        for (let i = 0; i < metas.length; i++) {
+            if (metas[i].getAttribute('name') === metaName) {
+                return metas[i].getAttribute('content');
+            }
+        }
+
+        return null;
+    }
+
+    this.getUrl = function(){
+        let url = window.location.href;
+        url = window.location.href.replace(window.location.origin + '/', '');
+        let updateUrl= self.getMetaValue('update_url');
+        if (updateUrl !== null) {
+            return  updateUrl;
+        }
+
+        return url;
+    };
+
+    this.update = function(){
         if(self.updateLockUrl === null) {
             self.updateLockUrl = $('body').data('change-lock-update-url');
         }
@@ -64,8 +86,7 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
         }
 
         self.showPreloader = false;
-        let url = window.location.href;
-        url = window.location.href.replace(window.location.origin + '/', '');
+        let url = self.getUrl();
         self.sendRequest(self.updateLockUrl, {'url': url}, {}, function (data) {});
         self.showPreloader = true;
     };
@@ -75,9 +96,8 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
             self.checkLockUrl = $('body').data('change-lock-check-url');
         }
 
-        let url = window.location.href;
         self.showPreloader = false;
-        url = window.location.href.replace(window.location.origin + '/', '');
+        let url = self.getUrl();
         self.sendRequest(self.checkLockUrl, {'url': url}, {}, function (data) {
             if (data['can'] == true){
                 checkLockInterval = setInterval(function() {

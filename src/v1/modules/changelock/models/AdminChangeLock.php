@@ -34,7 +34,7 @@ class AdminChangeLock extends ActiveRecord
                     'url',
                 ],
                 'string',
-                'max' => 100
+                'max' => 1024
             ],
             [
                 [
