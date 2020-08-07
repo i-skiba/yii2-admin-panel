@@ -123,7 +123,7 @@ class DefaultController extends BaseController
             if (Yii::$app->user->returnUrl) {
                 return $this->redirect(Yii::$app->user->returnUrl);
             }
-            
+
             return $this->redirect(['/site/index']);
         }
 
