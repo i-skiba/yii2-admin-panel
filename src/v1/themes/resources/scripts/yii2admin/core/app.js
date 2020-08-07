@@ -46,6 +46,28 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
         });
     };
 
+    this.getMetaValue = function (metaName) {
+        const metas = document.getElementsByTagName('meta');
+        for (let i = 0; i < metas.length; i++) {
+            if (metas[i].getAttribute('name') === metaName) {
+                return metas[i].getAttribute('content');
+            }
+        }
+
+        return null;
+    }
+
+    this.updateUrl = function(){
+        let url = window.location.href;
+        url = window.location.href.replace(window.location.origin + '/', '');
+        let updateUrl= self.getMetaValue('update_url');
+        if (updateUrl !== null) {
+            return  updateUrl;
+        }
+
+        return url;
+    };
+
     this.update = function(){
         let currentDate = new Date();
         let timeDiff = Math.abs(currentDate.getTime() - lastActionDate.getTime());
@@ -60,16 +82,14 @@ Yii2Admin.prototype.setChangeLockEvents = function (key) {
         }
 
         self.showPreloader = false;
-        let url = window.location.href;
-        url = window.location.href.replace(window.location.origin + '/', '');
+        let url = self.updateUrl();
         self.sendRequest(self.updateLockUrl, {'url': url}, {}, function (data) {});
         self.showPreloader = true;
     };
 
     this.check = function(){
         self.showPreloader = false;
-        let url = window.location.href;
-        url = window.location.href.replace(window.location.origin + '/', '');
+        let url = self.updateUrl();
         self.sendRequest(self.checkLockUrl, {'url': url}, {}, function (data) {
             if (data['can'] == true){
                 checkLockInterval = setInterval(function() {
