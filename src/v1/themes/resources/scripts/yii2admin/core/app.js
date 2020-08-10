@@ -721,6 +721,26 @@ $(document).ready(function() {
             return;
         }
 
+        // обновление переключения доменов в навигационной панели
+        var $domainSidebar = $('.sidebar-content[data-current-domain-id]');
+
+        if($domainSidebar.length === 1) {
+            var currentDomainId = $domainSidebar.data('current-domain-id'),
+            $domainNavBar = $('.domain-switch-navbar');
+
+            if($domainNavBar.length === 1) {
+                var $element = $domainNavBar.find('[data-domain-id="' + currentDomainId + '"]'),
+                    $current = $domainNavBar.find('.domain-switch-navbar-current'),
+                    content = $element.parent().html();
+
+                if($current.length === 1) {
+                    $domainNavBar.find('.switch-domain').removeClass('active');
+                    $element.closest('.switch-domain ').addClass('active');
+                    $current.html(content);
+                }
+            }
+        }
+
         yii2admin.reinitPlugins();
     });
 
