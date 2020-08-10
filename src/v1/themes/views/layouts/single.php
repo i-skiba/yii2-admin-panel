@@ -14,7 +14,7 @@ use yii\helpers\Html;
         </title>
         <?php $this->head() ?>
     </head>
-    <body class="">
+    <body class="" data-current-domain-id="<?= Yii::$app->domainService->getCurrentDomainId();?>">
         <?php $this->beginBody() ?>
         <div class="page-content">
             <div class="content-wrapper">

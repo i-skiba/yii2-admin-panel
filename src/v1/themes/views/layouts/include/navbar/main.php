@@ -1,4 +1,4 @@
-<div class="navbar navbar-expand-md navbar-dark">
+<div class="navbar navbar-expand-md navbar-dark" data-pjax-list-update="true">
     <div class="navbar-brand">
         <a href="/" target="_blank" class="d-inline-block">
             <?= $this->render('logo');?>

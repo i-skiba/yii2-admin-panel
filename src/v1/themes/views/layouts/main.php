@@ -18,7 +18,7 @@
         </title>
         <?php $this->head() ?>
     </head>
-    <body class="" data-change-lock-check-url="<?= Url::to(['/changelock/change-lock/check']);?>" data-change-lock-update-url="<?= Url::to(['/changelock/change-lock/update-lock']);?>">
+    <body class="" data-current-domain-id="<?= Yii::$app->domainService->getCurrentDomainId();?>" data-change-lock-check-url="<?= Url::to(['/changelock/change-lock/check']);?>" data-change-lock-update-url="<?= Url::to(['/changelock/change-lock/update-lock']);?>">
     <?php $this->beginBody() ?>
     <?= $this->render('include/navbar/main');?>
     <div class="page-content">

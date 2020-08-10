@@ -289,27 +289,47 @@ FlashAlertHelper.prototype.reset = function() {
 
 var UrlHelper = function() {};
 
+UrlHelper.prototype.getParam = function(queryString, param) {
+    var queryParameters = this.getQueryParameters(queryString);
+
+    return queryParameters[param] ?? null;
+};
+
 UrlHelper.prototype.addParam = function(queryString, param, value) {
-    queryParameters = this._getQueryParameters(queryString);
+    var queryParameters = this.getQueryParameters(queryString);
     queryParameters[param] = value;
 
     return $.param(queryParameters);
 };
 
 UrlHelper.prototype.removeParam = function(queryString, param) {
-    queryParameters = this._getQueryParameters(queryString);
+    var queryParameters = this.getQueryParameters(queryString);
     delete queryParameters[param];
 
     return $.param(queryParameters);
 };
 
-UrlHelper.prototype._getQueryParameters = function(queryString) {
-    var queryParameters = {}, re = /([^&=]+)=([^&]*)/g, m;
+UrlHelper.prototype.getQueryParameters = function(queryString) {
+    var
+        queryParameters = {},
+        re = /([^&=]+)=([^&]*)/g,
+        m;
+
     while (m = re.exec(queryString)) {
         queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
 
     return queryParameters;
+};
+
+UrlHelper.prototype.addDomainParam = function(queryString) {
+    var currentUrl = location.href;
+    var domain_id = this.getParam(currentUrl, 'domain_id');
+    if(domain_id === null) {
+        return queryString;
+    }
+
+    return this.addParam(queryString, 'domain_id', domain_id);
 };
 
 var Pjax = function() {
@@ -519,6 +539,10 @@ MagicModal.prototype.init = function() {
     $magicModalPjax.on('pjax:timeout', function (event, data) {
         event.preventDefault();
     });
+    $magicModalPjax.on('pjax:beforeSend', function (data, xhr, pjax) {
+        // экранирование только якоря
+        pjax.url = decodeURIComponent(urlHelper.addDomainParam(pjax.url)).replace('#', '%23')
+    });
 
     $magicModalPjax.on('pjax:success', function(data, status, xhr, options) {
         try {
@@ -682,7 +706,7 @@ $(document).ready(function() {
         event.preventDefault()
     });
     // по завершению обновления листа реинициализируем плагины
-    $listPjax.on('pjax:end', function(object, xhr) {
+    $listPjax.on('pjax:end', function(object, xhr, a, b) {
         var $error = $(document).find('.has-error').first();
 
         if($error.length > 0) {
