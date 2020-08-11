@@ -25,6 +25,8 @@ abstract class BaseModel extends Model
      */
     public static $refreshParam = 'refresh-form';
 
+    public $isNewRecord = true;
+
     /**
      * @inheritDoc
      */
@@ -52,9 +54,14 @@ abstract class BaseModel extends Model
      * @param array $multipleModels
      * @return array
      */
-    public static function createMultiple($modelClass, $multipleModels = [])
+    public static function createMultiple($modelClass = null, $multipleModels = [])
     {
-        $model = new $modelClass;
+        if($modelClass) {
+            $model = new $modelClass;
+        } else {
+            $model = new static();
+        }
+
         $formName = $model->formName();
         $post = Yii::$app->request->post($formName);
         $models = [];
@@ -75,6 +82,46 @@ abstract class BaseModel extends Model
         }
 
         unset($model, $formName, $post);
+
+        return $models;
+    }
+
+    /**
+     * @param null $modelClass
+     * @param int $count
+     * @return array|mixed|object
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function createClear($modelClass = null, $count = 1)
+    {
+        $models = [];
+        if(! $modelClass) {
+            $modelClass = (static::class);
+        }
+
+        for($i = 0; $i < $count; $i ++) {
+            $models[] = Yii::createObject($modelClass);
+        }
+
+        return $count === 1 ? (reset($models)) : $models;
+    }
+
+    public static function createFromArray($modelClass = null, $array = [])
+    {
+        $models = [];
+        if(! $modelClass) {
+            $modelClass = (static::class);
+        }
+
+        foreach ($array as $item) {
+            $instance = Yii::createObject($modelClass);
+            if($item instanceof \yii\base\Model) {
+                $attributes = $item->attributes;
+            }
+
+            $instance->setAttributes($attributes);
+            $models[] = $instance;
+        }
 
         return $models;
     }
