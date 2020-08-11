@@ -87,6 +87,14 @@ class DynamicForm extends \yii\base\Widget
     /**
      * @var bool
      */
+    public $addControlVisible = true;
+    /**
+     * @var bool
+     */
+    public $removeControlVisible = true;
+    /**
+     * @var bool
+     */
     public $dragAndDrop = false;
     /**
      * @var array
@@ -248,6 +256,7 @@ class DynamicForm extends \yii\base\Widget
                     'body' => $this->getBody(),
                     'dragAndDropOptions' => $this->dragAndDropOptions,
                     'editable' => $this->editable,
+                    'addControlVisible' => $this->addControlVisible,
                     'widgetBody' => trim($this->widgetBody, '.#'),
                 ],
                 $this->viewParams
@@ -335,7 +344,7 @@ class DynamicForm extends \yii\base\Widget
                 $dragAndDrop = $this->dragAndDropControl();
             }
 
-            $item = ($dragAndDrop . $this->removeControl());
+            $item = ($dragAndDrop . $this->removeControlVisible ? $this->removeControl() : false);
             $itemTemplate = $item;
             foreach ($this->attributes as $attribute => $settings) {
                 $column = null;
