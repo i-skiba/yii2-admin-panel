@@ -103,7 +103,7 @@ abstract class BaseModel extends Model
             $models[] = Yii::createObject($modelClass);
         }
 
-        return $count === 1 ? (reset($models)) : $models;
+        return $models;
     }
 
     public static function createFromArray($modelClass = null, $array = [])

@@ -82,7 +82,7 @@ abstract class BaseForm extends Form
 
         foreach ($collectionForms as $attribute => $className) {
             $instance = Yii::createObject($className);
-            self::loadMultiple($this->odds, Yii::$app->getRequest()->post($instance->formName()), '');
+            self::loadMultiple($this->{$attribute}, Yii::$app->getRequest()->post($instance->formName()), '');
             $validator = Validator::createValidator(
                 CollectionModelsValidator::class,
                 $this,
@@ -95,6 +95,51 @@ abstract class BaseForm extends Form
         }
 
         return $parent;
+    }
+
+
+    /**
+     * @param null $modelClass
+     * @param int $count
+     * @return array|mixed|object
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function createClear($modelClass = null, $count = 1)
+    {
+        $models = [];
+        if(! $modelClass) {
+            $modelClass = (static::class);
+        }
+
+        for($i = 0; $i < $count; $i ++) {
+            $models[] = Yii::createObject($modelClass);
+        }
+
+        return $models;
+    }
+
+    public static function createFromArray($modelClass = null, $array = [])
+    {
+        $models = [];
+        if(! $modelClass) {
+            $modelClass = (static::class);
+        }
+
+        foreach ($array as $item) {
+            $instance = Yii::createObject($modelClass);
+            if($item instanceof \yii\base\Model) {
+                $instance->setAttributes($item->attributes, false);
+                if (method_exists($instance, 'customizeForm')) {
+                    $instance->customizeForm($item);
+                }
+            } else {
+                $instance->setAttributes($item, false);
+            }
+
+            $models[] = $instance;
+        }
+
+        return $models;
     }
 
     /**
