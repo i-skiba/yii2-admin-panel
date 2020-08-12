@@ -314,7 +314,7 @@ class DynamicForm extends \yii\base\Widget
             return null;
         }
 
-        $result = $this->editable ? Html::tag('td', '', []) : '';
+        $result = ($this->editable && $this->removeControlVisible) ? Html::tag('td', '', []) : '';
         if($this->dragAndDrop) {
             $result .= Html::tag('td', '', []);
         }
@@ -344,7 +344,12 @@ class DynamicForm extends \yii\base\Widget
                 $dragAndDrop = $this->dragAndDropControl();
             }
 
-            $item = ($dragAndDrop . $this->removeControlVisible ? $this->removeControl() : false);
+            $removeControl = null;
+            if ($this->removeControlVisible) {
+                $removeControl = $this->removeControl();
+            }
+
+            $item = $dragAndDrop . $removeControl;
             $itemTemplate = $item;
             foreach ($this->attributes as $attribute => $settings) {
                 $column = null;
