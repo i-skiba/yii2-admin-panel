@@ -382,12 +382,13 @@ class DynamicForm extends \yii\base\Widget
                     $columnTemplate = call_user_func_array([$instance, $type], $params);
                 }
 
-                if(
-                    is_array($settings)
-                    && isset($settings['itemOptions'])
-                    && is_array($settings['itemOptions'])
-                ) {
-                    $options = ArrayHelper::merge($settings['itemOptions'], $options);
+                if (is_array($settings)) {
+                    if (
+                        isset($settings['itemOptions'])
+                        && is_array($settings['itemOptions'])
+                    ) {
+                        $options = ArrayHelper::merge($settings['itemOptions'], $options);
+                    }
                 }
 
                 $item .= Html::tag('td', $column, $options);
