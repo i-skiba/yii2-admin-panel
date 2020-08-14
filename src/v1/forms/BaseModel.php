@@ -17,14 +17,7 @@ abstract class BaseModel extends Model
 {
     use ModelTrait;
 
-    /**
-     * Параметр для перезагрузки модели без валидации
-     * Используется в ActiveForm
-     * 
-     * @var string
-     */
-    public static $refreshParam = 'refresh-form';
-
+    # todo: убрать
     public $isNewRecord = true;
 
     /**
@@ -43,7 +36,7 @@ abstract class BaseModel extends Model
 
             return false;
         }
-        
+
         return parent::validate($attributeNames, $clearErrors);
     }
 
@@ -82,46 +75,6 @@ abstract class BaseModel extends Model
         }
 
         unset($model, $formName, $post);
-
-        return $models;
-    }
-
-    /**
-     * @param null $modelClass
-     * @param int $count
-     * @return array|mixed|object
-     * @throws \yii\base\InvalidConfigException
-     */
-    public static function createClear($modelClass = null, $count = 1)
-    {
-        $models = [];
-        if(! $modelClass) {
-            $modelClass = (static::class);
-        }
-
-        for($i = 0; $i < $count; $i ++) {
-            $models[] = Yii::createObject($modelClass);
-        }
-
-        return $models;
-    }
-
-    public static function createFromArray($modelClass = null, $array = [])
-    {
-        $models = [];
-        if(! $modelClass) {
-            $modelClass = (static::class);
-        }
-
-        foreach ($array as $item) {
-            $instance = Yii::createObject($modelClass);
-            if($item instanceof \yii\base\Model) {
-                $attributes = $item->attributes;
-            }
-
-            $instance->setAttributes($attributes);
-            $models[] = $instance;
-        }
 
         return $models;
     }
