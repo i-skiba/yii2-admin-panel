@@ -297,22 +297,24 @@ UrlHelper.prototype.getParam = function(queryString, param) {
 
 UrlHelper.prototype.addParam = function(queryString, param, value) {
     var queryParameters = this.getQueryParameters(queryString);
+    
     queryParameters[param] = value;
 
-    return $.param(queryParameters);
+    return queryString.split('?')[0] + "?" + $.param(queryParameters);
 };
 
 UrlHelper.prototype.removeParam = function(queryString, param) {
     var queryParameters = this.getQueryParameters(queryString);
     delete queryParameters[param];
 
-    return $.param(queryParameters);
+    return queryString.split('?')[0] + "?" + $.param(queryParameters);
 };
 
 UrlHelper.prototype.getQueryParameters = function(queryString) {
     var
         queryParameters = {},
-        re = /([^&=]+)=([^&]*)/g,
+        re = /[?&]+([^=&]+)=([^&]*)/g,
+        // re = /([^&=]+)=([^&]*)/g,
         m;
 
     while (m = re.exec(queryString)) {
