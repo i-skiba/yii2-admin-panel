@@ -71,6 +71,10 @@ class AdminChangeLockService extends Service
             return true;
         }
 
+        if ($lock->user_id == Yii::$app->user->identity->id) {
+            return true;
+        }
+
         return $lock;
     }
 }

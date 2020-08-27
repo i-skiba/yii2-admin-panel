@@ -52,7 +52,7 @@ abstract class BaseController extends Controller
             if (! in_array($tmp[0], $primaryKey)) {
                 continue;
             }
-            
+
             $params[] = $value;
         }
 
