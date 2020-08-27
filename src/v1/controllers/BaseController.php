@@ -3,6 +3,7 @@
 namespace kamaelkz\yii2admin\v1\controllers;
 
 use concepture\yii2logic\controllers\web\Controller;
+use concepture\yii2logic\helpers\UrlHelper;
 use kamaelkz\yii2admin\v1\controllers\traits\ControllerTrait;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -51,14 +52,17 @@ abstract class BaseController extends Controller
             if (! in_array($tmp[0], $primaryKey)) {
                 continue;
             }
-
-            $params[$tmp[0]] = $tmp[1];
+            
+            $params[] = $value;
         }
 
-        $route = ArrayHelper::merge(['update'], $params);
+        $queryArray = implode('&', $params);
+        $parsed['query'] = $queryArray;
+        $url = UrlHelper::buildUrl($parsed);
+        $url = str_replace('http://example.com', '', $url);
         Yii::$app->view->registerMetaTag([
             'name' => 'update_url',
-            'content' => Url::to($route)
+            'content' => $url
         ]);
     }
 }
