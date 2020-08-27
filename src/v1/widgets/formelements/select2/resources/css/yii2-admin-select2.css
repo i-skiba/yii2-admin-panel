@@ -26,3 +26,8 @@
 .select2-smart-input-placeholder {
     color: #999;
 }
+
+.select2-smart-input[disabled='disabled'] {
+    color: #999;
+    background-color: #fafafa;
+}

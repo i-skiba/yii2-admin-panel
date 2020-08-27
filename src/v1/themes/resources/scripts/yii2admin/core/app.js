@@ -297,7 +297,7 @@ UrlHelper.prototype.getParam = function(queryString, param) {
 
 UrlHelper.prototype.addParam = function(queryString, param, value) {
     var queryParameters = this.getQueryParameters(queryString);
-    
+
     queryParameters[param] = value;
 
     return queryString.split('?')[0] + "?" + $.param(queryParameters);
