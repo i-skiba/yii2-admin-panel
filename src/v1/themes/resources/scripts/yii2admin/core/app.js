@@ -543,7 +543,8 @@ MagicModal.prototype.init = function() {
     });
     $magicModalPjax.on('pjax:beforeSend', function (data, xhr, pjax) {
         // экранирование только якоря
-        pjax.url = decodeURIComponent(urlHelper.addDomainParam(pjax.url)).replace('#', '%23')
+        pjax.url = urlHelper.addDomainParam(pjax.url);
+        // pjax.url = decodeURIComponent(urlHelper.addDomainParam(pjax.url)).replace('#', '%23')
     });
 
     $magicModalPjax.on('pjax:success', function(data, status, xhr, options) {
