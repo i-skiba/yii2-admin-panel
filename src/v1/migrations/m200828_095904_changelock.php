@@ -18,7 +18,7 @@ class m200828_095904_changelock extends Migration
      */
     public function safeUp()
     {
-        $this->createColumn('last_access_ts', $this->integer());
+        $this->createColumn('last_access', $this->text());
     }
 
     /**
