@@ -26,6 +26,7 @@ class AdminChangeLock extends ActiveRecord
             [
                 [
                     'user_id',
+                    'last_access_ts',
                 ],
                 'integer'
             ],

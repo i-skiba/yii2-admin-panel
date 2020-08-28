@@ -55,6 +55,7 @@ class AdminChangeLockService extends Service
             $form->session_id = Yii::$app->session->getId();
             $form->user_id = Yii::$app->user->identity->id;
             $form->last_acess_date_time = date("Y-m-d H:i:s");
+            $form->last_access_ts =  time();
             $lock = $this->create($form);
 
             return true;
@@ -65,6 +66,7 @@ class AdminChangeLockService extends Service
         if ($diffSec > 30 || $lock->session_id == Yii::$app->session->getId()){
             $lock->session_id = Yii::$app->session->getId();
             $lock->last_acess_date_time = date("Y-m-d H:i:s");
+            $lock->last_access_ts =  time();
             $lock->user_id = Yii::$app->user->identity->id;
             $lock->save(false);
 

@@ -15,6 +15,7 @@ class AdminChangeLockForm extends BaseForm
     public $url;
     public $user_id;
     public $last_acess_date_time;
+    public $last_access_ts;
     public $session_id;
 
     /**
