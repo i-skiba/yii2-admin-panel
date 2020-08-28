@@ -745,6 +745,7 @@ $(document).ready(function() {
         }
 
         yii2admin.reinitPlugins();
+        //Запуск проверки на блокироваку редактирования при ажакс обновлении
         try {
             yii2admin.check();
         }catch (e) {
