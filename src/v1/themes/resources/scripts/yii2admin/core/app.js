@@ -745,6 +745,7 @@ $(document).ready(function() {
         }
 
         yii2admin.reinitPlugins();
+        yii2admin.check();
     });
 
     $listPjax.on('pjax:error', function(xhr, response) {
