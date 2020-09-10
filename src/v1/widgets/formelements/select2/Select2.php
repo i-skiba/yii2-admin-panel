@@ -175,8 +175,10 @@ class Select2 extends InputWidget
         $this->options['class'] .= ' d-none';
         $inputOptions = [
             'class' => 'form-control select2-smart-input',
-            'disabled' => 'disabled'
         ];
+        if(isset($this->options['disabled']) && $this->options['disabled'] == true) {
+            $inputOptions['disabled'] = 'disabled';
+        }
 
         return Html::tag('div', $inputValue, $inputOptions);
     }
