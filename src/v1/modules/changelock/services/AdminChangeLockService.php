@@ -21,6 +21,8 @@ class AdminChangeLockService extends Service
      */
     public function updateUrl($url)
     {
+        $currentDt = $this->getCurrent();
+        $serialized = serialize($currentDt);
         $lock = $this->getOneByCondition(['url' => $url]);
         if (! $lock){
             $form = new AdminChangeLockForm();
@@ -28,6 +30,7 @@ class AdminChangeLockService extends Service
             $form->session_id = Yii::$app->session->getId();
             $form->user_id = Yii::$app->user->identity->id;
             $form->last_acess_date_time = date("Y-m-d H:i:s");
+            $form->last_access = $serialized;
             $lock = $this->create($form);
 
             return $lock;
@@ -36,6 +39,7 @@ class AdminChangeLockService extends Service
         $lock->session_id = Yii::$app->session->getId();
         $lock->last_acess_date_time = date("Y-m-d H:i:s");
         $lock->user_id = Yii::$app->user->identity->id;
+        $lock->last_access = $serialized;
         $lock->save(false);
 
         return $lock;
@@ -48,6 +52,8 @@ class AdminChangeLockService extends Service
      */
     public function checkUrl($url)
     {
+        $currentDt = $this->getCurrent();
+        $serialized = serialize($currentDt);
         $lock = $this->getOneByCondition(['url' => $url]);
         if (! $lock){
             $form = new AdminChangeLockForm();
@@ -55,22 +61,39 @@ class AdminChangeLockService extends Service
             $form->session_id = Yii::$app->session->getId();
             $form->user_id = Yii::$app->user->identity->id;
             $form->last_acess_date_time = date("Y-m-d H:i:s");
+            $form->last_access = $serialized;
             $lock = $this->create($form);
 
             return true;
         }
 
-        $current = date("Y-m-d H:i:s");
-        $diffSec = round(abs(strtotime($current) - strtotime($lock->last_acess_date_time)),2);
+        $lockDt = unserialize($lock->last_access);
+        $diffSec = $currentDt->getTimestamp() - $lockDt->getTimestamp();
         if ($diffSec > 30 || $lock->session_id == Yii::$app->session->getId()){
             $lock->session_id = Yii::$app->session->getId();
             $lock->last_acess_date_time = date("Y-m-d H:i:s");
+            $lock->last_access = $serialized;
             $lock->user_id = Yii::$app->user->identity->id;
             $lock->save(false);
 
             return true;
         }
 
+        if ($lock->user_id == Yii::$app->user->identity->id) {
+            return true;
+        }
+
         return $lock;
+    }
+
+    /**
+     * Возвращает обьект теукщего даты / времени
+     */
+    public function getCurrent()
+    {
+        $dtString = date("Y-m-d H:i:s");
+        $format = 'Y-m-d H:i:s';
+
+        return \DateTimeImmutable::createFromFormat($format, $dtString);
     }
 }

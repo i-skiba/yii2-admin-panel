@@ -31,6 +31,12 @@ class AdminChangeLock extends ActiveRecord
             ],
             [
                 [
+                    'last_access',
+                ],
+                'string',
+            ],
+            [
+                [
                     'url',
                 ],
                 'string',
