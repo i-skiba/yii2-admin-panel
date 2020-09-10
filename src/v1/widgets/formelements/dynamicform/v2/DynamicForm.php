@@ -329,7 +329,7 @@ class DynamicForm extends \yii\base\Widget
                 $options = ArrayHelper::merge($settings['headerOptions'], $options);
             }
 
-            $result .= Html::tag('td', $this->model->getAttributeLabel($attribute), $options);
+            $result .= Html::tag('td', ($settings['headerOptions']['label'] ?? $this->model->getAttributeLabel($attribute)), $options);
         }
 
         return Html::tag('tr', $result);
