@@ -4,18 +4,6 @@
         this.selector = selector;
     };
 
-    Select2.prototype.init = function() {
-        var selector = '.select2[data-smart-select!="true"]',
-            $elements = initHelper.findElelements(selector),
-            instance = null;
-
-        instance = new Select2(selector);
-        instance.initElements($elements);
-        instance.registerEvents();
-
-        return instance;
-    };
-
     Select2.prototype.initElements = function($elements) {
         if (
             $elements === null
@@ -44,7 +32,7 @@
         initHelper.initElements($elements);
     };
 
-    Select2.prototype.registerEvents = function () {
+    Select2.prototype.initSmartElements = function () {
         var $select = null,
             $smartInput = null,
             self = this;
@@ -59,7 +47,12 @@
     };
 
     $(document).ready(function() {
-        componentSelects.select2 = Select2.prototype.init.call();
-    });
+        var selector = '.select2[data-smart-select!="true"]',
+            $elements = initHelper.findElelements(selector),
+            instance = new Select2(selector);
 
+        componentSelects.select2 = instance;
+        instance.initElements($elements);
+        instance.initSmartElements();
+    });
 })();

@@ -13,8 +13,10 @@ var componentSelects = (function() {
         },
         select2: null, // инициализация из виджета \kamaelkz\yii2admin\v1\widgets\formelements\select2\Select2
         initAll : function() {
+            this.uniform();
             if(this.select2 !== null) {
-                this.select2.init();
+                $elements = initHelper.findElelements(this.select2.selector);
+                this.select2.initElements($elements);
             }
         }
     };
