@@ -13,9 +13,8 @@ var componentSelects = (function() {
         },
         select2: null, // инициализация из виджета \kamaelkz\yii2admin\v1\widgets\formelements\select2\Select2
         initAll : function() {
-            this.uniform();
-            if(typeof this.select2 === "function") {
-                this.select2();
+            if(this.select2 !== null) {
+                this.select2.init();
             }
         }
     };
