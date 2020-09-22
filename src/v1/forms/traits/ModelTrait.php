@@ -85,7 +85,7 @@ trait ModelTrait
      * @return array
      * @throws \yii\base\InvalidConfigException
      */
-    public static function createFromArray($modelClass = null, $array = [])
+    public static function createFromArray($modelClass = null, $array = [], $data = [])
     {
         $models = [];
         if(! $modelClass) {
@@ -101,6 +101,17 @@ trait ModelTrait
                 }
             } else {
                 $instance->setAttributes($item, false);
+            }
+
+            if($data) {
+                foreach ($data as $attribute => $value) {
+                    if (
+                        ($instance instanceof ActiveRecord && $instance->hasAttribute($attribute))
+                        || ($instance instanceof Model && property_exists($instance, $attribute))
+                    ) {
+                        $instance->{$attribute} = $value;
+                    }
+                }
             }
 
             $models[] = $instance;
