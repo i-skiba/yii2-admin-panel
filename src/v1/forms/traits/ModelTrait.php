@@ -44,7 +44,6 @@ trait ModelTrait
         return Inflector::underscore($this->formName());
     }
 
-
     /**
      * @param null $modelClass
      * @param int $count
@@ -114,7 +113,13 @@ trait ModelTrait
         return $models;
     }
 
-    private static function setCreateData($instance, $data = [])
+    /**
+     * Установка данных в экземпляр при создании
+     *
+     * @param Model $instance
+     * @param array $data
+     */
+    private static function setCreateData(Model $instance, $data = [])
     {
         if(! $data) {
             return;
