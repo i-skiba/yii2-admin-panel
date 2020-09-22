@@ -48,10 +48,12 @@ trait ModelTrait
     /**
      * @param null $modelClass
      * @param int $count
+     * @param array $data
+     * @param mixed $scenario
      * @return array|mixed|object
      * @throws \yii\base\InvalidConfigException
      */
-    public static function createClear($modelClass = null, $count = 1, $data = [])
+    public static function createClear($modelClass = null, $count = 1, $data = [], $scenario = null)
     {
         $models = [];
         if (! $modelClass) {
@@ -60,16 +62,11 @@ trait ModelTrait
 
         for($i = 0; $i < $count; $i ++) {
             $instance = Yii::createObject($modelClass);
-            if($data) {
-                foreach ($data as $attribute => $value) {
-                    if (
-                        ($instance instanceof ActiveRecord && $instance->hasAttribute($attribute))
-                        || ($instance instanceof Model && property_exists($instance, $attribute))
-                    ) {
-                        $instance->{$attribute} = $value;
-                    }
-                }
+            if($scenario) {
+                $instance->setScenario($scenario);
             }
+
+            static::setCreateData($instance, $data);
 
             $models[] = $instance;
         }
@@ -82,10 +79,13 @@ trait ModelTrait
      *
      * @param null $modelClass
      * @param array $array
+     * @param array $data
+     * @param mixed $scenario
+     *
      * @return array
      * @throws \yii\base\InvalidConfigException
      */
-    public static function createFromArray($modelClass = null, $array = [], $data = [])
+    public static function createFromArray($modelClass = null, $array = [], $data = [], $scenario = null)
     {
         $models = [];
         if(! $modelClass) {
@@ -94,6 +94,10 @@ trait ModelTrait
 
         foreach ($array as $item) {
             $instance = Yii::createObject($modelClass);
+            if($scenario) {
+                $instance->setScenario($scenario);
+            }
+
             if($item instanceof Model) {
                 $instance->setAttributes($item->attributes, false);
                 if (method_exists($instance, 'customizeForm')) {
@@ -103,20 +107,26 @@ trait ModelTrait
                 $instance->setAttributes($item, false);
             }
 
-            if($data) {
-                foreach ($data as $attribute => $value) {
-                    if (
-                        ($instance instanceof ActiveRecord && $instance->hasAttribute($attribute))
-                        || ($instance instanceof Model && property_exists($instance, $attribute))
-                    ) {
-                        $instance->{$attribute} = $value;
-                    }
-                }
-            }
-
+            static::setCreateData($instance, $data);
             $models[] = $instance;
         }
 
         return $models;
+    }
+
+    private static function setCreateData($instance, $data = [])
+    {
+        if(! $data) {
+            return;
+        }
+
+        foreach ($data as $attribute => $value) {
+            if (
+                ($instance instanceof ActiveRecord && $instance->hasAttribute($attribute))
+                || ($instance instanceof Model && property_exists($instance, $attribute))
+            ) {
+                $instance->{$attribute} = $value;
+            }
+        }
     }
 }
