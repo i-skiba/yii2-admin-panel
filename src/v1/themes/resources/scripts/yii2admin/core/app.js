@@ -643,12 +643,13 @@ InitHelper.prototype.initElements = function(elements) {
 };
 
 InitHelper.prototype.isInit = function (element) {
-    var self = this;
+    var self = this,
+        $element = null;
 
     if(typeof element === 'string') {
-        var $element = $(element);
+        $element = $(element);
     } else {
-        var $element = element;
+        $element = element;
     }
 
     return $element.attr(self.attribute) === self.value;

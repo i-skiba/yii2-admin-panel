@@ -17,9 +17,6 @@ abstract class BaseModel extends Model
 {
     use ModelTrait;
 
-    # todo: убрать
-    public $isNewRecord = true;
-
     /**
      * @inheritDoc
      */

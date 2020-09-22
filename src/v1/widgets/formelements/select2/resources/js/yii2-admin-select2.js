@@ -14,22 +14,25 @@
 
         $elements.each(function() {
             var variable = $(this).data('plugin-options-variable'),
-                options = window[variable] || {};
+                options = window[variable] || {},
+                $element = $(this);
 
-            $(this).select2(options);
+            if(! initHelper.isInit($element)) {
+                $element.select2(options);
+                $element.on('select2:clearing', function (e) {
+                    e.preventDefault();
+                    var self = $(this);
+
+                    componentNotify.sweetAlert(yii2admin.t('Confirm'), function () {
+                        self.val(null).trigger("change");
+                        self.select2("open");
+                    });
+
+                });
+
+                initHelper.initElements($element);
+            }
         });
-
-        $elements.on('select2:clearing', function (e) {
-            e.preventDefault();
-            var self = $(this);
-
-            componentNotify.sweetAlert(yii2admin.t('Confirm'), function () {
-                self.val(null).trigger("change");
-                self.select2("open");
-            });
-
-        });
-        initHelper.initElements($elements);
     };
 
     Select2.prototype.initSmartElements = function () {
@@ -47,7 +50,7 @@
     };
 
     $(document).ready(function() {
-        var selector = '.select2[data-smart-select!="true"]',
+        var selector = 'select.select2[data-smart-select!="true"]',
             $elements = initHelper.findElelements(selector),
             instance = new Select2(selector);
 

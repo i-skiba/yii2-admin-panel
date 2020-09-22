@@ -15,6 +15,10 @@ use \yii\base\Model;
 trait ModelTrait
 {
     /**
+     * @var bool
+     */
+    public $isNewRecord = true;
+    /**
      * Параметр для перезагрузки модели без валидации
      * Используется в ActiveForm
      *

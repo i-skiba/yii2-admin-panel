@@ -64,7 +64,17 @@ abstract class BaseForm extends Form
 
         foreach ($collectionForms as $attribute => $className) {
             $instance = Yii::createObject($className);
-            self::loadMultiple($this->{$attribute}, Yii::$app->getRequest()->post($instance->formName()), '');
+            $post = Yii::$app->getRequest()->post($instance->formName());
+            if(! $post) {
+                continue;
+            }
+
+            if(! $this->{$attribute}) {
+                $this->{$attribute} = $className::createClear(null, count($post));
+            }
+
+            self::loadMultiple($this->{$attribute}, $post , '');
+
             $validator = Validator::createValidator(
                 CollectionModelsValidator::class,
                 $this,
@@ -78,6 +88,43 @@ abstract class BaseForm extends Form
 
         return $parent;
     }
+
+    /**
+     * Костыль для динамических форм, добавлен isNewRecord
+     *
+     * @inheritDoc
+     */
+    public static function loadMultiple($models, $data, $formName = null)
+    {
+        if ($formName === null) {
+            $first = reset($models);
+            if ($first === false) {
+                return false;
+            }
+
+            $formName = $first->formName();
+        }
+
+        $success = false;
+        foreach ($models as $i => $model) {
+            if ($formName == '') {
+                if (!empty($data[$i]) && $model->load($data[$i], '')) {
+                    $success = true;
+                    if(property_exists($model, 'isNewRecord')) {
+                        $model->isNewRecord = false;
+                    }
+                }
+            } elseif (!empty($data[$formName][$i]) && $model->load($data[$formName][$i], '')) {
+                $success = true;
+                if(property_exists($model, 'isNewRecord')) {
+                    $model->isNewRecord = false;
+                }
+            }
+        }
+
+        return $success;
+    }
+
     /**
      * @return array
      */

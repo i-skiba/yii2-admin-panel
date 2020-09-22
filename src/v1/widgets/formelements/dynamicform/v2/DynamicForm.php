@@ -2,6 +2,7 @@
 
 namespace kamaelkz\yii2admin\v1\widgets\formelements\dynamicform\v2;
 
+use Yii;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\CssSelector\CssSelector;
 use yii\helpers\ArrayHelper;
@@ -263,18 +264,15 @@ class DynamicForm extends \yii\base\Widget
             )
         );
 
-//        $crawler = new Crawler();
-//        $crawler->addHTMLContent($content, \Yii::$app->charset);
-//        $results = $crawler->filter($this->widgetItem);
-//        $document = new \DOMDocument('1.0', \Yii::$app->charset);
-//        $document->appendChild($document->importNode($results->first()->getNode(0), true));
-//        $this->_options['template'] = trim($document->saveHTML());
-
-        // TODO темплейт генерится теперь на основе нового экземпляра, а не первой попавшейся записи
-        // Пока оставил старый код закомментированным
         $this->_options['template'] = trim($this->itemTemplate);
-
-        if (isset($this->_options['min']) && $this->_options['min'] === 0 && $this->model->isNewRecord) {
+        # todo: протестировать
+        if (
+            isset($this->_options['min'])
+            && $this->_options['min'] === 0
+            && count($this->models) === 1
+            && property_exists($this->model, 'isNewRecord')
+            && $this->model->isNewRecord
+        ) {
             $content = $this->removeItems($content);
         }
 
