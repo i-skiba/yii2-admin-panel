@@ -22,6 +22,9 @@ $config = [
         ]
     ],
     'components' => [
+        'urlManager' => [
+            'class' => 'kamaelkz\yii2admin\v1\components\UrlManager'
+        ],
         'view' => [
             'class' => 'kamaelkz\yii2admin\v1\themes\components\view\View',
             'theme' => [

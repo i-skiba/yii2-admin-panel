@@ -326,12 +326,14 @@ UrlHelper.prototype.getQueryParameters = function(queryString) {
 
 UrlHelper.prototype.addDomainParam = function(queryString) {
     var currentUrl = location.href;
-    var domain_id = this.getParam(currentUrl, 'domain_id');
-    if(domain_id === null) {
+    var currentUrlDomainId = this.getParam(currentUrl, 'domain_id'),
+        queryStringDomainId = this.getParam(queryString, 'domain_id');
+
+    if(queryStringDomainId !== null) {
         return queryString;
     }
 
-    return this.addParam(queryString, 'domain_id', domain_id);
+    return this.addParam(queryString, 'domain_id', currentUrlDomainId);
 };
 
 var Pjax = function() {

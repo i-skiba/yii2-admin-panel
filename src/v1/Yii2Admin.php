@@ -4,6 +4,9 @@ namespace kamaelkz\yii2admin\v1;
 
 use Yii;
 use yii\base\BootstrapInterface;
+use yii\base\Event;
+use yii\web\Controller;
+use yii\helpers\Url;
 use kamaelkz\yii2admin\v1\ {
     widgets\Breadcrumbs,
     widgets\DetailView,
@@ -15,6 +18,7 @@ use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use kamaelkz\yii2cdnuploader\Yii2CdnUploader;
 use concepture\yii2logic\validators\StringValidator;
+use kamaelkz\yii2admin\v1\components\UrlManager;
 
 /**
  * Первичная настройка компонента
@@ -35,6 +39,13 @@ class Yii2Admin implements BootstrapInterface
     {
         $this->setClassmap();
         Yii::$container->setDefinitions($this->getDefinations());
+        # редирект на адрес с параметром текущего домена, если его нет в запросе
+        Event::on(Controller::class, Controller::EVENT_BEFORE_ACTION, function() {
+            $domain_id = Yii::$app->getRequest()->get('domain_id');
+            if(! $domain_id) {
+                Yii::$app->getResponse()->redirect(Url::current(['domain_id' => Yii::$app->domainService->getCurrentDomainId()], 301));
+            }
+        });
     }
 
     /**
