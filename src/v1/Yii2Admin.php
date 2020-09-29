@@ -45,6 +45,11 @@ class Yii2Admin implements BootstrapInterface
             if(! $domain_id) {
                 Yii::$app->getResponse()->redirect(Url::current(['domain_id' => Yii::$app->domainService->getCurrentDomainId()], 301));
             }
+            // set timezone
+            $domain_data = Yii::$app->domainService->getDomainDataById($domain_id);
+            if(isset($domain_data['timezone'])) {
+                date_default_timezone_set($domain_data['timezone']);
+            }
         });
     }
 
