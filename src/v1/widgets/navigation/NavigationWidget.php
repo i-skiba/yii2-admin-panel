@@ -74,7 +74,12 @@ abstract class NavigationWidget extends CoreWidget
                 }
 
                 if (isset($child['url']) && $child['url'] != '#'){
-                    if (! AccessHelper::checkAccess($child['url'])){
+                    $asPermission = false;
+                    if (isset($child['asPermission']) && $child['asPermission'] == true) {
+                        $asPermission = true;
+                    }
+
+                    if (! AccessHelper::checkAccess($child['url'], [] , $asPermission)){
                         unset($this->items[$key]['children'][$childKey]);
                     }
                 }
@@ -85,6 +90,7 @@ abstract class NavigationWidget extends CoreWidget
             }
         }
     }
+    
     /**
      * Возвращает контент виджета
      *
