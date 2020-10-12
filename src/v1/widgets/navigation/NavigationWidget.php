@@ -69,6 +69,10 @@ abstract class NavigationWidget extends CoreWidget
             }
 
             foreach ($item['children'] as $childKey => $child){
+                if (isset($child['ignoreRbac']) && $child['ignoreRbac'] == true) {
+                    continue;
+                }
+
                 if (isset($child['url']) && $child['url'] != '#'){
                     if (! AccessHelper::checkAccess($child['url'])){
                         unset($this->items[$key]['children'][$childKey]);
