@@ -9,7 +9,7 @@ use kamaelkz\yii2admin\v1\widgets\formelements\editors\froala\FroalaEditor;
 $this->setTitle(Yii::t('yii2admin', 'Редактирование атрибута'));
 ?>
 
-<?php Pjax::begin(['formSelector' => '#update-column-form']); ?>
+<?php Pjax::begin(['formSelector' => '#update-column-form', 'enablePushState' => false]); ?>
 
 <?php $form = ActiveForm::begin(['id' => 'update-column-form']); ?>
 <div class="card">
