@@ -40,7 +40,7 @@ return [
                 [
                     'label' => Yii::t('yii2admin', 'Генератор'),
                     'url' => ['/gii'],
-                    'visible' => true,
+                    'ignoreRbac' => true,
                     'active' => [
                         'rules' => [
                             'm' => ['gii']
@@ -50,7 +50,7 @@ return [
                 [
                     'label' => Yii::t('yii2admin', 'Интерфейс'),
                     'url' => ['/uikit/crud'],
-                    'visible' => true,
+                    'ignoreRbac' => true,
                     'active' => [
                         'rules' => [
                             'mc' => ['uikit', ['crud']]
@@ -60,7 +60,7 @@ return [
                 [
                     'label' => Yii::t('yii2admin', 'Виджеты'),
                     'url' => ['/uikit/widgets'],
-                    'visible' => true,
+                    'ignoreRbac' => true,
                     'active' => [
                         'rules' => [
                             'mc' => ['uikit', ['widgets']]
@@ -70,7 +70,7 @@ return [
                 [
                     'label' => Yii::t('yii2admin', 'Магические модалки'),
                     'url' => ['/uikit/magic-modal'],
-                    'visible' => true,
+                    'ignoreRbac' => true,
 //                    'icon' => 'icon-magic-wand2',
                     'active' => [
                         'rules' => [

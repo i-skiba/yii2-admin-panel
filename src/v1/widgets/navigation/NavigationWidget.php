@@ -69,7 +69,7 @@ abstract class NavigationWidget extends CoreWidget
             }
 
             foreach ($item['children'] as $childKey => $child){
-                if (isset($child['visible']) && $child['visible'] == true) {
+                if (isset($child['ignoreRbac']) && $child['ignoreRbac'] == true) {
                     continue;
                 }
 
