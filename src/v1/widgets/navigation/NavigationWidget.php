@@ -73,6 +73,14 @@ abstract class NavigationWidget extends CoreWidget
                     continue;
                 }
 
+                if (isset($child['permission'])) {
+                    if (! Yii::$app->user->can($child['permission'])){
+                        unset($this->items[$key]['children'][$childKey]);
+                    }
+
+                    continue;
+                }
+
                 if (isset($child['url']) && $child['url'] != '#'){
                     $asPermission = false;
                     if (isset($child['asPermission']) && $child['asPermission'] == true) {
@@ -90,7 +98,7 @@ abstract class NavigationWidget extends CoreWidget
             }
         }
     }
-    
+
     /**
      * Возвращает контент виджета
      *
