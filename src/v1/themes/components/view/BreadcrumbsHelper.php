@@ -24,7 +24,7 @@ class BreadcrumbsHelper
      *
      * @return array
      */
-    public static function getClosurePath($model, $captionAttribute = null, $identityAttribute = "id", $viewTitle = null)
+    public static function getClosurePath($model, $captionAttribute = null, $identityAttribute = "id", $viewTitle = null, $captionCallback = null)
     {
         $breadcrumb[] = [
             'label' => $model::label(),
@@ -41,17 +41,22 @@ class BreadcrumbsHelper
 
         $count = count($parents);
         foreach ($parents as $parent) {
+            $captionValue = $parent->{$captionAttribute};
+            if (is_callable($captionCallback)){
+                $captionValue = call_user_func($captionCallback, $captionValue);
+            }
+
             $i++;
             if($i != $count || $viewTitle !== null) {
                 $breadcrumb[] = [
-                    'label' => $parent->{$captionAttribute},
+                    'label' => $captionValue,
                     'url' => ['index' , 'parent_id' => $parent->id]
                 ];
 
                 continue;
             }
 
-            $breadcrumb[] = $parent->{$captionAttribute};
+            $breadcrumb[] = $captionValue;
         }
 
         if($viewTitle !== null){
