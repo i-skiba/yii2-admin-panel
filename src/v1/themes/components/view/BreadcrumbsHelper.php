@@ -22,6 +22,7 @@ class BreadcrumbsHelper
      * @param null|string $identityAttribute
      * @param null|string $viewTitle
      *
+     * @param callback|null $captionCallback
      * @return array
      */
     public static function getClosurePath($model, $captionAttribute = null, $identityAttribute = "id", $viewTitle = null, $captionCallback = null)
