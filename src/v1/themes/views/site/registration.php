@@ -4,12 +4,12 @@ use yii\helpers\Html;
 use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 use yii\web\View;
 
-$this->title = \Yii::t('backend', "Регистрация");
+$this->title = \Yii::t('yii2admin', "Регистрация");
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p><?= \Yii::t('backend', "Для авторизации заполните форму: "); ?></p>
+    <p><?= \Yii::t('yii2admin', "Для авторизации заполните форму: "); ?></p>
 
     <div class="row">
         <div class="col-lg-5">
@@ -20,7 +20,7 @@ $this->title = \Yii::t('backend', "Регистрация");
             <?= $form->field($model, 'validation')->passwordInput() ?>
 
             <div class="form-group">
-                <?= Html::submitButton(\Yii::t('backend', "Зарегистрироваться"), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(\Yii::t('yii2admin', "Зарегистрироваться"), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

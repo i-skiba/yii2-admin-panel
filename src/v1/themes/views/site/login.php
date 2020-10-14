@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use kamaelkz\yii2admin\v1\widgets\formelements\activeform\ActiveForm;
 use kamaelkz\yii2admin\v1\themes\bundles\ImagesBundle;
 
-$this->title = \Yii::t('backend', "Авторизация");
+$this->title = \Yii::t('yii2admin', "Авторизация");
 $imagePath = $this->assetBundles[ImagesBundle::class]->baseUrl;
 
 ?>
@@ -32,10 +32,10 @@ $imagePath = $this->assetBundles[ImagesBundle::class]->baseUrl;
             <div class="text-center mb-3">
                 <img style="width:120px;" class="p-3 mb-2 mt-1" src="<?= $imagePath;?>/yii_logo.png" alt="">
                 <h5 class="mb-0">
-                    <?= \Yii::t('xray', "Авторизация");?>
+                    <?= \Yii::t('yii2admin', "Авторизация");?>
                 </h5>
                 <span class="d-block text-muted">
-                        <?= Yii::t('xray','Введите свои учетные данные ниже');?>
+                        <?= Yii::t('yii2admin','Введите свои учетные данные ниже');?>
                     </span>
             </div>
             <?= $form
