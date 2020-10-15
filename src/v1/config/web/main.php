@@ -19,7 +19,10 @@ $config = [
         ],
         'changelock' => [
             'class' => 'kamaelkz\yii2admin\v1\modules\changelock\Module'
-        ]
+        ],
+        'i18n' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\i18n\Module'
+        ],
     ],
     'components' => [
         'urlManager' => [
@@ -83,6 +86,12 @@ $config = [
         ],
         'auditService' => [
             'class' => 'kamaelkz\yii2admin\v1\modules\audit\services\AuditService',
+        ],
+        'adminMessageService' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\i18n\services\MessageService',
+        ],
+        'adminSourceMessageService' => [
+            'class' => 'kamaelkz\yii2admin\v1\modules\i18n\services\SourceMessageService',
         ],
     ],
     'controllerMap' => [

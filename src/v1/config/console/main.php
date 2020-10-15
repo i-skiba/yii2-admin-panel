@@ -11,7 +11,11 @@ return [
             'migrationPath' => [
                 '@yii2admin/migrations'
             ],
-        ]
+        ],
+        'yii2admin-message' => [
+            'class' => '\kamaelkz\yii2admin\v1\modules\i18n\commands\MessageController',
+            'configFile' => '@backend/config/message.php'
+        ],
     ],
     'components' => [
         'adminHintsService' => [
