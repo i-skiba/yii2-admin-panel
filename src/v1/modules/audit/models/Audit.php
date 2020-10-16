@@ -79,15 +79,15 @@ class Audit extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('yii2admin', 'ID'),
-            'user_id' => \Yii::t('yii2admin', 'Пользователь'),
-            'action' => \Yii::t('yii2admin', 'Действие'),
-            'model' => \Yii::t('yii2admin', 'Модель'),
-            'model_pk' => \Yii::t('yii2admin', 'Первичный ключ'),
-            'field' => \Yii::t('yii2admin', 'Поле'),
-            'old_value' => \Yii::t('yii2admin', 'Старое значение'),
-            'new_value' => \Yii::t('yii2admin', 'Новое значение'),
-            'created_at' => \Yii::t('yii2admin', 'Дата создания'),
+            'id' => \Yii::t('common', 'ID'),
+            'user_id' => \Yii::t('common', 'Пользователь'),
+            'action' => \Yii::t('common', 'Действие'),
+            'model' => \Yii::t('common', 'Модель'),
+            'model_pk' => \Yii::t('common', 'Первичный ключ'),
+            'field' => \Yii::t('common', 'Поле'),
+            'old_value' => \Yii::t('common', 'Старое значение'),
+            'new_value' => \Yii::t('common', 'Новое значение'),
+            'created_at' => \Yii::t('common', 'Дата создания'),
         ];
     }
 

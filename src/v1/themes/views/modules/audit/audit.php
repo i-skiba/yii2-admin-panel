@@ -69,7 +69,7 @@ $auditDataProvider = new ActiveDataProvider([
             'columns' => [
                 [
                     'attribute' => 'user_id',
-                    'label' => Yii::t('yii2admin', 'Пользователь'),
+                    'label' => Yii::t('common', 'Пользователь'),
                     'value' => function ($data) {
                         $user_id = $data->user_id;
                         $user = User::findIdentity($user_id);
