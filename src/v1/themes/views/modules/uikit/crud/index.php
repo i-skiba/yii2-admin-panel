@@ -13,7 +13,7 @@ $this->setTitle(Yii::t('yii2admin', 'Интерфейс'));
 $this->pushBreadcrumbs($this->title);
 $this->viewHelper()->pushPageHeader(
     [PositionSortIndexAction::actionName()],
-    Yii::t('yii2admin', 'Сортировка'),
+    Yii::t('common', 'Сортировка'),
     'icon-sort'
 );
 $this->viewHelper()->pushPageHeader();
