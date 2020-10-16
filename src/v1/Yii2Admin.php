@@ -5,6 +5,7 @@ namespace kamaelkz\yii2admin\v1;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
+use yii\web\Application;
 use yii\web\Controller;
 use yii\helpers\Url;
 use kamaelkz\yii2admin\v1\ {
@@ -39,6 +40,22 @@ class Yii2Admin implements BootstrapInterface
     {
         $this->setClassmap();
         Yii::$container->setDefinitions($this->getDefinations());
+        # построение меню
+        Event::on(Application::class, Application::EVENT_BEFORE_REQUEST, function($event) {
+            $event->sender->params = ArrayHelper::merge(
+                Yii::$app->params,
+                require __DIR__ . "/config/web/menu-sidebar.php"
+            );
+
+            # пытаемся искать меню в подпроекте backend
+            $filePath = Yii::getAlias('@backend/config') . '/menu-sidebar.php';
+            if (file_exists($filePath)) {
+                $event->sender->params = ArrayHelper::merge(
+                    Yii::$app->params,
+                    require $filePath
+                );
+            }
+        });
         # редирект на адрес с параметром текущего домена, если его нет в запросе
         Event::on(Controller::class, Controller::EVENT_BEFORE_ACTION, function() {
             $domain_id = Yii::$app->getRequest()->get('domain_id');
@@ -82,17 +99,18 @@ class Yii2Admin implements BootstrapInterface
      * Конфигурация компонента админки
      *
      * @param string $type
+     * @param string $fileName
      * @throws InvalidConfigException
      * @return array
      */
-    public static function getConfiguration($type = self::WEB)
+    public static function getConfiguration($type = self::WEB, $fileName = 'main')
     {
         if(! in_array($type, [self::WEB, self::CONSOLE])) {
             throw new InvalidConfigException('Configuration type is not defined.');
         }
 
         return ArrayHelper::merge(
-            require __DIR__ . "/config/{$type}/main.php",
+            require __DIR__ . "/config/{$type}/{$fileName}.php",
             Yii2CdnUploader::getConfiguration()
         );
     }

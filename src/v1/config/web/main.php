@@ -99,7 +99,6 @@ $config = [
             'class' => 'kamaelkz\yii2admin\v1\controllers\DefaultController',
         ],
     ],
-    'params' => require __DIR__ . '/params.php'
 ];
 
 if(YII_DEBUG) {
