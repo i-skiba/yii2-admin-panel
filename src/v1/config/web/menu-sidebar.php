@@ -6,7 +6,7 @@ return [
     'yii2admin-navigation' => [
         'index' => [
             'position' => 1,
-            'label' => Yii::t('yii2admin', 'Главная'),
+            'label' => Yii::t('common', 'Главная'),
             'url' => ['/site/index'],
             'icon' => 'icon-home4',
             'active' => [
@@ -23,7 +23,7 @@ return [
         ],
         'uikit' => [
             'position' => 1000,
-            'label' => Yii::t('yii2admin', 'Разработчику'),
+            'label' => Yii::t('common', 'Разработчику'),
             'url' => ['/uikit'],
             'icon' => 'icon-wrench',
             'color' => 'info',
@@ -38,7 +38,7 @@ return [
             ],
             'children' => [
                 [
-                    'label' => Yii::t('yii2admin', 'Генератор'),
+                    'label' => Yii::t('common', 'Генератор'),
                     'url' => ['/gii'],
                     'ignoreRbac' => true,
                     'active' => [
@@ -48,7 +48,7 @@ return [
                     ]
                 ],
                 [
-                    'label' => Yii::t('yii2admin', 'Интерфейс'),
+                    'label' => Yii::t('common', 'Интерфейс'),
                     'url' => ['/uikit/crud'],
                     'ignoreRbac' => true,
                     'active' => [
@@ -58,7 +58,7 @@ return [
                     ]
                 ],
                 [
-                    'label' => Yii::t('yii2admin', 'Виджеты'),
+                    'label' => Yii::t('common', 'Виджеты'),
                     'url' => ['/uikit/widgets'],
                     'ignoreRbac' => true,
                     'active' => [
@@ -68,7 +68,7 @@ return [
                     ]
                 ],
                 [
-                    'label' => Yii::t('yii2admin', 'Магические модалки'),
+                    'label' => Yii::t('common', 'Магические модалки'),
                     'url' => ['/uikit/magic-modal'],
                     'ignoreRbac' => true,
 //                    'icon' => 'icon-magic-wand2',
@@ -82,7 +82,7 @@ return [
         ],
         'audit' => [
             'position' => 1001,
-            'label' => Yii::t('yii2admin', 'Аудит'),
+            'label' => Yii::t('common', 'Аудит'),
             'url' => ['/audit/audit/index'],
             'icon' => 'icon-eye',
             'active' => [

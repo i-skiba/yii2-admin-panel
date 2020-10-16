@@ -11,7 +11,9 @@
             <div class="card-body">
                 <div class="media">
                     <div class="mr-3">
-                        <a href="#"><img src="<?php echo $imageBundlePath;?>/placeholders/placeholder.jpg" class="rounded-circle" alt="" width="38" height="38"></a>
+                        <a href="#">
+                            <img src="<?php echo $imageBundlePath;?>/placeholders/placeholder.jpg" class="rounded-circle" alt="" width="38" height="38">
+                        </a>
                     </div>
 
                     <div class="media-body">
