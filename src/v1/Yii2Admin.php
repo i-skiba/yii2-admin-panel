@@ -42,6 +42,14 @@ class Yii2Admin implements BootstrapInterface
         Yii::$container->setDefinitions($this->getDefinations());
         # построение меню
         Event::on(Application::class, Application::EVENT_BEFORE_REQUEST, function($event) {
+            # язык интерфейса
+            if (!Yii::$app->getUser()->getIsGuest()) {
+                $user = Yii::$app->getUser()->getIdentity();
+                if (!empty($user->interface_iso)) {
+                    Yii::$app->language = $user->interface_iso;
+                }
+            }
+            # меню модул
             $event->sender->params = ArrayHelper::merge(
                 Yii::$app->params,
                 require __DIR__ . "/config/web/menu-sidebar.php"
