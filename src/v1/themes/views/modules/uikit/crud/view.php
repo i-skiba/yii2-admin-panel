@@ -2,16 +2,16 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use kamaelkz\yii2admin\v1\widgets\formelements\Pjax;
+use kamaelkz\common\v1\widgets\formelements\Pjax;
 use yii\widgets\DetailView;
 
-$this->setTitle(Yii::t('yii2admin', 'Просмотр записи'));
-$this->pushBreadcrumbs(['label' => Yii::t('yii2admin', 'Интерфейс'), 'url' => ['index']]);
+$this->setTitle(Yii::t('common', 'Просмотр записи'));
+$this->pushBreadcrumbs(['label' => Yii::t('common', 'Интерфейс'), 'url' => ['index']]);
 $this->pushBreadcrumbs($this->title);
 
 $this->viewHelper()->pushPageHeader();
-$this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id], Yii::t('yii2admin','Редактировать'), 'icon-pencil6');
-$this->viewHelper()->pushPageHeader(['index'], Yii::t('yii2admin', 'Список'),'icon-list');
+$this->viewHelper()->pushPageHeader(['update' ,'id' => $model->id], Yii::t('common','Редактировать'), 'icon-pencil6');
+$this->viewHelper()->pushPageHeader(['index'], Yii::t('common', 'Список'),'icon-list');
 
 ?>
 
@@ -30,57 +30,57 @@ $this->viewHelper()->pushPageHeader(['index'], Yii::t('yii2admin', 'Список
                             <b>
                                 <i class="icon-cog5"></i>
                             </b>
-                            <?= Yii::t('yii2admin', 'Операции');?>
+                            <?= Yii::t('common', 'Операции');?>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                                 <?= Html::a(
-                                    '<i class="icon-bin2"></i>' . Yii::t('yii2admin', 'Удалить'),
+                                    '<i class="icon-bin2"></i>' . Yii::t('common', 'Удалить'),
                                     ['delete', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',
                                         'data-pjax-id' => 'list-pjax',
                                         'data-pjax-url' => Url::current([], true),
-                                        'data-swal' => Yii::t('yii2admin' , 'Удалить'),
+                                        'data-swal' => Yii::t('common' , 'Удалить'),
                                     ]
                                 );?>
                                 <div class="dropdown-divider"></div>
                                 <?= Html::a(
-                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с уведомлением'),
+                                    '<i class="icon-question6"></i>' . Yii::t('common', 'Операция с уведомлением'),
                                     ['notify', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',
                                         'data-pjax-id' => 'list-pjax',
                                         'data-pjax-url' => Url::current([], true),
-                                        'data-swal' => Yii::t('yii2admin' , 'Операция с уведомлением'),
+                                        'data-swal' => Yii::t('common' , 'Операция с уведомлением'),
                                     ]
                                 );?>
                                 <?= Html::a(
-                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с флешем'),
+                                    '<i class="icon-question6"></i>' . Yii::t('common', 'Операция с флешем'),
                                     ['flash', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',
                                         'data-pjax-id' => 'list-pjax',
                                         'data-pjax-url' => Url::current([], true),
-                                        'data-swal' => Yii::t('yii2admin' , 'Операция с флешем'),
+                                        'data-swal' => Yii::t('common' , 'Операция с флешем'),
                                     ]
                                 );?>
                                 <?= Html::a(
-                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с редиректом'),
+                                    '<i class="icon-question6"></i>' . Yii::t('common', 'Операция с редиректом'),
                                     ['redirect', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',
-                                        'data-swal' => Yii::t('yii2admin' , 'Операция с редиректом'),
+                                        'data-swal' => Yii::t('common' , 'Операция с редиректом'),
                                     ]
                                 );?>
                                 <?= Html::a(
-                                    '<i class="icon-question6"></i>' . Yii::t('yii2admin', 'Операция с колбэком'),
+                                    '<i class="icon-question6"></i>' . Yii::t('common', 'Операция с колбэком'),
                                     ['callback', 'id' => $model->id],
                                     [
                                         'class' => 'admin-action dropdown-item',
                                         'data-pjax-id' => 'list-pjax',
                                         'data-pjax-url' => Url::current([], true),
-                                        'data-swal' => Yii::t('yii2admin' , 'Операция с колбэком'),
+                                        'data-swal' => Yii::t('common' , 'Операция с колбэком'),
                                         'data-callback' => new \yii\web\JsExpression('
                                             function( response ){
                                                 console.log(response);
