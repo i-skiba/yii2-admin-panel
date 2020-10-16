@@ -124,7 +124,7 @@ trait ControllerTrait
         }
 
         if (! AccessHelper::checkAccess($this->id, ['model' => $model])) {
-            throw new ForbiddenHttpException(Yii::t("core", "You are not the owner"));
+            throw new ForbiddenHttpException(Yii::t("common", "You are not the owner"));
         }
 
         $form = $this->getService()->getRelatedForm();
