@@ -103,13 +103,13 @@ class AdminHints extends \concepture\yii2logic\models\ActiveRecord
     {
         return [
 
-            'id' => Yii::t('yii2admin', '#'),
-            'name' => Yii::t('yii2admin','Ключ'),
-            'value' => Yii::t('yii2admin','Значение'),
-            'caption' => Yii::t('yii2admin','Наименование'),
-            'status' => Yii::t('yii2admin', 'Состояние'),
-            'created_at' => Yii::t('yii2admin', 'Дата создания'),
-            'is_deleted' => Yii::t('yii2admin', 'Удален')
+            'id' => Yii::t('common', '#'),
+            'name' => Yii::t('common','Ключ'),
+            'value' => Yii::t('common','Значение'),
+            'caption' => Yii::t('common','Наименование'),
+            'status' => Yii::t('common', 'Состояние'),
+            'created_at' => Yii::t('common', 'Дата создания'),
+            'is_deleted' => Yii::t('common', 'Удален')
         ];
     }
 
