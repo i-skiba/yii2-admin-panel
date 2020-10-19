@@ -73,7 +73,9 @@ class Yii2Admin implements BootstrapInterface
             // set timezone
             $domain_data = Yii::$app->domainService->getDomainDataById($domain_id);
             if(isset($domain_data['timezone'])) {
-                date_default_timezone_set($domain_data['timezone']);
+                $timeZone = $domain_data['timezone'];
+                Yii::$app->setTimeZone($timeZone);
+                Yii::$app->getDb()->getMasterPdo()->exec("SET time_zone = '" . $timeZone . "'");
             }
         });
     }
