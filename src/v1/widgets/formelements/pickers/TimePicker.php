@@ -27,7 +27,9 @@ class TimePicker extends PickerWidget
         return [
             'format' => 'HH:i',
             'formatSubmit' => 'HH:i',
-            'hiddenName' => true,
+            // Выключаем сабмит с интервалом
+            'hiddenName' => false,
+            'hiddenPrefix' => 'submit_without_range',
 //            'clear' => Yii::t('frontend.common', "Очистить"),
             'interval' => 15
         ];
