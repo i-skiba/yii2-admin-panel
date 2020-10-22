@@ -11,7 +11,7 @@ use kamaelkz\yii2admin\v1\modules\i18n\services\SourceMessageService;
  *
  * @author kamaelkz <kamaelkz@yandex.kz>
  */
-class SourceMessageController extends \concepture\yii2handbook\web\controllers\SourceMessageController
+class AdminSourceMessageController extends \concepture\yii2handbook\web\controllers\SourceMessageController
 {
     /**
      * @return MessageService

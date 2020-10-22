@@ -20,7 +20,7 @@ class Module extends BaseModule
     /**
      * @var string
      */
-    public $defaultRoute = 'source-message';
+    public $defaultRoute = 'admin-source-message';
 
     /**
      * @return string|null
