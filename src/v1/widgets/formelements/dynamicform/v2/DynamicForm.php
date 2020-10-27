@@ -192,8 +192,8 @@ class DynamicForm extends \yii\base\Widget
     {
         $this->_options['widgetContainer'] = $this->widgetContainer;
         // Чтобы работало только с текущим контейнером, а не со всеми на форме устанавливается уникальный id
-        $this->_options['widgetBody']      = $this->widgetBody = $this->widgetBody . '_' . $this->getId();
-        $this->_options['widgetItem']      = $this->widgetItem = $this->widgetItem . '_' . $this->getId();
+        $this->_options['widgetBody']      = $this->widgetBody = $this->widgetBody . '_' . uniqid();
+        $this->_options['widgetItem']      = $this->widgetItem = $this->widgetItem . '_' . uniqid();
         $this->_options['limit']           = $this->limit;
         $this->_options['insertButton']    = $this->insertButton;
         $this->_options['deleteButton']    = $this->deleteButton;
