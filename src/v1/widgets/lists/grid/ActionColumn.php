@@ -52,20 +52,14 @@ class ActionColumn extends BaseColumn
         $this->initDefaultButton('undelete', 'redo');
     }
 
-    private function deleted($model) {
-        if(! isset($model['is_deleted'])) {
-            return true;
-        }
-
-        return ($model['is_deleted'] !== IsDeletedEnum::DELETED);
+    private function is_deleted($model)
+    {
+        return ($model['is_deleted'] == IsDeletedEnum::DELETED);
     }
 
-    private function active($model) {
-        if(! isset($model['status'])) {
-            return true;
-        }
-
-        return ($model['status'] !== StatusEnum::INACTIVE);
+    private function is_active($model)
+    {
+        return ($model['status'] == StatusEnum::ACTIVE);
     }
 
     /**
@@ -103,7 +97,7 @@ class ActionColumn extends BaseColumn
                 switch ($name) {
                     case 'update':
                         $title = Yii::t('yii2admin', 'Редактировать');
-                        $visible = ! $this->deleted($model);
+                        $visible = ! $this->is_deleted($model);
                         break;
                     case 'view':
                         $title = Yii::t('yii2admin', 'Просмотр');
@@ -113,7 +107,7 @@ class ActionColumn extends BaseColumn
                     case 'activate':
                         $title = Yii::t('yii2admin', 'Активировать');
                         $url = ['status-change', 'id' => $model['id'], 'status' => StatusEnum::ACTIVE];
-                        $visible = (! $this->deleted($model) || $this->active($model));
+                        $visible = (! $this->is_deleted($model) && ! $this->is_active($model));
                         $additionalOptions = [
                             'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
                             'data-pjax-id' => Pjax::DEFAULT_ID,
@@ -124,7 +118,7 @@ class ActionColumn extends BaseColumn
                     case 'deactivate':
                         $title = Yii::t('yii2admin', 'Деактивировать');
                         $url = ['status-change', 'id' => $model['id'], 'status' => StatusEnum::INACTIVE];
-                        $visible = (! $this->deleted($model) || ! $this->active($model));
+                        $visible = (! $this->is_deleted($model) && $this->is_active($model));
                         $additionalOptions = [
                             'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
                             'data-pjax-id' => Pjax::DEFAULT_ID,
@@ -134,7 +128,7 @@ class ActionColumn extends BaseColumn
                         break;
                     case 'delete':
                         $title = Yii::t('yii2admin', 'Удалить');
-                        $visible = ! $this->deleted($model);
+                        $visible = ! $this->is_deleted($model);
                         $additionalOptions = [
                             'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
                             'data-pjax-id' => Pjax::DEFAULT_ID,
@@ -143,7 +137,7 @@ class ActionColumn extends BaseColumn
                         ];
                         break;
                     case 'undelete':
-                        $visible = $this->deleted($model);
+                        $visible = $this->is_deleted($model);
                         $title = Yii::t('yii2admin', 'Восстановить');
                         $additionalOptions = [
                             'class' => ($this->dropdown ? 'dropdown-item' : 'list-icons-item') . ' admin-action',
@@ -171,7 +165,7 @@ class ActionColumn extends BaseColumn
                 $icon = Html::tag('i', '', ['class' => "icon-$iconName"]);
                 $label = $this->dropdown ? ($icon . $title) : $icon;
 
-                if(! $visible !== false) {
+                if($visible == true) {
                     return Html::a($label, $url, $options);
                 }
             };
