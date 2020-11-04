@@ -48,7 +48,7 @@ $allowedTypes = array_filter($types, function($type) use ($declination_format) {
         <?php
             $field = $form->field($model, "{$pluralAttr}[{$targetAttr}][{$type}]");
             if(in_array($type, $allowedTypes)) {
-                $field->textInput(['value' => $value, 'placeholder' => $type])->label("<b>{$type}</b>");
+                $field->textInput(['value' => $value, 'placeholder' => $type, 'disabled' => $disabled])->label("<b>{$type}</b>");
             } else {
                 $field->hiddenInput(['value' => $value])->label(false);
             }

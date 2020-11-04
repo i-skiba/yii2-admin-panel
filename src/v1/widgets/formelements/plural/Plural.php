@@ -45,6 +45,10 @@ class Plural extends Widget
      */
     public $token = '{plural}';
     /**
+     * @var bool
+     */
+    public $disabled = false;
+    /**
      * @var integer формат склонения
      */
     public $declination_format = DeclinationFormatEnum::FULL;
@@ -94,6 +98,7 @@ class Plural extends Widget
             'pluralAttr' => $this->pluralAttr,
             'origin' => $this->originText,
             'token' => $this->token,
+            'disabled' => $this->disabled,
             'declination_format' => $this->declination_format
         ]);
     }
