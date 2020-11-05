@@ -292,7 +292,7 @@ var UrlHelper = function() {};
 UrlHelper.prototype.getParam = function(queryString, param) {
     var queryParameters = this.getQueryParameters(queryString);
 
-    return queryParameters[param] ?? null;
+    return queryParameters[param] || null;
 };
 
 UrlHelper.prototype.addParam = function(queryString, param, value) {
