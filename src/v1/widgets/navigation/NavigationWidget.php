@@ -110,18 +110,20 @@ abstract class NavigationWidget extends CoreWidget
         if(! $this->items) {
             return $content;
         }
-        # сортировка элементов
-        usort($this->items, function($a, $b) {
-            $a = ( $a['position'] ?? 999 );
-            $b = ( $b['position'] ?? 999 );
 
-            if($a == $b) {
-                return 0;
+        $result = [];
+        $i = 0;
+        foreach ($this->items as $key => $item) {
+            $position = $item['position'] ?? null;
+            if(! $position) {
+                $position = $i + 200;
             }
+            $result[$position] = $item;
+            $i ++;
+        }
 
-            return ($a < $b) ? -1 : 1;
-        });
-        foreach ($this->items as $item) {
+        ksort($result);
+        foreach ($result as $item) {
             if(! isset($item['children'])) {
                 $content .= $this->getElement($item);
             } else {
