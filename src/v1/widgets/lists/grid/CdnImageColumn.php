@@ -20,7 +20,7 @@ class CdnImageColumn extends DataColumn
     /**
      * @var array
      */
-    public $headerOption = [
+    public $headerOptions = [
         'style' => 'width:10%',
         'class' => 'text-center'
     ];
