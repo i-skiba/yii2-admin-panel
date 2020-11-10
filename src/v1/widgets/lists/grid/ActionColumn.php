@@ -54,12 +54,16 @@ class ActionColumn extends BaseColumn
 
     private function is_deleted($model)
     {
-        return ($model['is_deleted'] == IsDeletedEnum::DELETED);
+        $is_deleted = $model['is_deleted'] ?? null;
+
+        return ($is_deleted == IsDeletedEnum::DELETED);
     }
 
     private function is_active($model)
     {
-        return ($model['status'] == StatusEnum::ACTIVE);
+        $status = $model['status'] ?? null;
+
+        return ($status == StatusEnum::ACTIVE);
     }
 
     /**
