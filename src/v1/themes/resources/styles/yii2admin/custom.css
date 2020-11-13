@@ -124,3 +124,8 @@ form div.required label.control-label::after{
 td.text-center .uniform-choice {
     margin: 0 auto;
 }
+
+legend .text-danger {
+    font-weight: normal;
+    text-transform : none;
+}

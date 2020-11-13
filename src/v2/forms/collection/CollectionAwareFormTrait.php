@@ -81,15 +81,6 @@ trait CollectionAwareFormTrait
             }
 
             $this->loadCollections($className, $attribute, $post , '');
-            $validator = Validator::createValidator(
-                CollectionModelsValidator::class,
-                $this,
-                $attribute,
-                [
-                    'modelClass' => $className
-                ]
-            );
-            $this->getValidators()->append($validator);
         }
 
         return $parent;
@@ -117,6 +108,16 @@ trait CollectionAwareFormTrait
                 $instance->isNewRecord = false;
                 $values[] = $instance;
             }
+
+            $validator = Validator::createValidator(
+                CollectionModelsValidator::class,
+                $this,
+                $attribute,
+                [
+                    'modelClass' => $className
+                ]
+            );
+            $this->getValidators()->append($validator);
         }
 
         $this->{$attribute} = $values;
