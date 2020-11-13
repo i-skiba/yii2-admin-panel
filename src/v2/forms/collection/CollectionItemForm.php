@@ -1,6 +1,6 @@
 <?php
 
-namespace kamaelkz\yii2admin\v2\forms;
+namespace kamaelkz\yii2admin\v2\forms\collection;
 
 use kamaelkz\yii2admin\v1\forms\BaseModel;
 

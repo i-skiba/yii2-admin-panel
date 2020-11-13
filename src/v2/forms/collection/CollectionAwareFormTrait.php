@@ -1,13 +1,11 @@
 <?php
 
-namespace kamaelkz\yii2admin\v2\forms\traits;
+namespace kamaelkz\yii2admin\v2\forms\collection;
 
-use kamaelkz\yii2admin\v2\forms\CollectionItemFormInterface;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 use yii\validators\Validator;
-use kamaelkz\yii2admin\v2\forms\CollectionAwareFormInterface;
 use kamaelkz\yii2admin\v1\validators\CollectionModelsValidator;
 
 /**
@@ -48,7 +46,7 @@ trait CollectionAwareFormTrait
                 throw new InvalidConfigException('Collection item must be instance of `CollectionItemFormInterface`');
             }
 
-            $instance->setIsEmpty(true);
+            $instance->isNewRecord = true;
             $this->{$attribute}[] = $instance;
         }
     }
@@ -77,7 +75,7 @@ trait CollectionAwareFormTrait
                     throw new InvalidConfigException('Collection item must be instance of `CollectionItemFormInterface`');
                 }
 
-                $instance->setIsEmpty(true);
+                $instance->isNewRecord = true;
                 $this->{$attribute} = [$instance];
                 continue;
             }
@@ -116,7 +114,7 @@ trait CollectionAwareFormTrait
                     throw new InvalidConfigException('Collection item must be instance of `CollectionItemFormInterface`');
                 }
 
-                $instance->setIsEmpty(false);
+                $instance->isNewRecord = false;
                 $values[] = $instance;
             }
         }

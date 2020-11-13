@@ -1,6 +1,6 @@
 <?php
 
-namespace kamaelkz\yii2admin\v2\forms;
+namespace kamaelkz\yii2admin\v2\forms\collection;
 
 /**
  * Интерфейс элемента формы коллекции
