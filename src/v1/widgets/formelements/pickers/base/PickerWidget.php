@@ -42,12 +42,16 @@ abstract class PickerWidget extends InputWidget
     {
         $view = $this->getView();
         $id = $this->options['id'];
-        $clientOptions = Json::htmlEncode(
-                ArrayHelper::merge(
-                        $this->getDefaultClientOptions(),
-                        $this->clientOptions
-                )
+        $options = ArrayHelper::merge(
+            $this->getDefaultClientOptions(),
+            $this->clientOptions
         );
+        $format = $options['format'] ?? null;
+        if($format) {
+            $this->field->hint($format, ['class' => 'text-muted']);
+        }
+
+        $clientOptions = Json::htmlEncode($options);
         $js = 'jQuery("#' . $id . '").' . $this->pluginName() . '(' . $clientOptions. ');';
 
         $this->registerBundle();
