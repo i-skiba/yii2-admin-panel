@@ -263,7 +263,7 @@
 
         $(widgetOptionsRoot.widgetItem).each(function(index) {
             var $item = $(this);
-            $(this).find('*').each(function() {
+            $(this).find('*:not(.yii2admin_hints_popover)').each(function() {
                 // update "id" attribute
                 _updateAttrID($(this), index);
 
