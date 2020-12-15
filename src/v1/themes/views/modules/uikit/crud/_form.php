@@ -9,7 +9,8 @@ use yii\helpers\Html;
         formelements\Pjax,
         formelements\pickers\DatePicker,
         formelements\pickers\TimePicker,
-        formelements\dynamicform\DynamicForm
+        formelements\dynamicform\DynamicForm,
+        formelements\select2\Select2
     };
 
     use kamaelkz\yii2admin\v1\modules\uikit\enum\UiikitEnum;
@@ -18,7 +19,7 @@ use yii\helpers\Html;
     use kamaelkz\yii2cdnuploader\widgets\Uploader;
     use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
     use kamaelkz\yii2admin\v1\modules\hints\enum\AdminHintsTypeEnum;
-
+    
     $saveRedirectButton = Html::saveRedirectButton();
     $saveButton = Html::saveButton();
 ?>
@@ -30,6 +31,7 @@ use yii\helpers\Html;
                 <?= $saveButton?>
             </div>
         </div>
+        <?= $form->errorSummary($model);?>
         <div class="card">
             <div class="card-body">
                 <legend class="font-weight-semibold text-uppercase font-size-sm">
@@ -125,6 +127,17 @@ use yii\helpers\Html;
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <?= $form->field($model, 'select2')->widget(Select2::class, [
+                                    'form' => $form,
+                                    'data' => UiikitEnum::getDropdownList(),
+                                    'options' => [
+                                        'prompt' => '',
+                                        'allowClear' => true,
+
+                                    ],
+                                ]); ?>
+                            </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <?= $form
                                     ->field($model, 'dropdown_root')
