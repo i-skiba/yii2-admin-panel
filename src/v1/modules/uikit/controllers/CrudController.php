@@ -69,7 +69,6 @@ class CrudController extends BaseController
         ];
         $parent[EditableColumnAction::actionName()] = [
             'class' => EditableColumnAction::class,
-            'serviceClass' => EntityTypePositionSortService::class
         ];
         $parent[SortAction::actionName()] = [
             'class' => SortAction::class,

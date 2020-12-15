@@ -16,6 +16,9 @@ class CrudService extends Service implements UpdateColumnInterface
 {
     use UpdateColumnTrait;
 
+    /**
+     * @inheritDoc
+     */
     public function getRelatedFormClass()
     {
         return UikitForm::class;

@@ -19,7 +19,7 @@ use yii\helpers\Html;
     use kamaelkz\yii2cdnuploader\widgets\Uploader;
     use kamaelkz\yii2admin\v1\modules\hints\widgets\HintWidget;
     use kamaelkz\yii2admin\v1\modules\hints\enum\AdminHintsTypeEnum;
-    
+
     $saveRedirectButton = Html::saveRedirectButton();
     $saveButton = Html::saveButton();
 ?>
