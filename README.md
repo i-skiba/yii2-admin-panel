@@ -7,7 +7,7 @@ backend|frontend/config/main.php
         ...
     ];
 
-    return yii\helpers\ArrayHelper::merge(
+    return yii\helpers\ArrayHelper::merge( 
         ...
         kamaelkz\yii2admin\v1\Yii2Admin::getConfiguration(Yii2Admin::WEB),
         $config
