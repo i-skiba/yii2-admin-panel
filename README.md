@@ -2,7 +2,7 @@
 
 backend|frontend/config/main.php
 ```php
-    # конфигурация приложения (из коробки return)
+    # конфигурация приложения (из коробки return) 
     $config = [
         ...
     ];
@@ -31,4 +31,4 @@ console/config/main.php
 ```
 ..
 
-Check webhook! 3
+Check webhook! 4
