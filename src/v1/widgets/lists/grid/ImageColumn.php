@@ -48,7 +48,7 @@ class ImageColumn extends DataColumn
         }
 
         if(! is_array($attribute)) {
-            $attribute = Json::encode($attribute);
+            $attribute = Json::decode($attribute);
         }
 
         $source = $attribute['path'] ?? null;
