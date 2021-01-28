@@ -47,7 +47,7 @@ abstract class PickerWidget extends InputWidget
             $this->clientOptions
         );
         $format = $options['format'] ?? null;
-        if($format) {
+        if($format && $this->model && $this->attribute) {
             $this->field->hint($format, ['class' => 'text-muted']);
         }
 
